@@ -1,19 +1,31 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard";
-import products from "@/data/products.json";
+import { getProducts } from "@/lib/dataFetch";
 
 const categories = ["Semua", "cincin", "gelang", "kalung", "anting", "liontin", "batangan"];
 const kadarOptions = ["Semua", "24K", "22K", "18K", "16K", "925"];
 const materialOptions = ["Semua", "emas", "perak"];
 
 export default function ProdukPage() {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const [category, setCategory] = useState("Semua");
   const [kadar, setKadar] = useState("Semua");
   const [material, setMaterial] = useState("Semua");
   const [sortBy, setSortBy] = useState("featured");
+
+  useEffect(() => {
+    async function fetchProducts() {
+      const data = await getProducts();
+      setProducts(data);
+      setLoading(false);
+    }
+    fetchProducts();
+  }, []);
 
   const filtered = useMemo(() => {
     let result = [...products];
@@ -28,7 +40,7 @@ export default function ProdukPage() {
       default: result.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0)); break;
     }
     return result;
-  }, [category, kadar, material, sortBy]);
+  }, [products, category, kadar, material, sortBy]);
 
   return (
     <div className={styles.page}>
@@ -83,19 +95,25 @@ export default function ProdukPage() {
           </div>
         </div>
 
-        <div className={styles.resultCount}>{filtered.length} produk ditemukan</div>
+        {loading ? (
+           <div style={{textAlign: 'center', padding: '40px', color: 'var(--text-muted)'}}>Memuat katalog...</div>
+        ) : (
+          <>
+            <div className={styles.resultCount}>{filtered.length} produk ditemukan</div>
 
-        <div className={styles.grid}>
-          {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+            <div className={styles.grid}>
+              {filtered.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
 
-        {filtered.length === 0 && (
-          <div className={styles.empty}>
-            <span className={styles.emptyIcon}>◆</span>
-            <p>Tidak ada produk yang sesuai filter.</p>
-          </div>
+            {filtered.length === 0 && (
+              <div className={styles.empty}>
+                <span className={styles.emptyIcon}>◆</span>
+                <p>Tidak ada produk yang sesuai filter.</p>
+              </div>
+            )}
+          </>
         )}
       </section>
     </div>

@@ -2,15 +2,14 @@
 
 import { useState } from "react";
 import styles from "./Calculator.module.css";
-import goldPrices from "@/data/gold-prices.json";
 import storeInfo from "@/data/store-info.json";
 
-export default function Calculator() {
+export default function Calculator({ initialPrices }: { initialPrices: any }) {
   const [kadar, setKadar] = useState<"24K" | "22K" | "18K" | "16K">("24K");
   const [weight, setWeight] = useState("5");
   const [ongkos, setOngkos] = useState("150000");
 
-  const pricePerGram = goldPrices.prices[kadar];
+  const pricePerGram = initialPrices.prices[kadar];
   const weightNum = parseFloat(weight) || 0;
   const ongkosNum = parseFloat(ongkos) || 0;
   const basePrice = pricePerGram * weightNum;

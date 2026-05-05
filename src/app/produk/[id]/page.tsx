@@ -1,18 +1,16 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import styles from "./page.module.css";
-import products from "@/data/products.json";
 import storeInfo from "@/data/store-info.json";
-import goldPrices from "@/data/gold-prices.json";
+import { getProducts, getGoldPrices } from "@/lib/dataFetch";
 
-export async function generateStaticParams() {
-  return products.map((p) => ({
-    id: p.id.toString(),
-  }));
-}
+// We need this to handle dynamic generation properly
+export const dynamic = 'force-dynamic';
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-  const product = products.find((p) => p.id.toString() === params.id);
+export default async function ProductDetail({ params }: { params: { id: string } }) {
+  const products = await getProducts();
+  const goldPrices = await getGoldPrices();
+  const product = products.find((p: any) => p.id.toString() === params.id);
 
   if (!product) {
     notFound();
@@ -22,7 +20,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
     new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(price);
 
   const isEmas = product.material === 'emas';
-  // Get base gold price for transparency breakdown if it's gold
   const baseGoldPricePerGram = isEmas ? (goldPrices.prices as any)[product.kadar] || 0 : 0;
   const rawGoldValue = baseGoldPricePerGram * product.weight;
   const estimatedOngkos = product.price > rawGoldValue ? product.price - rawGoldValue : 0;

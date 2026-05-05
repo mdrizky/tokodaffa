@@ -1,13 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
 import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard";
 import PriceTable from "@/components/PriceTable";
 import Calculator from "@/components/Calculator";
-import products from "@/data/products.json";
 import storeInfo from "@/data/store-info.json";
-
-const featuredProducts = products.filter((p) => p.featured).slice(0, 6);
+import { getProducts, getGoldPrices } from "@/lib/dataFetch";
 
 const trustItems = [
   { icon: "🏅", title: "Emas Bersertifikat Asli", desc: "Setiap produk dilengkapi surat & sertifikat keaslian resmi" },
@@ -22,7 +19,11 @@ const testimonials = [
   { name: "Dina Pratiwi", text: "Custom cincin nikah hasilnya rapi banget! Sesuai ekspektasi dan harganya masuk akal. Pelayanannya ramah pol.", rating: 5, time: "3 minggu yang lalu" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const products = await getProducts();
+  const goldPricesData = await getGoldPrices();
+  const featuredProducts = products.filter((p: any) => p.featured).slice(0, 6);
+
   return (
     <>
       {/* Hero Section */}
@@ -71,7 +72,7 @@ export default function HomePage() {
       {/* Price Ticker */}
       <section className={`section ${styles.priceSection}`}>
         <div className="container">
-          <PriceTable />
+          <PriceTable initialPrices={goldPricesData} />
         </div>
       </section>
 
@@ -97,7 +98,7 @@ export default function HomePage() {
             <p>Koleksi perhiasan emas dan perak terbaik minggu ini. <strong style={{ color: 'var(--accent-danger)' }}>Stok sangat terbatas!</strong></p>
           </div>
           <div className={styles.productsGrid}>
-            {featuredProducts.map((product) => (
+            {featuredProducts.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -107,7 +108,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why Choose Us (Trust Concept) */}
+      {/* Why Choose Us */}
       <section className={`section ${styles.trustSection}`}>
         <div className="container">
           <div className="section-header">
@@ -151,11 +152,11 @@ export default function HomePage() {
             <h2>Simulasi <span className="text-gold-gradient">Investasi & Harga</span></h2>
             <p>Transparansi 100%. Hitung sendiri estimasi harga emas Anda sebelum membeli.</p>
           </div>
-          <Calculator />
+          <Calculator initialPrices={goldPricesData} />
         </div>
       </section>
 
-      {/* Testimonials (Real Social Proof Concept) */}
+      {/* Testimonials */}
       <section className={`section ${styles.testimonialSection}`}>
         <div className="container">
           <div className="section-header">
