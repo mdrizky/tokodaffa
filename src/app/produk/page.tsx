@@ -6,17 +6,21 @@ import ProductCard from "@/components/ProductCard";
 import products from "@/data/products.json";
 
 const categories = ["Semua", "cincin", "gelang", "kalung", "anting", "liontin", "batangan"];
-const kadarOptions = ["Semua", "24K", "22K", "18K", "16K"];
+const kadarOptions = ["Semua", "24K", "22K", "18K", "16K", "925"];
+const materialOptions = ["Semua", "emas", "perak"];
 
 export default function ProdukPage() {
   const [category, setCategory] = useState("Semua");
   const [kadar, setKadar] = useState("Semua");
+  const [material, setMaterial] = useState("Semua");
   const [sortBy, setSortBy] = useState("featured");
 
   const filtered = useMemo(() => {
     let result = [...products];
     if (category !== "Semua") result = result.filter((p) => p.category === category);
     if (kadar !== "Semua") result = result.filter((p) => p.kadar === kadar);
+    if (material !== "Semua") result = result.filter((p) => p.material === material);
+    
     switch (sortBy) {
       case "price-asc": result.sort((a, b) => a.price - b.price); break;
       case "price-desc": result.sort((a, b) => b.price - a.price); break;
@@ -24,7 +28,7 @@ export default function ProdukPage() {
       default: result.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0)); break;
     }
     return result;
-  }, [category, kadar, sortBy]);
+  }, [category, kadar, material, sortBy]);
 
   return (
     <div className={styles.page}>
@@ -44,6 +48,16 @@ export default function ProdukPage() {
               {categories.map((c) => (
                 <button key={c} className={`${styles.filterBtn} ${category === c ? styles.filterActive : ""}`} onClick={() => setCategory(c)}>
                   {c === "Semua" ? "Semua" : c.charAt(0).toUpperCase() + c.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>Material</label>
+            <div className={styles.filterBtns}>
+              {materialOptions.map((m) => (
+                <button key={m} className={`${styles.filterBtn} ${material === m ? styles.filterActive : ""}`} onClick={() => setMaterial(m)}>
+                  {m.toUpperCase()}
                 </button>
               ))}
             </div>

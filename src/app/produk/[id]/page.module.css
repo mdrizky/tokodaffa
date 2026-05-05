@@ -110,10 +110,31 @@
   margin-bottom: 12px;
 }
 
-.priceNote {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-style: italic;
+.priceBreakdown {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-gold);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.breakdownRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.urgencyAlert {
+  margin-top: 16px;
+  padding: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--accent-danger);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .specsBox {
@@ -162,6 +183,8 @@
   width: 100%;
   padding: 16px !important;
   font-size: 1.1rem !important;
+  display: flex;
+  justify-content: center;
 }
 
 .guarantee {

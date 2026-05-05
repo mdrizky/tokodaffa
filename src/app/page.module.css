@@ -58,7 +58,7 @@
 }
 
 .heroTitle {
-  font-size: clamp(2.5rem, 5.5vw, 4rem);
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
   line-height: 1.15;
 }
 
@@ -145,6 +145,30 @@
   z-index: 10;
 }
 
+.categoryWrap {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.catBox {
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.catBox:hover {
+  background: var(--gold-muted);
+  color: var(--gold-primary);
+  border-color: var(--border-gold);
+  transform: translateY(-2px);
+}
+
 .productsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -180,12 +204,34 @@
   font-size: 0.9rem;
 }
 
+.servicesBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(212, 175, 55, 0.1));
+  border: 1px solid var(--border-gold);
+  padding: 48px;
+}
+
+.sbContent h3 {
+  font-size: 2rem;
+  color: var(--gold-primary);
+  margin-bottom: 12px;
+}
+
+.sbContent p {
+  max-width: 600px;
+  font-size: 1.1rem;
+}
+
 .testimonialSection {
   background: linear-gradient(180deg, transparent, rgba(26, 26, 46, 0.5), transparent);
 }
 
 .testimonialCard {
   padding: 28px;
+  display: flex;
+  flex-direction: column;
 }
 
 .stars {
@@ -200,20 +246,27 @@
   font-style: italic;
   line-height: 1.7;
   color: var(--text-secondary);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.testimonialFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
 }
 
 .testimonialAuthor {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--text-primary);
-  font-weight: 500;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
   display: flex;
@@ -255,6 +308,8 @@
 
 @media (max-width: 1024px) {
   .productsGrid { grid-template-columns: repeat(2, 1fr); }
+  .servicesBanner { flex-direction: column; text-align: center; gap: 32px; }
+  .sbContent p { margin: 0 auto; }
 }
 
 @media (max-width: 768px) {
@@ -267,4 +322,5 @@
   .ctaCard { padding: 40px 24px; }
   .ctaButtons { flex-direction: column; align-items: center; }
   .heroBadge { margin: 0 auto; }
+  .servicesBanner { padding: 32px 20px; }
 }

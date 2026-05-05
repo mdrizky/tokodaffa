@@ -1,0 +1,217 @@
+.adminPage {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-surface);
+  font-family: var(--font-body);
+}
+
+.sidebar {
+  width: 250px;
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  padding: 24px;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.brand span {
+  color: var(--gold-primary);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  gap: 8px;
+  flex: 1;
+}
+
+.nav a {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.nav a:hover, .nav a.active {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold-primary);
+}
+
+.logout {
+  padding: 24px;
+  color: var(--accent-danger);
+  font-weight: 600;
+  border-top: 1px solid var(--border-subtle);
+  cursor: pointer;
+}
+
+.main {
+  flex: 1;
+  padding: 32px 48px;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+}
+
+.adminProfile {
+  background: rgba(255,255,255,0.05);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  font-weight: 500;
+}
+
+.warningBanner {
+  background: rgba(212, 175, 55, 0.1);
+  border-left: 4px solid var(--gold-primary);
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  margin-bottom: 32px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.warningBanner strong {
+  color: var(--gold-primary);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.statCard {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.statCard h3 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.panel {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.panelHeader h2 {
+  font-size: 1.2rem;
+}
+
+.btnMock {
+  background: var(--gold-primary);
+  color: #0a0a0f;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.inputGroup input {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border-subtle);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+}
+
+.mockTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mockTable th {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.mockTable td {
+  padding: 16px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .statsGrid { grid-template-columns: 1fr 1fr; }
+  .contentGrid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .adminPage { flex-direction: column; }
+  .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-subtle); }
+  .nav { flex-direction: row; overflow-x: auto; padding: 16px; }
+  .nav a { white-space: nowrap; }
+  .main { padding: 24px 16px; }
+  .statsGrid { grid-template-columns: 1fr; }
+}

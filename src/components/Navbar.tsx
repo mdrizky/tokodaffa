@@ -7,11 +7,11 @@ import styles from "./Navbar.module.css";
 
 const navLinks = [
   { href: "/", label: "Beranda" },
-  { href: "/produk", label: "Produk" },
+  { href: "/produk", label: "Katalog" },
   { href: "/harga-emas", label: "Harga Emas" },
   { href: "/kalkulator", label: "Kalkulator" },
+  { href: "/layanan", label: "Layanan & Custom" },
   { href: "/tentang", label: "Tentang" },
-  { href: "/kontak", label: "Kontak" },
 ];
 
 export default function Navbar() {

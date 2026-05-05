@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard";
 import PriceTable from "@/components/PriceTable";
@@ -9,16 +10,16 @@ import storeInfo from "@/data/store-info.json";
 const featuredProducts = products.filter((p) => p.featured).slice(0, 6);
 
 const trustItems = [
-  { icon: "🏅", title: "Emas Bersertifikat", desc: "Setiap produk dilengkapi sertifikat keaslian resmi" },
-  { icon: "💰", title: "Harga Transparan", desc: "Harga berdasarkan harga pasar emas terkini" },
-  { icon: "🔄", title: "Garansi Buyback", desc: "Jaminan beli kembali 100% kapan saja" },
-  { icon: "⚖️", title: "Timbangan Presisi", desc: "Timbangan digital tersertifikasi metrologi" },
+  { icon: "🏅", title: "Emas Bersertifikat Asli", desc: "Setiap produk dilengkapi surat & sertifikat keaslian resmi" },
+  { icon: "💰", title: "Transparansi Harga", desc: "Harga update tiap hari + Rincian ongkos tukang jelas" },
+  { icon: "🔄", title: "Garansi Buyback 100%", desc: "Jaminan beli kembali dengan potongan sesuai harga pasar" },
+  { icon: "⚖️", title: "Timbangan Presisi", desc: "Timbangan digital tersertifikasi badan metrologi" },
 ];
 
 const testimonials = [
-  { name: "Ibu Sarah", text: "Sudah berlangganan 5 tahun. Emas selalu berkualitas dan harga jujur!", rating: 5 },
-  { name: "Pak Ahmad", text: "Buyback mudah dan cepat. TokoDaffa memang terpercaya.", rating: 5 },
-  { name: "Dina Pratiwi", text: "Koleksi cincinnya bagus-bagus, desain modern dan kualitas premium.", rating: 5 },
+  { name: "Ibu Sarah", text: "Sudah langganan sejak 2010. Beli cincin di sini selalu puas, modelnya up to date dan potongannya jujur kalau dijual lagi.", rating: 5, time: "2 hari yang lalu" },
+  { name: "Pak Ahmad", text: "Buyback sangat gampang dan cepat cair. TokoDaffa memang terpercaya. Nggak nyesel investasi emas batangan di sini.", rating: 5, time: "1 minggu yang lalu" },
+  { name: "Dina Pratiwi", text: "Custom cincin nikah hasilnya rapi banget! Sesuai ekspektasi dan harganya masuk akal. Pelayanannya ramah pol.", rating: 5, time: "3 minggu yang lalu" },
 ];
 
 export default function HomePage() {
@@ -40,27 +41,27 @@ export default function HomePage() {
           <div className={styles.heroContent}>
             <div className={styles.heroBadge}>
               <span className={styles.heroBadgeIcon}>◆</span>
-              Dipercaya Sejak {storeInfo.since}
+              Melayani Ribuan Pelanggan Sejak {storeInfo.since}
             </div>
             <h1 className={styles.heroTitle}>
-              <span className="text-gold-gradient">Emas Berkualitas,</span>
-              <br />Harga Terpercaya
+              Jual Beli <span className="text-gold-gradient">Emas & Perak</span> Terpercaya
             </h1>
             <p className={styles.heroDesc}>
-              Kedai emas pilihan Anda dengan koleksi perhiasan premium dan emas batangan berkualitas tinggi.
-              Harga transparan, sertifikat keaslian, dan garansi buyback 100%.
+              Koleksi perhiasan premium, logam mulia, dan layanan custom perhiasan impian Anda. Harga paling jujur, transparan, dan bergaransi.
             </p>
             <div className={styles.heroCtas}>
-              <Link href="/produk" className="btn btn-gold">Lihat Koleksi</Link>
-              <Link href="/harga-emas" className="btn btn-outline">Cek Harga Emas</Link>
+              <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20mau%20konsultasi%20gratis%20soal%20perhiasan`} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
+                Tanya via WhatsApp
+              </a>
+              <Link href="/produk" className="btn btn-gold">Lihat Katalog</Link>
             </div>
           </div>
           <div className={styles.heroVisual}>
             <div className={styles.heroCard}>
               <div className={styles.heroCardInner}>
-                <span className={styles.heroCardIcon}>◆</span>
-                <span className={styles.heroCardTitle}>24K Pure Gold</span>
-                <span className={styles.heroCardSub}>Premium Collection</span>
+                <span className={styles.heroCardIcon}>🏆</span>
+                <span className={styles.heroCardTitle}>100% Original</span>
+                <span className={styles.heroCardSub}>Garansi Uang Kembali</span>
               </div>
             </div>
           </div>
@@ -74,13 +75,26 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Categories Fast Link */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className={styles.categoryWrap}>
+            <Link href="/produk?cat=cincin" className={styles.catBox}>💍 Cincin</Link>
+            <Link href="/produk?cat=gelang" className={styles.catBox}>🔗 Gelang</Link>
+            <Link href="/produk?cat=kalung" className={styles.catBox}>📿 Kalung</Link>
+            <Link href="/produk?cat=batangan" className={styles.catBox}>🪙 Logam Mulia</Link>
+            <Link href="/layanan" className={styles.catBox} style={{ borderColor: 'var(--gold-primary)', color: 'var(--gold-primary)' }}>✨ Custom & Sepuh</Link>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Products */}
       <section className="section">
         <div className="container">
           <div className="section-header">
             <div className="gold-line" />
             <h2>Produk <span className="text-gold-gradient">Unggulan</span></h2>
-            <p>Koleksi perhiasan emas terbaik pilihan kami untuk Anda</p>
+            <p>Koleksi perhiasan emas dan perak terbaik minggu ini. <strong style={{ color: 'var(--accent-danger)' }}>Stok sangat terbatas!</strong></p>
           </div>
           <div className={styles.productsGrid}>
             {featuredProducts.map((product) => (
@@ -88,18 +102,18 @@ export default function HomePage() {
             ))}
           </div>
           <div className={styles.viewAll}>
-            <Link href="/produk" className="btn btn-outline">Lihat Semua Produk →</Link>
+            <Link href="/produk" className="btn btn-outline">Lihat Semua Katalog →</Link>
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* Why Choose Us (Trust Concept) */}
       <section className={`section ${styles.trustSection}`}>
         <div className="container">
           <div className="section-header">
             <div className="gold-line" />
-            <h2>Kenapa Pilih <span className="text-gold-gradient">TokoDaffa</span>?</h2>
-            <p>Kami berkomitmen memberikan yang terbaik untuk pelanggan</p>
+            <h2>Kenapa Wajib Pilih <span className="text-gold-gradient">TokoDaffa</span>?</h2>
+            <p>Rasa aman Anda adalah prioritas utama kami dalam setiap transaksi.</p>
           </div>
           <div className="grid-4">
             {trustItems.map((item, i) => (
@@ -113,33 +127,53 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Calculator Preview */}
+      {/* Services Preview */}
+      <section className="section">
+        <div className="container">
+          <div className={`glass-card ${styles.servicesBanner}`}>
+            <div className={styles.sbContent}>
+              <h3>Punya Model Impian atau Perhiasan Kusam?</h3>
+              <p>Kami melayani <strong>Custom Desain Perhiasan</strong> sesuai request, <strong>Sepuh Emas</strong> agar kembali berkilau, dan <strong>Servis/Perbaikan</strong> ringan hingga berat.</p>
+              <Link href="/layanan" className="btn btn-gold" style={{ marginTop: '16px' }}>Lihat Detail Layanan</Link>
+            </div>
+            <div className={styles.sbVisual}>
+               <span style={{ fontSize: '4rem' }}>🛠️✨</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Calculator */}
       <section className="section">
         <div className="container">
           <div className="section-header">
             <div className="gold-line" />
-            <h2>Kalkulator <span className="text-gold-gradient">Emas</span></h2>
-            <p>Hitung estimasi harga emas sesuai kebutuhan Anda</p>
+            <h2>Simulasi <span className="text-gold-gradient">Investasi & Harga</span></h2>
+            <p>Transparansi 100%. Hitung sendiri estimasi harga emas Anda sebelum membeli.</p>
           </div>
           <Calculator />
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials (Real Social Proof Concept) */}
       <section className={`section ${styles.testimonialSection}`}>
         <div className="container">
           <div className="section-header">
             <div className="gold-line" />
-            <h2>Apa Kata <span className="text-gold-gradient">Pelanggan</span></h2>
+            <h2>Testimoni <span className="text-gold-gradient">Real Pelanggan</span></h2>
+            <p>Ribuan transaksi berhasil dan pelanggan yang puas.</p>
           </div>
           <div className="grid-3">
             {testimonials.map((t, i) => (
               <div key={i} className={`glass-card ${styles.testimonialCard}`}>
                 <div className={styles.stars}>{"★".repeat(t.rating)}</div>
                 <p className={styles.testimonialText}>&ldquo;{t.text}&rdquo;</p>
-                <div className={styles.testimonialAuthor}>
-                  <div className={styles.avatar}>{t.name[0]}</div>
-                  <span>{t.name}</span>
+                <div className={styles.testimonialFooter}>
+                  <div className={styles.testimonialAuthor}>
+                    <div className={styles.avatar}>{t.name[0]}</div>
+                    <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{t.name}</span>
+                  </div>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t.time}</span>
                 </div>
               </div>
             ))}
@@ -147,15 +181,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Strong CTA Action */}
       <section className={styles.ctaSection}>
         <div className="container">
           <div className={styles.ctaCard}>
-            <h2>Tertarik dengan Koleksi Kami?</h2>
-            <p>Hubungi kami sekarang untuk konsultasi dan pemesanan</p>
+            <h2>Tunggu Apa Lagi? Harga Emas Bisa Berubah Kapan Saja!</h2>
+            <p style={{ maxWidth: '600px', margin: '0 auto 28px' }}>Amankan perhiasan impian Anda sekarang atau konsultasikan kebutuhan investasi logam mulia Anda bersama pakar kami secara gratis.</p>
             <div className={styles.ctaButtons}>
-              <a href={`https://wa.me/${storeInfo.whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">Chat WhatsApp</a>
-              <Link href="/kontak" className="btn btn-outline">Lihat Kontak</Link>
+              <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20mau%20tanya-tanya%20dulu%20boleh?`} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp" style={{ fontSize: '1.1rem', padding: '16px 32px' }}>
+                Konsultasi Gratis via WA
+              </a>
             </div>
           </div>
         </div>

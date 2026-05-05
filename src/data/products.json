@@ -9,6 +9,7 @@
     "photo": "/products/cincin-24k.jpg",
     "description": "Cincin emas murni 24 karat dengan desain classic elegan. Cocok untuk investasi dan koleksi pribadi. Finishing halus dengan kilau premium.",
     "category": "cincin",
+    "material": "emas",
     "featured": true
   },
   {
@@ -21,6 +22,7 @@
     "photo": "/products/gelang-22k.jpg",
     "description": "Gelang emas 22 karat dengan model rantai Italia yang elegan. Desain timeless yang cocok untuk pria dan wanita.",
     "category": "gelang",
+    "material": "emas",
     "featured": true
   },
   {
@@ -33,30 +35,33 @@
     "photo": "/products/kalung-18k.jpg",
     "description": "Kalung emas 18 karat dengan liontin berbentuk hati. Hadiah sempurna untuk orang tersayang.",
     "category": "kalung",
+    "material": "emas",
     "featured": true
   },
   {
     "id": 4,
-    "name": "Anting Emas Tindik Mutiara",
-    "kadar": "18K",
+    "name": "Anting Perak Permata Zirconia",
+    "kadar": "925",
     "weight": 3.2,
-    "price": 2640000,
+    "price": 450000,
     "stock": 8,
-    "photo": "/products/anting-18k.jpg",
-    "description": "Anting emas 18 karat dengan aksen mutiara asli. Desain minimalis dan modern.",
+    "photo": "/products/anting-perak.jpg",
+    "description": "Anting perak sterling 925 dengan aksen permata zirconia. Desain minimalis dan modern, anti karat.",
     "category": "anting",
+    "material": "perak",
     "featured": false
   },
   {
     "id": 5,
-    "name": "Cincin Emas Ukir Batak",
-    "kadar": "22K",
+    "name": "Cincin Perak Pria Ukir",
+    "kadar": "925",
     "weight": 7.5,
-    "price": 7560000,
+    "price": 650000,
     "stock": 1,
-    "photo": "/products/cincin-ukir-22k.jpg",
-    "description": "Cincin emas 22 karat dengan ukiran motif Batak tradisional. Karya seni tinggi dengan nilai budaya.",
+    "photo": "/products/cincin-perak-pria.jpg",
+    "description": "Cincin perak tebal khusus pria dengan ukiran premium. Elegan dan maskulin.",
     "category": "cincin",
+    "material": "perak",
     "featured": true
   },
   {
@@ -65,10 +70,11 @@
     "kadar": "24K",
     "weight": 15.0,
     "price": 16500000,
-    "stock": 2,
+    "stock": 0,
     "photo": "/products/bangle-24k.jpg",
     "description": "Gelang bangle emas murni 24 karat. Investasi emas dalam bentuk perhiasan mewah.",
     "category": "gelang",
+    "material": "emas",
     "featured": true
   },
   {
@@ -81,6 +87,7 @@
     "photo": "/products/kalung-figaro-22k.jpg",
     "description": "Kalung emas 22 karat dengan model rantai Figaro yang kuat dan elegan. Cocok untuk pria.",
     "category": "kalung",
+    "material": "emas",
     "featured": false
   },
   {
@@ -93,18 +100,20 @@
     "photo": "/products/wedding-ring-18k.jpg",
     "description": "Cincin emas 18 karat spesial untuk pernikahan. Tersedia custom ukiran nama.",
     "category": "cincin",
+    "material": "emas",
     "featured": true
   },
   {
     "id": 9,
-    "name": "Anting Emas Gantung Bunga",
-    "kadar": "16K",
-    "weight": 2.5,
-    "price": 1832500,
+    "name": "Kalung Perak Liontin Salib",
+    "kadar": "925",
+    "weight": 5.5,
+    "price": 550000,
     "stock": 6,
-    "photo": "/products/anting-bunga-16k.jpg",
-    "description": "Anting emas 16 karat dengan desain bunga gantung. Ringan dan nyaman dipakai sehari-hari.",
-    "category": "anting",
+    "photo": "/products/kalung-salib-perak.jpg",
+    "description": "Kalung perak 925 dengan liontin salib minimalis. Cocok dipakai sehari-hari.",
+    "category": "kalung",
+    "material": "perak",
     "featured": false
   },
   {
@@ -117,6 +126,7 @@
     "photo": "/products/liontin-kaligrafi-22k.jpg",
     "description": "Liontin emas 22 karat dengan ukiran kaligrafi Arab. Bernilai seni dan spiritual tinggi.",
     "category": "liontin",
+    "material": "emas",
     "featured": false
   },
   {
@@ -129,6 +139,7 @@
     "photo": "/products/batangan-10g.jpg",
     "description": "Emas batangan murni 24 karat berat 10 gram. Investasi terbaik dengan sertifikat keaslian.",
     "category": "batangan",
+    "material": "emas",
     "featured": true
   },
   {
@@ -141,6 +152,7 @@
     "photo": "/products/batangan-5g.jpg",
     "description": "Emas batangan murni 24 karat berat 5 gram. Pilihan investasi terjangkau.",
     "category": "batangan",
+    "material": "emas",
     "featured": false
   }
 ]
