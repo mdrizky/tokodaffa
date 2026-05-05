@@ -1,0 +1,98 @@
+.page {
+  padding-top: var(--navbar-height);
+}
+
+.header {
+  text-align: center;
+  padding: 60px 0 40px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+}
+
+.header h1 { margin-bottom: 12px; }
+.header p { color: var(--text-muted); font-size: 1.05rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.infoCard {
+  padding: 40px;
+}
+
+.infoCard h3 {
+  color: var(--gold-primary);
+  margin-bottom: 32px;
+  font-size: 1.5rem;
+}
+
+.infoItem {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.infoItem:last-child {
+  margin-bottom: 0;
+}
+
+.icon {
+  font-size: 1.5rem;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.infoItem h4 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.infoItem p, .infoItem a {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.infoItem a:hover {
+  color: var(--gold-primary);
+}
+
+.btnWa {
+  margin-top: 12px;
+  font-size: 0.9rem !important;
+  padding: 10px 20px !important;
+}
+
+.hoursList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hoursList li {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  gap: 20px;
+}
+
+.map {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  min-height: 500px;
+}
+
+@media (max-width: 992px) {
+  .grid { grid-template-columns: 1fr; }
+  .map { min-height: 400px; }
+}

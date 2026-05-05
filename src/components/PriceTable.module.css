@@ -1,0 +1,138 @@
+.tableWrap {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.7));
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-gold);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--gold-primary);
+}
+
+.date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.priceCard {
+  text-align: center;
+  padding: 24px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-normal);
+}
+
+.priceCard:hover {
+  border-color: var(--border-gold);
+  background: var(--gold-muted);
+  transform: translateY(-2px);
+}
+
+.kadarBadge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
+  color: #0a0a0f;
+  padding: 4px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+}
+
+.priceValue {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.perGram {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.change {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.up {
+  color: var(--accent-success);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.down {
+  color: var(--accent-danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.stable {
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footerNote {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.margin {
+  font-size: 0.8rem;
+  color: var(--gold-dark);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tableWrap {
+    padding: 20px;
+  }
+
+  .priceValue {
+    font-size: 1.1rem;
+  }
+}

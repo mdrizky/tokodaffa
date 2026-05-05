@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gold Shop Admin Dashboard v1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9d406",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#121212",
+                        "navy-accent": "#1a1a2e",
+                        "charcoal": "#1e1e1e",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(249, 212, 6, 0.1);
+        }
+        .gold-sparkle {
+            background-image: radial-gradient(circle, rgba(249, 212, 6, 0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex">
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-background-light dark:bg-navy-accent border-r border-slate-200 dark:border-white/5 flex flex-col z-50">
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">account_balance</span>
+</div>
+<div>
+<h1 class="text-lg font-bold tracking-tight">Aura Gold</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">Premium Management</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-background-dark font-bold" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+<span>Gold Prices</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">receipt_long</span>
+<span>Transactions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+<span>Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">security</span>
+<span>Security</span>
+</a>
+</nav>
+<div class="p-4 border-t border-white/5 mt-auto">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 p-8 overflow-y-auto">
+<!-- Welcome Banner -->
+<header class="flex justify-between items-end mb-8 gold-sparkle rounded-xl p-8 glass-card border-primary/20 bg-gradient-to-r from-navy-accent to-background-dark">
+<div class="flex flex-col gap-2">
+<h2 class="text-4xl font-black text-white tracking-tight">Good Morning, Admin</h2>
+<p class="text-slate-400 text-lg">The gold market is up <span class="text-primary font-bold">+1.2%</span> today.</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-background-dark px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-primary/20">
+                View Market Reports
+            </button>
+</header>
+<!-- Live Gold Prices -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 size-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all"></div>
+<p class="text-slate-400 font-medium">24K Gold</p>
+<p class="text-2xl font-bold text-white tracking-tight">$65.40/g</p>
+<div class="flex items-center gap-1 text-emerald-400 text-sm font-bold">
+<span class="material-symbols-outlined text-sm">arrow_upward</span>
+                    1.2%
+                </div>
+</div>
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2 relative overflow-hidden group">
+<p class="text-slate-400 font-medium">22K Gold</p>
+<p class="text-2xl font-bold text-white tracking-tight">$60.15/g</p>
+<div class="flex items-center gap-1 text-rose-400 text-sm font-bold">
+<span class="material-symbols-outlined text-sm">arrow_downward</span>
+                    0.5%
+                </div>
+</div>
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2 relative overflow-hidden group">
+<p class="text-slate-400 font-medium">18K Gold</p>
+<p class="text-2xl font-bold text-white tracking-tight">$49.20/g</p>
+<div class="flex items-center gap-1 text-emerald-400 text-sm font-bold">
+<span class="material-symbols-outlined text-sm">arrow_upward</span>
+                    0.8%
+                </div>
+</div>
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2 relative overflow-hidden group">
+<p class="text-slate-400 font-medium">16K Gold</p>
+<p class="text-2xl font-bold text-white tracking-tight">$42.80/g</p>
+<div class="flex items-center gap-1 text-emerald-400 text-sm font-bold">
+<span class="material-symbols-outlined text-sm">arrow_upward</span>
+                    0.3%
+                </div>
+</div>
+</section>
+<!-- Charts & Stats -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Large Chart -->
+<div class="lg:col-span-2 glass-card p-8 rounded-xl flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-slate-400 font-medium">Sales Trends (Last 7 Days)</p>
+<h3 class="text-4xl font-bold text-white tracking-tight mt-1">$482,900</h3>
+<p class="text-emerald-400 text-sm font-bold mt-1">+15.4% from last week</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-lg bg-white/5 text-xs font-bold hover:bg-primary hover:text-background-dark transition-all">WEEKLY</button>
+<button class="px-4 py-2 rounded-lg bg-white/5 text-xs font-bold hover:bg-primary hover:text-background-dark transition-all">MONTHLY</button>
+</div>
+</div>
+<!-- Custom SVG Chart -->
+<div class="w-full h-64 relative mt-4">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 800 200">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f9d406" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#f9d406" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Area path -->
+<path d="M0,180 C100,160 150,40 200,60 C250,80 300,140 400,130 C500,120 600,20 700,50 L800,20 L800,200 L0,200 Z" fill="url(#chartGradient)"></path>
+<!-- Line path -->
+<path d="M0,180 C100,160 150,40 200,60 C250,80 300,140 400,130 C500,120 600,20 700,50 L800,20" fill="none" stroke="#f9d406" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<div class="flex justify-between mt-4 text-xs font-bold text-slate-500 tracking-widest uppercase">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+</div>
+<!-- Stats Grid Column -->
+<div class="flex flex-col gap-6">
+<div class="glass-card p-6 rounded-xl flex justify-between items-center border-l-4 border-primary">
+<div>
+<p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Transactions</p>
+<p class="text-2xl font-bold text-white mt-1">1,250</p>
+</div>
+<div class="bg-primary/10 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl flex justify-between items-center border-l-4 border-primary">
+<div>
+<p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Weight (Grams)</p>
+<p class="text-2xl font-bold text-white mt-1">12,482g</p>
+</div>
+<div class="bg-primary/10 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">weight</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl flex justify-between items-center border-l-4 border-primary">
+<div>
+<p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Total Revenue</p>
+<p class="text-2xl font-bold text-white mt-1">$782,420</p>
+</div>
+<div class="bg-primary/10 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl flex justify-between items-center border-l-4 border-primary">
+<div>
+<p class="text-slate-400 text-xs font-bold uppercase tracking-widest">Tool Fees</p>
+<p class="text-2xl font-bold text-white mt-1">$1,150</p>
+</div>
+<div class="bg-primary/10 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">handyman</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Transactions Table -->
+<section class="glass-card rounded-xl overflow-hidden mb-20">
+<div class="p-6 border-b border-white/5 flex justify-between items-center">
+<h3 class="text-xl font-bold text-white">Recent Transactions</h3>
+<button class="text-primary text-sm font-bold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-white/5 text-slate-400 text-xs font-bold uppercase tracking-widest">
+<tr>
+<th class="px-6 py-4">Invoice No</th>
+<th class="px-6 py-4">Customer</th>
+<th class="px-6 py-4">Karat</th>
+<th class="px-6 py-4">Weight</th>
+<th class="px-6 py-4 text-right">Total</th>
+<th class="px-6 py-4">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4 font-mono text-primary">#G-88291</td>
+<td class="px-6 py-4 text-white font-medium">Sophia Sterling</td>
+<td class="px-6 py-4">24K</td>
+<td class="px-6 py-4">12.5g</td>
+<td class="px-6 py-4 text-right font-bold text-white">$817.50</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold">Completed</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 font-mono text-primary">#G-88290</td>
+<td class="px-6 py-4 text-white font-medium">Marcus Golding</td>
+<td class="px-6 py-4">18K</td>
+<td class="px-6 py-4">42.0g</td>
+<td class="px-6 py-4 text-right font-bold text-white">$2,066.40</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold">Completed</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 font-mono text-primary">#G-88289</td>
+<td class="px-6 py-4 text-white font-medium">Elena Rivera</td>
+<td class="px-6 py-4">22K</td>
+<td class="px-6 py-4">8.2g</td>
+<td class="px-6 py-4 text-right font-bold text-white">$493.23</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">Processing</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 font-mono text-primary">#G-88288</td>
+<td class="px-6 py-4 text-white font-medium">Julian Vance</td>
+<td class="px-6 py-4">24K</td>
+<td class="px-6 py-4">150.0g</td>
+<td class="px-6 py-4 text-right font-bold text-white">$9,810.00</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold">Completed</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 font-mono text-primary">#G-88287</td>
+<td class="px-6 py-4 text-white font-medium">Serena Bloom</td>
+<td class="px-6 py-4">18K</td>
+<td class="px-6 py-4">5.5g</td>
+<td class="px-6 py-4 text-right font-bold text-white">$270.60</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-slate-500/10 text-slate-400 text-xs font-bold">Cancelled</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-8 right-8 size-16 bg-primary rounded-full flex items-center justify-center text-background-dark shadow-2xl shadow-primary/40 hover:scale-110 transition-transform active:scale-95 group z-50">
+<span class="material-symbols-outlined text-3xl font-bold">add</span>
+<div class="absolute right-20 bg-background-dark px-4 py-2 rounded-lg text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            New Invoice
+        </div>
+</button>
+</body></html>

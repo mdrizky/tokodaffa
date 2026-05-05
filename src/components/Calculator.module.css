@@ -1,0 +1,170 @@
+.calculator {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.7));
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-gold);
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kadarGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.kadarBtn {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+}
+
+.kadarBtn:hover {
+  border-color: var(--border-gold);
+  color: var(--gold-primary);
+  background: var(--gold-muted);
+}
+
+.kadarActive {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary)) !important;
+  color: #0a0a0f !important;
+  border-color: var(--gold-primary) !important;
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0 16px;
+  transition: border-color var(--transition-fast);
+}
+
+.inputWrap:focus-within {
+  border-color: var(--gold-primary);
+}
+
+.input {
+  flex: 1;
+  padding: 14px 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.inputSuffix, .inputPrefix {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.result {
+  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.resultHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gold-primary);
+  margin-bottom: 24px;
+}
+
+.resultIcon {
+  font-size: 1rem;
+  animation: sparkle 3s ease infinite;
+}
+
+.breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.breakdownRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-gold);
+  margin: 4px 0;
+}
+
+.totalRow {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  padding-top: 4px;
+}
+
+.totalPrice {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--gold-primary);
+}
+
+.waBtn {
+  margin-top: 20px;
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .calculator {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .kadarGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .totalPrice {
+    font-size: 1.2rem;
+  }
+}

@@ -1,0 +1,76 @@
+.page {
+  padding-top: var(--navbar-height);
+}
+
+.header {
+  text-align: center;
+  padding: 60px 0 40px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+}
+
+.header h1 { margin-bottom: 12px; }
+.header p { color: var(--text-muted); font-size: 1.05rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 60px;
+}
+
+.content h2 {
+  color: var(--gold-primary);
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.content p {
+  margin-bottom: 16px;
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list li {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.list strong {
+  color: var(--gold-primary);
+}
+
+.certCard {
+  padding: 32px;
+}
+
+.certCard h3 {
+  margin-bottom: 24px;
+  color: var(--gold-primary);
+}
+
+.certList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.certList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text-primary);
+}
+
+.checkIcon {
+  color: var(--accent-success);
+  font-weight: bold;
+}
+
+@media (max-width: 992px) {
+  .grid { grid-template-columns: 1fr; }
+}

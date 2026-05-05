@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Invoice Form v2 - GoldShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#f9d406",
+                "background-light": "#f8f8f5",
+                "background-dark": "#0b0e14",
+                "navy-card": "#161b22",
+                "gold-border": "#55513a",
+              },
+              fontFamily: {
+                "display": ["Manrope", "sans-serif"],
+                "mono": ["JetBrains Mono", "monospace"]
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .digital-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="flex flex-col h-screen">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-navy-card px-10 py-3 bg-white dark:bg-background-dark z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">GoldShop <span class="text-primary font-black">PRO</span></h2>
+</div>
+<nav class="flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-white text-sm font-bold border-b-2 border-primary pb-1" href="#">Invoices</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Inventory</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full rounded-xl bg-slate-100 dark:bg-navy-card border-none text-sm pl-10 focus:ring-1 focus:ring-primary text-white" placeholder="Search invoices..."/>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-xl bg-slate-100 dark:bg-navy-card hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-white">notifications</span>
+</button>
+<button class="p-2 rounded-xl bg-slate-100 dark:bg-navy-card hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-white">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVhbfKuQUtlaRh4QCv2Po1WQ3wBxkNtzTEHYdEfFwuEThLpLo18J5IPgFqrBobDlrmx-H00Uzh-LENF3j2zYTm5F5yiy47Z3nL0r5JFYsBVA4S99whtYNkXVqMCgrisrgmDRKgq1Nn53PdPKbnaHAw1SSQNnhaAR9RXFS9haRYR-Gl4pkbQOddFG5gyia6rdBIf_jFP447RbAbmj8A0KwpMn4hIk4f4pFNKZBvE-_GhRPIZ-VtH5QNmXapy_nIhLxzLnZz4lDTm9_G");'></div>
+</div>
+</header>
+<!-- Main Split-Screen Layout -->
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Panel: Data Entry (60%) -->
+<section class="w-3/5 overflow-y-auto p-8 border-r border-slate-200 dark:border-navy-card custom-scrollbar">
+<div class="max-w-3xl mx-auto space-y-8">
+<!-- Header -->
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-white text-4xl font-black tracking-tight">Generate Invoice</h1>
+<p class="text-slate-400 mt-1">New gold sale transaction - Terminal #04</p>
+</div>
+<div class="flex bg-navy-card p-1 rounded-lg border border-gold-border/30">
+<button class="px-4 py-2 rounded-md text-xs font-bold bg-primary text-background-dark">TYPE 45K</button>
+<button class="px-4 py-2 rounded-md text-xs font-bold text-slate-400 hover:text-white">TYPE 70K</button>
+</div>
+</div>
+<!-- Customer Section -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 border-b border-gold-border/20 pb-2">
+<span class="material-symbols-outlined text-primary text-xl">person_add</span>
+<h2 class="text-white text-xl font-bold">Customer Information</h2>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-slate-300 text-sm font-medium">Customer Full Name</label>
+<input class="w-full rounded-xl border border-gold-border/40 bg-navy-card text-white focus:ring-1 focus:ring-primary p-3.5" placeholder="Johnathan Doe" value="Ahmad Al-Farsi"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-300 text-sm font-medium">Phone Number</label>
+<input class="w-full rounded-xl border border-gold-border/40 bg-navy-card text-white focus:ring-1 focus:ring-primary p-3.5" placeholder="+966 50 000 0000" value="+971 52 881 9002"/>
+</div>
+</div>
+</div>
+<!-- Product Section -->
+<div class="space-y-6">
+<div class="flex items-center gap-2 border-b border-gold-border/20 pb-2">
+<span class="material-symbols-outlined text-primary text-xl">diamond</span>
+<h2 class="text-white text-xl font-bold">Product Details</h2>
+</div>
+<div class="bg-navy-card/50 p-6 rounded-2xl border border-gold-border/20 space-y-6">
+<div class="grid grid-cols-3 gap-4">
+<div class="col-span-2 flex flex-col gap-2">
+<label class="text-slate-300 text-sm font-medium">Item Description</label>
+<input class="w-full rounded-xl border border-gold-border/40 bg-background-dark text-white focus:ring-1 focus:ring-primary p-3.5" placeholder="e.g. 21K Gold Chain" value="Handcrafted Wedding Band"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-300 text-sm font-medium">Weight (Grams)</label>
+<div class="relative">
+<input class="w-full rounded-xl border border-gold-border/40 bg-background-dark text-white focus:ring-1 focus:ring-primary p-3.5" placeholder="0.00" type="number" value="12.45"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">g</span>
+</div>
+</div>
+</div>
+<!-- Karat Picker -->
+<div class="space-y-3">
+<label class="text-slate-300 text-sm font-medium">Select Purity (Karat)</label>
+<div class="grid grid-cols-4 gap-3">
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-700 bg-background-dark text-slate-400 hover:border-primary/50 transition-all">
+<span class="text-lg font-black">18K</span>
+<span class="text-[10px] uppercase tracking-widest opacity-60">75.0% Gold</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-primary bg-primary/10 text-primary shadow-[0_0_15px_rgba(249,212,6,0.1)]">
+<span class="text-lg font-black">21K</span>
+<span class="text-[10px] uppercase tracking-widest opacity-80">87.5% Gold</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-700 bg-background-dark text-slate-400 hover:border-primary/50 transition-all">
+<span class="text-lg font-black">22K</span>
+<span class="text-[10px] uppercase tracking-widest opacity-60">91.6% Gold</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-700 bg-background-dark text-slate-400 hover:border-primary/50 transition-all">
+<span class="text-lg font-black">24K</span>
+<span class="text-[10px] uppercase tracking-widest opacity-60">99.9% Gold</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-slate-300 text-sm font-medium">Daily Market Rate (per g)</label>
+<div class="flex items-center bg-background-dark border border-gold-border/40 rounded-xl px-4 py-3.5">
+<span class="text-primary font-bold mr-2">$</span>
+<input class="w-full bg-transparent border-none p-0 text-white focus:ring-0" value="238.45"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-300 text-sm font-medium">Labor Charge (per g)</label>
+<div class="flex items-center bg-background-dark border border-gold-border/40 rounded-xl px-4 py-3.5">
+<span class="text-primary font-bold mr-2">$</span>
+<input class="w-full bg-transparent border-none p-0 text-white focus:ring-0" value="15.00"/>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-4 rounded-xl border-2 border-dashed border-gold-border/40 text-slate-400 hover:text-primary hover:border-primary/50 flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-bold">Add Another Item</span>
+</button>
+</div>
+<!-- Additional Charges -->
+<div class="p-6 bg-primary/5 border border-primary/20 rounded-2xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-primary/20 rounded-full text-primary">
+<span class="material-symbols-outlined">percent</span>
+</div>
+<div>
+<p class="text-white font-bold">Standard VAT Apply</p>
+<p class="text-slate-400 text-xs">A 5% value added tax is applied to the total sale.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-slate-300 font-medium">Apply Tax</span>
+<div class="w-12 h-6 bg-primary rounded-full relative flex items-center px-1">
+<div class="size-4 bg-background-dark rounded-full translate-x-6"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Live Receipt Preview (40%) -->
+<section class="w-2/5 bg-slate-100 dark:bg-navy-card p-10 flex justify-center overflow-y-auto">
+<div class="w-full max-w-sm">
+<div class="flex items-center justify-center gap-2 mb-6">
+<span class="material-symbols-outlined text-slate-400">visibility</span>
+<span class="text-slate-400 text-sm font-bold uppercase tracking-widest">Live Receipt Preview</span>
+</div>
+<!-- Virtual Thermal Receipt -->
+<div class="bg-white text-slate-800 shadow-2xl rounded-sm p-8 min-h-[600px] flex flex-col relative overflow-hidden">
+<!-- Serrated Edge Top -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-[radial-gradient(circle,transparent_40%,#eee_41%)] bg-[length:10px_10px] bg-repeat-x"></div>
+<!-- Receipt Header -->
+<div class="text-center space-y-1 mb-8">
+<h3 class="text-2xl font-black uppercase tracking-tighter">GoldShop Pro</h3>
+<p class="text-[10px] text-slate-500 uppercase">Jewellery District, Dubai, UAE</p>
+<p class="text-[10px] text-slate-500">VAT REG: 100234567890003</p>
+<div class="border-b border-dashed border-slate-300 my-4"></div>
+</div>
+<!-- Info Grid -->
+<div class="text-[11px] space-y-2 mb-6 uppercase font-bold">
+<div class="flex justify-between">
+<span class="text-slate-400">Invoice:</span>
+<span>#GSP-2024-0892</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-400">Date:</span>
+<span>24 May 2024 14:32</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-400">Customer:</span>
+<span>Ahmad Al-Farsi</span>
+</div>
+</div>
+<div class="border-b-2 border-slate-900 mb-4"></div>
+<!-- Itemized List -->
+<div class="flex-1">
+<div class="flex justify-between text-[10px] font-black uppercase mb-2">
+<span class="w-1/2">Description</span>
+<span class="w-1/4 text-right">Wt/K</span>
+<span class="w-1/4 text-right">Amount</span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between text-[11px] leading-tight">
+<div class="w-1/2">
+<p class="font-bold">Wedding Band</p>
+<p class="text-[9px] text-slate-500">Handcrafted Polished Finish</p>
+</div>
+<span class="w-1/4 text-right font-mono">12.45g<br/>21K</span>
+<span class="w-1/4 text-right font-mono">$3,155.07</span>
+</div>
+</div>
+</div>
+<!-- Totals Section -->
+<div class="mt-8 space-y-2 border-t border-dashed border-slate-300 pt-4">
+<div class="flex justify-between text-xs font-bold">
+<span>Subtotal</span>
+<span class="font-mono">$3,155.07</span>
+</div>
+<div class="flex justify-between text-xs font-bold">
+<span>Labor Fees</span>
+<span class="font-mono">$186.75</span>
+</div>
+<div class="flex justify-between text-xs font-bold">
+<span>VAT (5%)</span>
+<span class="font-mono">$167.09</span>
+</div>
+<div class="bg-slate-900 text-white p-4 mt-4 rounded-lg flex flex-col items-center">
+<span class="text-[10px] uppercase font-bold text-primary mb-1">Total Payable</span>
+<span class="text-3xl font-black digital-font tracking-tight">$3,508.91</span>
+</div>
+</div>
+<!-- Footer QR -->
+<div class="mt-8 flex flex-col items-center gap-4">
+<div class="size-20 bg-slate-100 flex items-center justify-center border border-slate-200" data-alt="QR Code for invoice verification" data-location="QR Code" style="">
+<span class="material-symbols-outlined text-4xl text-slate-300">qr_code_2</span>
+</div>
+<p class="text-[9px] text-slate-400 text-center uppercase tracking-widest">Scan to verify authenticity<br/>Thank you for your business!</p>
+</div>
+<!-- Serrated Edge Bottom -->
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-[radial-gradient(circle,transparent_40%,#eee_41%)] bg-[length:10px_10px] bg-repeat-x rotate-180"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Fixed Action Footer -->
+<footer class="h-20 border-t border-slate-200 dark:border-navy-card bg-white dark:bg-background-dark flex items-center justify-between px-10 shadow-2xl">
+<div class="flex items-center gap-4">
+<div class="flex flex-col">
+<span class="text-slate-400 text-[10px] uppercase font-bold tracking-wider leading-none">Status</span>
+<span class="flex items-center gap-1.5 text-emerald-400 text-sm font-bold">
+<span class="size-2 rounded-full bg-emerald-400"></span> Ready to Print
+                    </span>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-navy-card mx-2"></div>
+<div class="flex flex-col">
+<span class="text-slate-400 text-[10px] uppercase font-bold tracking-wider leading-none">Live Total</span>
+<span class="text-white font-mono text-lg font-bold">$3,508.91</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="px-6 h-12 rounded-xl bg-slate-200 dark:bg-navy-card text-slate-700 dark:text-white font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-all">Save Draft</button>
+<button class="px-8 h-12 rounded-xl bg-primary text-background-dark font-black flex items-center gap-2 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined font-bold">print</span>
+                    Print Invoice
+                </button>
+</div>
+</footer>
+</div>
+</body></html>

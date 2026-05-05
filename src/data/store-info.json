@@ -1,0 +1,27 @@
+{
+  "name": "TokoDaffa Gold",
+  "tagline": "Emas Berkualitas, Harga Terpercaya",
+  "description": "Kedai emas terpercaya dengan koleksi perhiasan emas berkualitas tinggi. Menyediakan berbagai pilihan emas murni 24K, 22K, 18K, dan 16K dengan harga kompetitif dan transparan.",
+  "address": "Jl. Pasar Emas No. 88, Medan, Sumatera Utara",
+  "phone": "+6281234567890",
+  "whatsapp": "6281234567890",
+  "email": "info@tokodaffa.com",
+  "operating_hours": {
+    "weekday": "09:00 - 18:00 WIB",
+    "saturday": "09:00 - 17:00 WIB",
+    "sunday": "Tutup"
+  },
+  "social_media": {
+    "instagram": "https://instagram.com/tokodaffagold",
+    "facebook": "https://facebook.com/tokodaffagold",
+    "tiktok": "https://tiktok.com/@tokodaffagold"
+  },
+  "certifications": [
+    "Sertifikat Keaslian Emas",
+    "Garansi Buyback 100%",
+    "Timbangan Tersertifikasi",
+    "Member Asosiasi Pedagang Emas Indonesia"
+  ],
+  "since": 2015,
+  "maps_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.0!2d98.67!3d3.59!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sMedan!5e0!3m2!1sen!2sid!4v1"
+}

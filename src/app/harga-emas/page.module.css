@@ -1,0 +1,12 @@
+.page {
+  padding-top: var(--navbar-height);
+}
+
+.header {
+  text-align: center;
+  padding: 60px 0 40px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+}
+
+.header h1 { margin-bottom: 12px; }
+.header p { color: var(--text-muted); font-size: 1.05rem; }

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gold Shop Admin Dashboard v2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9d406",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#0f0c29",
+                        "card-dark": "#1a173d",
+                        "accent-gold": "#FFD700",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .gold-glow {
+            box-shadow: 0 0 15px rgba(249, 212, 6, 0.15);
+        }
+        .glass-card {
+            background: rgba(26, 23, 61, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(249, 212, 6, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-white/10 px-6 py-3 bg-white/5 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">skillet</span>
+</div>
+<h2 class="text-white text-xl font-extrabold leading-tight tracking-tight">AURUM <span class="text-primary/80 font-light">ADMIN</span></h2>
+</div>
+<label class="hidden md:flex flex-col min-w-64 h-10">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-slate-100 dark:bg-white/5 border border-transparent focus-within:border-primary/50 transition-all">
+<div class="text-slate-400 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 text-sm placeholder:text-slate-500" placeholder="Search transactions, customers, or stock..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-primary/20 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-primary/20 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-white/10 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-white">James Sterling</p>
+<p class="text-[10px] text-primary">Master Admin</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30" data-alt="Admin user profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApB1ehTWBEayNVqouiqRtHzqe307-INEYQzkY5IrR1dk47e10ufS4DoNobDF642Fim2-pOOu2naQKvHTKGL_HzvJSmSg1lvuJ8osKxiT36NVZeZAwkLFq87DYViXGHffLO70NunJkLDWigCx0yMsNtPPFLuccYlTR_Tz8aTfC0IyfSSU5pQFprnK-ubUEbjl3_1wA5_rUzCxyBPF2m1VKySlbaksJbjdXuBeet3JXM9bjs0QgNd-VRepsBy5zY_BDlN-fZWtIBnmwR");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 p-6 max-w-[1600px] mx-auto w-full">
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+<div class="flex flex-col gap-2 rounded-xl p-6 border border-primary/10 bg-white dark:bg-card-dark/40 gold-glow">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Sales Today</p>
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-3xl font-extrabold">$42,500.00</p>
+<div class="flex items-center gap-1 text-emerald-500 text-xs font-bold">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+12.5% vs yesterday</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 border border-primary/10 bg-white dark:bg-card-dark/40 gold-glow">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Karat Inventory</p>
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-3xl font-extrabold">12.55 kg</p>
+<div class="flex items-center gap-1 text-emerald-500 text-xs font-bold">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>+0.2% stock added</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 border border-primary/10 bg-white dark:bg-card-dark/40 gold-glow">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Active Customers</p>
+<span class="material-symbols-outlined text-primary">group</span>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-3xl font-extrabold">1,240</p>
+<div class="flex items-center gap-1 text-rose-500 text-xs font-bold">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+<span>-1.5% from peak</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 border border-primary/10 bg-white dark:bg-card-dark/40 gold-glow">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Net Profit Margin</p>
+<span class="material-symbols-outlined text-primary">monitoring</span>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-3xl font-extrabold">18.4%</p>
+<div class="flex items-center gap-1 text-emerald-500 text-xs font-bold">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>+8.4% optimized</span>
+</div>
+</div>
+</div>
+<!-- Main Content Area: 3 Columns -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left & Middle: Charts and Market Data (8 columns) -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Live Gold Price Card -->
+<div class="glass-card rounded-xl overflow-hidden relative group">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
+<div class="p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-4">
+<div class="size-14 rounded-full bg-primary/20 flex items-center justify-center border border-primary/40">
+<span class="material-symbols-outlined text-primary text-3xl">database</span>
+</div>
+<div>
+<h3 class="text-white text-xl font-bold flex items-center gap-2">
+                                        Live Gold Price <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full uppercase tracking-widest">Live</span>
+</h3>
+<p class="text-slate-400 text-sm">Global Market: XAU/USD (Spot)</p>
+</div>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<div class="text-center">
+<p class="text-[10px] uppercase text-slate-500 font-bold tracking-widest">24K Gold</p>
+<p class="text-primary text-xl font-bold">$2,045.20</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] uppercase text-slate-500 font-bold tracking-widest">22K Gold</p>
+<p class="text-slate-200 text-xl font-bold">$1,875.40</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] uppercase text-slate-500 font-bold tracking-widest">18K Gold</p>
+<p class="text-slate-200 text-xl font-bold">$1,534.10</p>
+</div>
+</div>
+<button class="bg-primary hover:bg-accent-gold text-background-dark px-6 py-2.5 rounded-lg font-bold text-sm transition-all shadow-lg shadow-primary/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+                                Refresh Rates
+                            </button>
+</div>
+</div>
+<!-- Performance Chart -->
+<div class="bg-white dark:bg-card-dark/40 border border-white/5 rounded-xl p-6">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h3 class="text-white text-lg font-bold">Sales Performance</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold text-white">$284,900</span>
+<span class="text-emerald-500 text-sm font-bold">+14% vs last week</span>
+</div>
+</div>
+<div class="flex bg-slate-100 dark:bg-white/5 rounded-lg p-1">
+<button class="px-3 py-1.5 text-xs font-bold rounded-md bg-primary text-background-dark">Weekly</button>
+<button class="px-3 py-1.5 text-xs font-bold rounded-md text-slate-400">Monthly</button>
+<button class="px-3 py-1.5 text-xs font-bold rounded-md text-slate-400">Yearly</button>
+</div>
+</div>
+<div class="h-[300px] w-full relative">
+<!-- SVG Chart Simulation -->
+<svg class="w-full h-full" viewbox="0 0 800 300">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f9d406" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#f9d406" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,250 Q100,220 200,240 T400,100 T600,150 T800,50 L800,300 L0,300 Z" fill="url(#chartGradient)"></path>
+<path d="M0,250 Q100,220 200,240 T400,100 T600,150 T800,50" fill="none" stroke="#f9d406" stroke-linecap="round" stroke-width="4"></path>
+<!-- Data points -->
+<circle cx="200" cy="240" fill="#f9d406" r="4"></circle>
+<circle cx="400" cy="100" fill="#f9d406" r="4"></circle>
+<circle cx="600" cy="150" fill="#f9d406" r="4"></circle>
+<circle cx="800" cy="50" fill="#f9d406" r="4"></circle>
+</svg>
+<div class="flex justify-between mt-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest px-2">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Quick Actions & Recent Activity (4 columns) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Quick Actions -->
+<div class="bg-white dark:bg-card-dark/40 border border-white/5 rounded-xl p-6">
+<h3 class="text-white text-lg font-bold mb-4">Quick Actions</h3>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-all group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">update</span>
+<span class="text-xs font-bold text-white">Update Prices</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">sync_alt</span>
+<span class="text-xs font-bold text-white">Sync API</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">add_box</span>
+<span class="text-xs font-bold text-white">Add Stock</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">description</span>
+<span class="text-xs font-bold text-white">Export Rpt</span>
+</button>
+</div>
+</div>
+<!-- Recent Activity Feed -->
+<div class="bg-white dark:bg-card-dark/40 border border-white/5 rounded-xl p-6 h-[calc(100%-200px)]">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-white text-lg font-bold">Activity Feed</h3>
+<button class="text-primary text-xs font-bold hover:underline">View All</button>
+</div>
+<div class="space-y-6 relative">
+<div class="absolute left-3 top-2 bottom-2 w-[1px] bg-white/10"></div>
+<!-- Activity Item 1 -->
+<div class="flex gap-4 relative">
+<div class="size-6 rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px] text-emerald-400">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">Sale Completed</p>
+<p class="text-xs text-slate-400">Transaction #8812 - 50g 24K Bar</p>
+<p class="text-[10px] text-slate-500 mt-1 uppercase font-bold tracking-tighter">2 mins ago</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-4 relative">
+<div class="size-6 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px] text-primary">priority_high</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">Price Alert</p>
+<p class="text-xs text-slate-400">Gold spiked +0.8% in London market</p>
+<p class="text-[10px] text-slate-500 mt-1 uppercase font-bold tracking-tighter">15 mins ago</p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-4 relative">
+<div class="size-6 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px] text-blue-400">person</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">New VIP Customer</p>
+<p class="text-xs text-slate-400">Sarah Jenkins registered (High Tier)</p>
+<p class="text-[10px] text-slate-500 mt-1 uppercase font-bold tracking-tighter">1 hour ago</p>
+</div>
+</div>
+<!-- Activity Item 4 -->
+<div class="flex gap-4 relative">
+<div class="size-6 rounded-full bg-white/10 border border-white/20 flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px] text-slate-400">inventory</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-white">Inventory Restock</p>
+<p class="text-xs text-slate-400">Added 5kg of 22K raw gold grain</p>
+<p class="text-[10px] text-slate-500 mt-1 uppercase font-bold tracking-tighter">3 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Recent Sales Table -->
+<div class="mt-6 bg-white dark:bg-card-dark/40 border border-white/5 rounded-xl overflow-hidden">
+<div class="p-6 border-b border-white/5 flex justify-between items-center">
+<h3 class="text-white text-lg font-bold">Recent Transactions</h3>
+<div class="flex gap-2">
+<button class="bg-white/5 hover:bg-white/10 text-white text-xs px-4 py-2 rounded-lg font-bold transition-all border border-white/10">Filter</button>
+<button class="bg-white/5 hover:bg-white/10 text-white text-xs px-4 py-2 rounded-lg font-bold transition-all border border-white/10">Download CSV</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-black/20">
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">ID</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Customer</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Item / Karat</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Weight</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Amount</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-400">#TRA-9021</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-800" data-alt="User avatar placeholder"></div>
+<span class="text-sm font-bold text-white">Alexander Rossi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Bullion Bar / 24K</td>
+<td class="px-6 py-4 text-sm text-slate-300">100g</td>
+<td class="px-6 py-4 text-sm font-bold text-primary">$6,450.00</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 rounded-full uppercase tracking-tighter">Completed</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-400">#TRA-9020</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-800" data-alt="User avatar placeholder"></div>
+<span class="text-sm font-bold text-white">Elena Gilbert</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Gold Ring / 18K</td>
+<td class="px-6 py-4 text-sm text-slate-300">12.5g</td>
+<td class="px-6 py-4 text-sm font-bold text-primary">$890.00</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 text-[10px] font-extrabold bg-primary/20 text-primary rounded-full uppercase tracking-tighter">Processing</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-400">#TRA-9019</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-800" data-alt="User avatar placeholder"></div>
+<span class="text-sm font-bold text-white">Marcus Wu</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Custom Chain / 22K</td>
+<td class="px-6 py-4 text-sm text-slate-300">45g</td>
+<td class="px-6 py-4 text-sm font-bold text-primary">$2,820.50</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 rounded-full uppercase tracking-tighter">Completed</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- System Footer Status -->
+<footer class="mt-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center bg-black/40 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>System Online</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">public</span>
+<span>Global API Connected</span>
+</div>
+</div>
+<div class="mt-2 sm:mt-0">
+                Last Price Update: 24 May 2024, 14:02:11 GMT
+            </div>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,144 @@
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 64px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 48px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoIcon {
+  color: var(--gold-primary);
+}
+
+.logoGold {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  border: 1px solid var(--border-subtle);
+}
+
+.socials a:hover {
+  background: var(--gold-muted);
+  color: var(--gold-primary);
+  border-color: var(--border-gold);
+  transform: translateY(-2px);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.columnTitle {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--gold-primary);
+  margin-bottom: 8px;
+}
+
+.column a,
+.column span {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.column a:hover {
+  color: var(--gold-primary);
+}
+
+.hours {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.hours span {
+  font-size: 0.8rem;
+}
+
+.bottom {
+  margin-top: 48px;
+  padding: 24px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.bottomInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottom p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.since {
+  color: var(--gold-dark) !important;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .bottomInner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
