@@ -15,7 +15,7 @@ export default function AdminDashboard() {
   const [saving, setSaving] = useState(false);
 
   // Hardcoded simple PIN for quick MVP implementation
-  const ADMIN_PIN = "123456";
+  const ADMIN_PIN = "240708daffa";
 
   useEffect(() => {
     if (isAuthenticated) {
