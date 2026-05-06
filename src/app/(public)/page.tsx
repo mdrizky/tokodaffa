@@ -3,8 +3,8 @@ import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard";
 import PriceTable from "@/components/PriceTable";
 import Calculator from "@/components/Calculator";
-import storeInfo from "@/data/store-info.json";
 import { getProducts, getGoldPrices } from "@/lib/dataFetch";
+import { getStoreInfo } from "@/lib/storeFetch";
 
 const trustItems = [
   { icon: "🏅", title: "Emas Bersertifikat Asli", desc: "Setiap produk dilengkapi surat & sertifikat keaslian resmi" },
@@ -22,6 +22,7 @@ const testimonials = [
 export default async function HomePage() {
   const products = await getProducts();
   const goldPricesData = await getGoldPrices();
+  const storeInfo = await getStoreInfo();
   const featuredProducts = products.filter((p: any) => p.featured).slice(0, 6);
 
   return (
@@ -48,7 +49,7 @@ export default async function HomePage() {
               Jual Beli <span className="text-gold-gradient">Emas & Perak</span> Terpercaya
             </h1>
             <p className={styles.heroDesc}>
-              Koleksi perhiasan premium, logam mulia, dan layanan custom perhiasan impian Anda. Harga paling jujur, transparan, dan bergaransi.
+              {storeInfo.description}
             </p>
             <div className={styles.heroCtas}>
               <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20mau%20konsultasi%20gratis%20soal%20perhiasan`} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">

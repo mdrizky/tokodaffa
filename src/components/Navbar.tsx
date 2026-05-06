@@ -3,23 +3,29 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
+import { useLanguage } from "@/lib/i18n";
 import styles from "./Navbar.module.css";
-
-const navLinks = [
-  { href: "/", label: "Beranda" },
-  { href: "/produk", label: "Katalog" },
-  { href: "/harga-emas", label: "Harga Emas" },
-  { href: "/kalkulator", label: "Kalkulator" },
-  { href: "/layanan", label: "Layanan & Custom" },
-  { href: "/tentang", label: "Tentang" },
-];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
+  const { lang, setLang, dict } = useLanguage();
+
+  const navLinks = [
+    { href: "/", label: dict.nav_home },
+    { href: "/produk", label: dict.nav_catalog },
+    { href: "/harga-emas", label: dict.nav_prices },
+    { href: "/kalkulator", label: dict.nav_calculator },
+    { href: "/layanan", label: dict.nav_services },
+    { href: "/tentang", label: dict.nav_about },
+  ];
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -28,6 +34,8 @@ export default function Navbar() {
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
+
+  if (!mounted) return null;
 
   return (
     <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
@@ -49,8 +57,27 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          
+          <div className={styles.switchers}>
+            <button 
+              className={styles.switcherBtn} 
+              onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
+              aria-label="Toggle Language"
+            >
+              {lang.toUpperCase()}
+            </button>
+            
+            <button 
+              className={styles.switcherBtn} 
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label="Toggle Theme"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+          </div>
+
           <Link href="/kontak" className={`btn btn-gold ${styles.navCta}`}>
-            Hubungi Kami
+            {dict.nav_contact}
           </Link>
         </nav>
 

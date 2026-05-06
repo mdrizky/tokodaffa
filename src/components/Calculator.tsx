@@ -5,7 +5,7 @@ import styles from "./Calculator.module.css";
 import storeInfo from "@/data/store-info.json";
 
 export default function Calculator({ initialPrices }: { initialPrices: any }) {
-  const [kadar, setKadar] = useState<"24K" | "22K" | "18K" | "16K">("24K");
+  const [kadar, setKadar] = useState<"24K" | "22K" | "18K" | "16K" | "Perak">("24K");
   const [weight, setWeight] = useState("5");
   const [ongkos, setOngkos] = useState("150000");
 
@@ -28,7 +28,7 @@ export default function Calculator({ initialPrices }: { initialPrices: any }) {
         <div className={styles.field}>
           <label className={styles.label}>Kadar Emas</label>
           <div className={styles.kadarGrid}>
-            {(["24K", "22K", "18K", "16K"] as const).map((k) => (
+            {(["24K", "22K", "18K", "16K", "Perak"] as const).map((k) => (
               <button key={k} className={`${styles.kadarBtn} ${kadar === k ? styles.kadarActive : ""}`} onClick={() => setKadar(k)}>{k}</button>
             ))}
           </div>

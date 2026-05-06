@@ -25,10 +25,11 @@ export default function PriceTable({ initialPrices }: { initialPrices: any }) {
       </div>
       
       <div className={styles.grid}>
-        {(["24K", "22K", "18K", "16K"] as const).map((kadar) => (
-          <div key={kadar} className={styles.card}>
-            <div className={styles.kadar}>{kadar}</div>
-            <div className={styles.price}>{formatPrice(initialPrices.prices[kadar])}<span className={styles.unit}>/g</span></div>
+        {(["24K", "22K", "18K", "16K", "Perak"] as const).map((kadar) => (
+          <div key={kadar} className={styles.priceCard}>
+            <div className={styles.kadarBadge}>{kadar}</div>
+            <div className={styles.priceValue}>{formatPrice(initialPrices.prices[kadar])}</div>
+            <div className={styles.perGram}>per gram</div>
           </div>
         ))}
       </div>

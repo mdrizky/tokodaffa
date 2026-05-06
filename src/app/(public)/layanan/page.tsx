@@ -1,8 +1,10 @@
 import styles from "./page.module.css";
-import storeInfo from "@/data/store-info.json";
+import { getStoreInfo } from "@/lib/storeFetch";
 import Link from "next/link";
 
-export default function LayananPage() {
+export default async function LayananPage() {
+  const storeInfo = await getStoreInfo();
+  
   const customWa = `https://wa.me/${storeInfo.whatsapp}?text=${encodeURIComponent("Halo TokoDaffa, saya mau konsultasi tentang Custom Desain Emas/Perak. Saya ada referensi gambarnya.")}`;
   const sepuhWa = `https://wa.me/${storeInfo.whatsapp}?text=${encodeURIComponent("Halo TokoDaffa, saya mau tanya soal biaya dan proses Sepuh (Cuci Emas) agar perhiasan saya mengkilap lagi.")}`;
   const servisWa = `https://wa.me/${storeInfo.whatsapp}?text=${encodeURIComponent("Halo TokoDaffa, saya butuh servis/perbaikan perhiasan (seperti resize cincin/patri putus).")}`;

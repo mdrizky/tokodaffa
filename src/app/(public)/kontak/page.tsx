@@ -1,7 +1,9 @@
 import styles from "./page.module.css";
-import storeInfo from "@/data/store-info.json";
+import { getStoreInfo } from "@/lib/storeFetch";
 
-export default function KontakPage() {
+export default async function KontakPage() {
+  const storeInfo = await getStoreInfo();
+  
   return (
     <div className={styles.page}>
       <section className={styles.header}>

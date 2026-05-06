@@ -6,6 +6,24 @@ CREATE TABLE gold_prices (
   last_updated TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- Buat tabel untuk Pengaturan Toko (Store Settings)
+CREATE TABLE store_settings (
+  id SERIAL PRIMARY KEY,
+  store_name VARCHAR(255) NOT NULL,
+  tagline VARCHAR(255),
+  description TEXT,
+  address TEXT,
+  maps_embed TEXT,
+  phone VARCHAR(50),
+  whatsapp VARCHAR(50),
+  email VARCHAR(100),
+  operating_hours JSONB,
+  social_media JSONB,
+  certifications JSONB,
+  since INTEGER,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
 -- Buat tabel untuk Produk
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
@@ -19,6 +37,8 @@ CREATE TABLE products (
   category VARCHAR(50) NOT NULL,
   material VARCHAR(50) NOT NULL DEFAULT 'emas',
   featured BOOLEAN DEFAULT FALSE,
+  images JSONB DEFAULT '[]'::jsonb,
+  specifications JSONB DEFAULT '{}'::jsonb,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
@@ -27,7 +47,8 @@ INSERT INTO gold_prices (kadar, price_per_gram) VALUES
 ('24K', 1100000),
 ('22K', 1008000),
 ('18K', 825000),
-('16K', 733000);
+('16K', 733000),
+('Perak', 15000);
 
 -- Masukkan data awal Produk
 INSERT INTO products (name, kadar, weight, price, stock, photo, description, category, material, featured) VALUES
@@ -54,6 +75,11 @@ CREATE POLICY "Public profiles are viewable by everyone."
 
 CREATE POLICY "Products are viewable by everyone."
   ON products FOR SELECT
+  USING ( true );
+
+ALTER TABLE store_settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Store settings are viewable by everyone."
+  ON store_settings FOR SELECT
   USING ( true );
 
 -- Supaya Vercel API (menggunakan service_role atau authenticated route handler) bisa UPDATE tanpa RLS untuk admin
