@@ -22,7 +22,7 @@ export default async function ProductDetail({ params }: { params: { id: string }
   const isEmas = product.material === 'emas';
   const baseGoldPricePerGram = isEmas ? (goldPrices.prices as any)[product.kadar] || 0 : 0;
   const rawGoldValue = baseGoldPricePerGram * product.weight;
-  const estimatedOngkos = product.price > rawGoldValue ? product.price - rawGoldValue : 0;
+  const estimatedOngkos = product.ongkos || (product.price > rawGoldValue ? product.price - rawGoldValue : 0);
 
   const waUrl = `https://wa.me/${storeInfo.whatsapp}?text=${encodeURIComponent(
     `Halo TokoDaffa, saya tertarik dengan produk:\n\n📿 *${product.name}*\n💎 Kadar: ${product.kadar}\n⚖️ Berat: ${product.weight}g\n💰 Estimasi: ${formatPrice(product.price)}\n\nLink: https://tokodaffa.vercel.app/produk/${product.id}\n\nApakah masih tersedia?`
