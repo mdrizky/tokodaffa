@@ -10,6 +10,10 @@ export default function AdminDashboard() {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
 
+  const [products, setProducts] = useState<any[]>([]);
+  const [prices, setPrices] = useState<any>(null);
+  const [saving, setSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState("dashboard");
   const [storeInfo, setStoreInfo] = useState<any>(null);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
