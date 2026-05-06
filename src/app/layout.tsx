@@ -1,3 +1,4 @@
+// Vercel Build Trigger: 2026-05-06
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
+  // Build Trigger: v2
   children: React.ReactNode;
 }>) {
   return (
