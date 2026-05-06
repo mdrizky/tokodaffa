@@ -327,15 +327,32 @@ export default function AdminDashboard() {
           {activeTab === 'settings' && storeInfo && (
             <div className={styles.panel}>
               <div className={styles.panelHeader}>
-                <h3>Pengaturan Toko</h3>
+                <h3>Pengaturan Toko & Branding</h3>
                 <button className={styles.primaryBtn} onClick={handleStoreUpdate} disabled={saving}>Simpan Pengaturan</button>
               </div>
               <form style={{ padding: '24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                 <div className={styles.inputGroup}><label>Nama Toko</label><input value={storeInfo.name} onChange={e => setStoreInfo({...storeInfo, name: e.target.value})} /></div>
+                 <div className={styles.inputGroup}><label>Nama Toko (Nav)</label><input value={storeInfo.name} onChange={e => setStoreInfo({...storeInfo, name: e.target.value})} /></div>
+                 <div className={styles.inputGroup}><label>Logo Highlight (Daffa)</label><input value={storeInfo.logo_highlight || 'Daffa'} onChange={e => setStoreInfo({...storeInfo, logo_highlight: e.target.value})} /></div>
+                 
                  <div className={styles.inputGroup}><label>WhatsApp (62xxx)</label><input value={storeInfo.whatsapp} onChange={e => setStoreInfo({...storeInfo, whatsapp: e.target.value})} /></div>
                  <div className={styles.inputGroup}><label>Email</label><input value={storeInfo.email} onChange={e => setStoreInfo({...storeInfo, email: e.target.value})} /></div>
-                 <div className={styles.inputGroup}><label>Instagram URL</label><input value={storeInfo.instagram} onChange={e => setStoreInfo({...storeInfo, instagram: e.target.value})} /></div>
+                 
+                 <div className={styles.inputGroup}><label>Instagram URL</label><input value={storeInfo.instagram || storeInfo.social_media?.instagram || ''} onChange={e => setStoreInfo({...storeInfo, instagram: e.target.value})} /></div>
+                 <div className={styles.inputGroup}><label>Facebook URL</label><input value={storeInfo.facebook || storeInfo.social_media?.facebook || ''} onChange={e => setStoreInfo({...storeInfo, facebook: e.target.value})} /></div>
+                 <div className={styles.inputGroup}><label>TikTok URL</label><input value={storeInfo.tiktok || storeInfo.social_media?.tiktok || ''} onChange={e => setStoreInfo({...storeInfo, tiktok: e.target.value})} /></div>
+                 <div className={styles.inputGroup}><label>Tahun Berdiri</label><input type="number" value={storeInfo.since} onChange={e => setStoreInfo({...storeInfo, since: Number(e.target.value)})} /></div>
+
                  <div className={styles.inputGroup} style={{ gridColumn: 'span 2' }}><label>Alamat Lengkap</label><textarea style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #e2e8f0' }} rows={2} value={storeInfo.address} onChange={e => setStoreInfo({...storeInfo, address: e.target.value})} /></div>
+                 <div className={styles.inputGroup} style={{ gridColumn: 'span 2' }}><label>Deskripsi Hero</label><textarea style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #e2e8f0' }} rows={3} value={storeInfo.description} onChange={e => setStoreInfo({...storeInfo, description: e.target.value})} /></div>
+                 
+                 <div style={{ gridColumn: 'span 2' }}>
+                    <h4 style={{ marginBottom: '10px' }}>Jam Operasional</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
+                       <div className={styles.inputGroup}><label>Senin - Jumat</label><input value={storeInfo.operating_hours?.weekday || ''} onChange={e => setStoreInfo({...storeInfo, operating_hours: {...storeInfo.operating_hours, weekday: e.target.value}})} /></div>
+                       <div className={styles.inputGroup}><label>Sabtu</label><input value={storeInfo.operating_hours?.saturday || ''} onChange={e => setStoreInfo({...storeInfo, operating_hours: {...storeInfo.operating_hours, saturday: e.target.value}})} /></div>
+                       <div className={styles.inputGroup}><label>Minggu</label><input value={storeInfo.operating_hours?.sunday || ''} onChange={e => setStoreInfo({...storeInfo, operating_hours: {...storeInfo.operating_hours, sunday: e.target.value}})} /></div>
+                    </div>
+                 </div>
               </form>
             </div>
           )}

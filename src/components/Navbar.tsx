@@ -14,6 +14,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const { lang, setLang, dict } = useLanguage();
+  const [storeInfo, setStoreInfo] = useState<any>(null);
 
   const navLinks = [
     { href: "/", label: dict.nav_home },
@@ -28,6 +29,13 @@ export default function Navbar() {
     setMounted(true);
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
+    
+    async function load() {
+      const s = await getStoreInfo();
+      setStoreInfo(s);
+    }
+    load();
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -43,7 +51,8 @@ export default function Navbar() {
         <Link href="/" className={styles.logo}>
           <span className={styles.logoIcon}>◆</span>
           <span className={styles.logoText}>
-            Toko<span className={styles.logoGold}>Daffa</span>
+            {storeInfo?.name?.split(storeInfo?.logo_highlight || 'Daffa')[0] || 'Toko'}
+            <span className={styles.logoGold}>{storeInfo?.logo_highlight || 'Daffa'}</span>
           </span>
         </Link>
 

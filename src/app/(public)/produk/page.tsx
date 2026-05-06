@@ -16,7 +16,7 @@ export default function ProdukPage() {
   const [category, setCategory] = useState("Semua");
   const [kadar, setKadar] = useState("Semua");
   const [material, setMaterial] = useState("Semua");
-  const [sortBy, setSortBy] = useState("featured");
+  const { dict } = useLanguage();
 
   useEffect(() => {
     async function fetchProducts() {
@@ -47,59 +47,50 @@ export default function ProdukPage() {
       <section className={styles.header}>
         <div className="container">
           <div className="gold-line" style={{ margin: "0 auto 16px" }} />
-          <h1>Katalog <span className="text-gold-gradient">Produk</span></h1>
-          <p>Temukan koleksi perhiasan emas berkualitas tinggi kami</p>
+          <h1>{dict.cat_title.split(' ')[0]} <span className="text-gold-gradient">{dict.cat_title.split(' ').slice(1).join(' ')}</span></h1>
+          <p>{dict.cat_subtitle}</p>
         </div>
       </section>
 
       <section className={`container ${styles.content}`}>
         <div className={styles.filters}>
           <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Kategori</label>
+            <label className={styles.filterLabel}>{dict.prod_category}</label>
             <div className={styles.filterBtns}>
               {categories.map((c) => (
                 <button key={c} className={`${styles.filterBtn} ${category === c ? styles.filterActive : ""}`} onClick={() => setCategory(c)}>
-                  {c === "Semua" ? "Semua" : c.charAt(0).toUpperCase() + c.slice(1)}
+                  {c === "Semua" ? dict.cat_all : c.charAt(0).toUpperCase() + c.slice(1)}
                 </button>
               ))}
             </div>
           </div>
           <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Material</label>
+            <label className={styles.filterLabel}>{dict.prod_material}</label>
             <div className={styles.filterBtns}>
               {materialOptions.map((m) => (
                 <button key={m} className={`${styles.filterBtn} ${material === m ? styles.filterActive : ""}`} onClick={() => setMaterial(m)}>
-                  {m.toUpperCase()}
+                  {m === "Semua" ? dict.cat_all : m.toUpperCase()}
                 </button>
               ))}
             </div>
           </div>
           <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Kadar</label>
+            <label className={styles.filterLabel}>{dict.prod_kadar}</label>
             <div className={styles.filterBtns}>
               {kadarOptions.map((k) => (
                 <button key={k} className={`${styles.filterBtn} ${kadar === k ? styles.filterActive : ""}`} onClick={() => setKadar(k)}>
-                  {k}
+                  {k === "Semua" ? dict.cat_all : k}
                 </button>
               ))}
             </div>
-          </div>
-          <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Urutkan</label>
-            <select className={styles.select} value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="featured">Unggulan</option>
-              <option value="price-asc">Harga Terendah</option>
-              <option value="price-desc">Harga Tertinggi</option>
-              <option value="weight">Berat Terbesar</option>
-            </select>
           </div>
         </div>
 
         {loading ? (
-           <div style={{textAlign: 'center', padding: '40px', color: 'var(--text-muted)'}}>Memuat katalog...</div>
+           <div style={{textAlign: 'center', padding: '40px', color: 'var(--text-muted)'}}>Loading...</div>
         ) : (
           <>
-            <div className={styles.resultCount}>{filtered.length} produk ditemukan</div>
+            <div className={styles.resultCount}>{filtered.length} {dict.nav_home === 'Beranda' ? 'produk ditemukan' : 'products found'}</div>
 
             <div className={styles.grid}>
               {filtered.map((product) => (
@@ -110,7 +101,7 @@ export default function ProdukPage() {
             {filtered.length === 0 && (
               <div className={styles.empty}>
                 <span className={styles.emptyIcon}>◆</span>
-                <p>Tidak ada produk yang sesuai filter.</p>
+                <p>{dict.nav_home === 'Beranda' ? 'Tidak ada produk yang sesuai filter.' : 'No products found with these filters.'}</p>
               </div>
             )}
           </>

@@ -78,6 +78,24 @@
   --navbar-height: 72px;
 }
 
+[data-theme='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-surface: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-elevated: #ffffff;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.1);
+}
+
 /* ---- Reset & Base ---- */
 *,
 *::before,
