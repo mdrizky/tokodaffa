@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -16,21 +15,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function PublicLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" suppressHydrationWarning>
-      <body>
-        <Providers>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <WhatsAppFloat />
-        </Providers>
-      </body>
-    </html>
+    <Providers>
+      <Navbar />
+      <main>{children}</main>
+      <Footer />
+      <WhatsAppFloat />
+    </Providers>
   );
 }
