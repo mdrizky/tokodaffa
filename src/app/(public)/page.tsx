@@ -143,7 +143,7 @@ export default function HomePage() {
               <div key={i} className={`glass-card ${styles.trustCard} animate-fade-in-up animate-delay-${i + 1}`}>
                 <div className={styles.trustIcon}>{item.icon}</div>
                 <h4>{item.title}</h4>
-                <p{item.desc}</p>
+                <p>{item.desc}</p>
               </div>
             ))}
           </div>

@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard";
 import { getProducts } from "@/lib/dataFetch";
+import { useLanguage } from "@/lib/i18n";
 
 const categories = ["Semua", "cincin", "gelang", "kalung", "anting", "liontin", "batangan"];
 const kadarOptions = ["Semua", "24K", "22K", "18K", "16K", "925"];
@@ -16,6 +17,7 @@ export default function ProdukPage() {
   const [category, setCategory] = useState("Semua");
   const [kadar, setKadar] = useState("Semua");
   const [material, setMaterial] = useState("Semua");
+  const [sortBy, setSortBy] = useState("featured");
   const { dict } = useLanguage();
 
   useEffect(() => {
@@ -83,6 +85,15 @@ export default function ProdukPage() {
                 </button>
               ))}
             </div>
+          </div>
+          <div className={styles.filterGroup}>
+            <label className={styles.filterLabel}>{dict.nav_home === 'Beranda' ? 'Urutkan' : 'Sort By'}</label>
+            <select className={styles.select} value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+              <option value="featured">{dict.nav_home === 'Beranda' ? 'Unggulan' : 'Featured'}</option>
+              <option value="price-asc">{dict.nav_home === 'Beranda' ? 'Harga Terendah' : 'Lowest Price'}</option>
+              <option value="price-desc">{dict.nav_home === 'Beranda' ? 'Harga Tertinggi' : 'Highest Price'}</option>
+              <option value="weight">{dict.nav_home === 'Beranda' ? 'Berat Terbesar' : 'Highest Weight'}</option>
+            </select>
           </div>
         </div>
 
