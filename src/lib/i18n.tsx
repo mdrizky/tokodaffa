@@ -49,6 +49,24 @@ interface Dictionary {
   con_hours_sat: string;
   con_hours_sun: string;
   con_send_wa: string;
+  // Services
+  ser_title: string;
+  ser_subtitle: string;
+  ser_custom_title: string;
+  ser_custom_desc: string;
+  ser_sepuh_title: string;
+  ser_sepuh_desc: string;
+  ser_servis_title: string;
+  ser_servis_desc: string;
+  ser_cta_title: string;
+  ser_cta_subtitle: string;
+  // About
+  abt_title: string;
+  abt_subtitle: string;
+  abt_history_title: string;
+  abt_history_desc: string;
+  abt_vision_title: string;
+  abt_vision_desc: string;
 }
 
 const id: Dictionary = {
@@ -93,6 +111,22 @@ const id: Dictionary = {
   con_hours_sat: 'Sabtu',
   con_hours_sun: 'Minggu',
   con_send_wa: 'Chat WhatsApp Sekarang',
+  ser_title: 'Layanan & Custom',
+  ser_subtitle: 'Wujudkan perhiasan impian Anda atau kembalikan kilau perhiasan lama',
+  ser_custom_title: 'Custom Desain Perhiasan',
+  ser_custom_desc: 'Punya referensi cincin kawin atau kalung dari Pinterest/Instagram? Kami bisa membuatkannya untuk Anda dengan tingkat kemiripan tinggi.',
+  ser_sepuh_title: 'Sepuh (Cuci Emas)',
+  ser_sepuh_desc: 'Perhiasan lama Anda mulai kusam? Kembalikan kilau kuning cerah perhiasan Anda seperti baru beli.',
+  ser_servis_title: 'Servis & Perbaikan',
+  ser_servis_desc: 'Cincin kebesaran? Kalung putus? Tukang ahli kami siap memperbaiki perhiasan Anda dengan rapi.',
+  ser_cta_title: 'Bingung Layanan Mana yang Anda Butuhkan?',
+  ser_cta_subtitle: 'Bawa langsung perhiasan Anda ke toko kami, pakar kami akan memeriksanya secara gratis.',
+  abt_title: 'Tentang Kami',
+  abt_subtitle: 'Mengenal lebih dekat TokoDaffa Gold',
+  abt_history_title: 'Sejarah Kami',
+  abt_history_desc: 'TokoDaffa Gold telah menjadi destinasi terpercaya bagi para pecinta dan investor emas. Kami mengedepankan kejujuran dan kepuasan pelanggan.',
+  abt_vision_title: 'Visi & Misi',
+  abt_vision_desc: 'Menjadi standar emas dalam industri perhiasan retail yang mengedepankan kepercayaan, kualitas, dan inovasi pelayanan.',
 };
 
 const en: Dictionary = {
@@ -137,6 +171,22 @@ const en: Dictionary = {
   con_hours_sat: 'Saturday',
   con_hours_sun: 'Sunday',
   con_send_wa: 'Chat WhatsApp Now',
+  ser_title: 'Services & Custom',
+  ser_subtitle: 'Realize your dream jewelry or restore the shine of old jewelry',
+  ser_custom_title: 'Custom Jewelry Design',
+  ser_custom_desc: 'Have wedding ring or necklace references from Pinterest/Instagram? We can make it for you with high accuracy.',
+  ser_sepuh_title: 'Gold Plating (Wash)',
+  ser_sepuh_desc: 'Old jewelry starting to look dull? Restore the bright yellow shine of your jewelry as if it were new.',
+  ser_servis_title: 'Service & Repair',
+  ser_servis_desc: 'Ring too big? Broken necklace? Our expert craftsmen are ready to repair your jewelry neatly.',
+  ser_cta_title: 'Unsure Which Service You Need?',
+  ser_cta_subtitle: 'Bring your jewelry directly to our store, our experts will inspect it for free.',
+  abt_title: 'About Us',
+  abt_subtitle: 'Getting to know TokoDaffa Gold closer',
+  abt_history_title: 'Our History',
+  abt_history_desc: 'TokoDaffa Gold has become a trusted destination for gold enthusiasts and investors. We prioritize honesty and customer satisfaction.',
+  abt_vision_title: 'Vision & Mission',
+  abt_vision_desc: 'To be the gold standard in the retail jewelry industry that promotes trust, quality, and service innovation.',
 };
 
 const dictionaries = { id, en };

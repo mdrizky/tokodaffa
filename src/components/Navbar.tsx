@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/lib/i18n";
+import { getStoreInfo } from "@/lib/storeFetch";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {

@@ -1,19 +1,34 @@
+"use client";
+
 import styles from "./page.module.css";
 import Calculator from "@/components/Calculator";
 import { getGoldPrices } from "@/lib/dataFetch";
+import { useLanguage } from "@/lib/i18n";
+import { useState, useEffect } from "react";
 
-export const dynamic = 'force-dynamic';
+export default function KalkulatorPage() {
+  const { dict, lang } = useLanguage();
+  const [goldPrices, setGoldPrices] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function KalkulatorPage() {
-  const goldPrices = await getGoldPrices();
+  useEffect(() => {
+    async function load() {
+      const g = await getGoldPrices();
+      setGoldPrices(g);
+      setLoading(false);
+    }
+    load();
+  }, []);
+
+  if (loading) return <div style={{ padding: '100px 0', textAlign: 'center' }}>Loading...</div>;
   
   return (
     <div className={styles.page}>
       <section className={styles.header}>
         <div className="container">
           <div className="gold-line" style={{ margin: "0 auto 16px" }} />
-          <h1>Kalkulator <span className="text-gold-gradient">Simulasi Harga</span></h1>
-          <p>Hitung estimasi harga perhiasan emas & perak Anda dengan harga pasar terbaru.</p>
+          <h1>{dict.nav_calculator.split(' ')[0]} <span className="text-gold-gradient">{dict.nav_calculator.split(' ').slice(1).join(' ')}</span></h1>
+          <p>{dict.calculator_subtitle}</p>
         </div>
       </section>
 
@@ -24,11 +39,11 @@ export default async function KalkulatorPage() {
           </div>
           
           <div className={styles.infoBox}>
-            <h3>Catatan Penting:</h3>
+            <h3>{lang === 'id' ? 'Catatan Penting:' : 'Important Notes:'}</h3>
             <ul>
-              <li>Hasil perhitungan adalah <strong>estimasi</strong> berdasarkan harga emas/perak hari ini.</li>
-              <li>Harga belum termasuk <strong>ongkos pembuatan</strong> (ongkos tukang) yang bervariasi tergantung kerumitan model.</li>
-              <li>Untuk mendapatkan harga pasti, silakan hubungi admin atau datang langsung ke toko kami.</li>
+              <li>{lang === 'id' ? 'Hasil perhitungan adalah estimasi berdasarkan harga hari ini.' : 'Calculation results are estimates based on today\'s price.'}</li>
+              <li>{lang === 'id' ? 'Harga belum termasuk ongkos pembuatan yang bervariasi.' : 'Price does not include labor costs which vary.'}</li>
+              <li>{lang === 'id' ? 'Untuk harga pasti, silakan hubungi admin.' : 'For exact price, please contact admin.'}</li>
             </ul>
           </div>
         </div>
