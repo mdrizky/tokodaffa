@@ -5,10 +5,12 @@ import styles from "./Footer.module.css";
 import { getStoreInfo } from "@/lib/storeFetch";
 import { useLanguage } from "@/lib/i18n";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const { dict } = useLanguage();
   const [storeInfo, setStoreInfo] = useState<any>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     async function load() {
@@ -18,7 +20,7 @@ export default function Footer() {
     load();
   }, []);
 
-  if (!storeInfo) return null;
+  if (!storeInfo || pathname === '/builder') return null;
 
   const instagram = storeInfo.instagram || storeInfo.social_media?.instagram;
   const facebook = storeInfo.facebook || storeInfo.social_media?.facebook;

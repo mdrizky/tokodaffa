@@ -45,7 +45,7 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  if (!mounted) return null;
+  if (!mounted || pathname === '/builder') return null;
 
   return (
     <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>

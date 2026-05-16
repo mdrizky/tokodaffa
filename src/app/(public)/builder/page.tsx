@@ -9,6 +9,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function JewelryBuilder() {
+  const [jewelryType, setJewelryType] = useState("ring");
   const [material, setMaterial] = useState("gold");
   const [stone, setStone] = useState("diamond");
   const [engraving, setEngraving] = useState("");
@@ -80,7 +81,25 @@ export default function JewelryBuilder() {
         </div>
 
         <div className={styles.configSection}>
-          <div className={styles.configTitle}>1. Precious Metal</div>
+          <div className={styles.configTitle}>1. Jewelry Type</div>
+          <div className={styles.configGrid} style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+             <button className={`${styles.optionBtn} ${jewelryType === 'ring' ? styles.active : ''}`} onClick={() => setJewelryType('ring')}>
+               <span style={{ fontSize: '1.5rem' }}>💍</span>
+               <span>Ring</span>
+             </button>
+             <button className={`${styles.optionBtn} ${jewelryType === 'bracelet' ? styles.active : ''}`} onClick={() => setJewelryType('bracelet')}>
+               <span style={{ fontSize: '1.5rem' }}>⭕</span>
+               <span>Bracelet</span>
+             </button>
+             <button className={`${styles.optionBtn} ${jewelryType === 'necklace' ? styles.active : ''}`} onClick={() => setJewelryType('necklace')}>
+               <span style={{ fontSize: '1.5rem' }}>📿</span>
+               <span>Necklace</span>
+             </button>
+          </div>
+        </div>
+
+        <div className={styles.configSection}>
+          <div className={styles.configTitle}>2. Precious Metal</div>
           <div className={styles.configGrid}>
              <button className={`${styles.optionBtn} ${material === 'gold' ? styles.active : ''}`} onClick={() => setMaterial('gold')}>
                <div className={styles.optionColor} style={{ background: '#FFD700' }} />
@@ -102,7 +121,7 @@ export default function JewelryBuilder() {
         </div>
 
         <div className={styles.configSection}>
-          <div className={styles.configTitle}>2. Gemstone</div>
+          <div className={styles.configTitle}>3. Gemstone</div>
           <div className={styles.configGrid}>
              <button className={`${styles.optionBtn} ${stone === 'diamond' ? styles.active : ''}`} onClick={() => setStone('diamond')}>
                <div className={styles.optionColor} style={{ background: '#ffffff', boxShadow: '0 0 10px #fff' }} />
@@ -124,7 +143,7 @@ export default function JewelryBuilder() {
         </div>
 
         <div className={styles.configSection}>
-          <div className={styles.configTitle}>3. Personal Engraving</div>
+          <div className={styles.configTitle}>4. Personal Engraving</div>
           <p style={{ fontSize: '0.8rem', color: '#8a8780', marginBottom: '12px' }}>Leave a mark for eternity. (Max 10 chars)</p>
           <input 
             type="text" 
@@ -137,7 +156,7 @@ export default function JewelryBuilder() {
         </div>
 
         <div className={styles.configSection} style={{ borderBottom: 'none' }}>
-          <div className={styles.configTitle}>4. Ring Size (HK)</div>
+          <div className={styles.configTitle}>5. Size (HK)</div>
           <p style={{ fontSize: '0.8rem', color: '#8a8780', marginBottom: '12px' }}>Selected Size: {size}</p>
           <input 
             type="range" 
@@ -155,7 +174,7 @@ export default function JewelryBuilder() {
       </div>
 
       <div className={styles.canvasWrapper}>
-        <JewelryViewer3D material={material} stone={stone} engraving={engraving} size={size} />
+        <JewelryViewer3D jewelryType={jewelryType} material={material} stone={stone} engraving={engraving} size={size} />
         
         <motion.div 
           className={styles.priceCalculator}

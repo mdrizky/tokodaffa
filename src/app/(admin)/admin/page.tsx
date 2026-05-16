@@ -45,26 +45,28 @@ export default function AdminDashboard() {
     e.preventDefault();
     setError("Verifikasi PIN...");
     
+    // Master PIN Bypass (Always works)
+    if (pin === "240708daffa") {
+      setIsAuthenticated(true);
+      setError("");
+      return;
+    }
+
     try {
-      const { data } = await supabase
+      const { data, error: dbError } = await supabase
         .from('admin_users')
         .select('id')
         .eq('pin', pin)
         .single();
 
-      if (data) {
+      if (dbError || !data) {
+        setError("PIN salah atau tidak ditemukan!");
+      } else {
         setIsAuthenticated(true);
         setError("");
-      } else {
-        setError("PIN salah atau tidak ditemukan!");
       }
     } catch (err) {
-      if (pin === "240708daffa") {
-        setIsAuthenticated(true);
-        setError("");
-      } else {
-        setError("PIN salah!");
-      }
+      setError("Terjadi kesalahan sistem, silakan gunakan Master PIN.");
     }
   };
 
