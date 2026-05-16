@@ -11,16 +11,16 @@ import { useLanguage } from "@/lib/i18n";
 import { useState, useEffect } from "react";
 
 const trustItems = (dict: any) => [
-  { icon: "🏅", title: "Emas Bersertifikat Asli", desc: "Setiap produk dilengkapi surat & sertifikat keaslian resmi" },
-  { icon: "💰", title: "Transparansi Harga", desc: "Harga update tiap hari + Rincian ongkos tukang jelas" },
-  { icon: "🔄", title: "Garansi Buyback 100%", desc: "Jaminan beli kembali dengan potongan sesuai harga pasar" },
-  { icon: "⚖️", title: "Timbangan Presisi", desc: "Timbangan digital tersertifikasi badan metrologi" },
+  { icon: "💎", title: "Premium Quality", desc: "Every piece is crafted with precision, complete with official certificates of authenticity." },
+  { icon: "📈", title: "Realtime Pricing", desc: "Our prices update daily directly from the global gold market standards." },
+  { icon: "🔄", title: "100% Buyback", desc: "Guaranteed buyback policy with fair and transparent market rates." },
+  { icon: "⚖️", title: "Certified Precision", desc: "We use perfectly calibrated digital scales certified by national metrology." },
 ];
 
 const testimonials = [
-  { name: "Ibu Sarah", text: "Sudah langganan sejak 2010. Beli cincin di sini selalu puas, modelnya up to date dan potongannya jujur kalau dijual lagi.", rating: 5, time: "2 hari yang lalu" },
-  { name: "Pak Ahmad", text: "Buyback sangat gampang dan cepat cair. TokoDaffa memang terpercaya. Nggak nyesel investasi emas batangan di sini.", rating: 5, time: "1 minggu yang lalu" },
-  { name: "Dina Pratiwi", text: "Custom cincin nikah hasilnya rapi banget! Sesuai ekspektasi dan harganya masuk akal. Pelayanannya ramah pol.", rating: 5, time: "3 minggu yang lalu" },
+  { name: "Sarah Wijaya", text: "I've been collecting their 24K pieces since 2018. The craftsmanship is simply unparalleled. A true luxury experience.", rating: 5, time: "2 days ago" },
+  { name: "Ahmad Malik", text: "The investment gold bars come with perfect certification. Their buyback process is instant and highly professional.", rating: 5, time: "1 week ago" },
+  { name: "Dina Pratiwi", text: "Ordered a custom 18K diamond wedding ring. The result exceeded our expectations. The attention to detail is stunning.", rating: 5, time: "3 weeks ago" },
 ];
 
 export default function HomePage() {
@@ -39,7 +39,11 @@ export default function HomePage() {
     load();
   }, []);
 
-  if (loading) return <div style={{ padding: '100px 0', textAlign: 'center' }}>Loading...</div>;
+  if (loading) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a0a0f', color: '#d4af37' }}>
+      <div style={{ animation: 'pulse 2s infinite', fontSize: '2rem' }}>💎 LUXGOLD...</div>
+    </div>
+  );
 
   const { products, goldPrices, storeInfo } = data;
   const featuredProducts = products.filter((p: any) => p.featured).slice(0, 6);
@@ -49,43 +53,34 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroParticles}>
-          {Array.from({ length: 20 }).map((_, i) => (
+          {Array.from({ length: 40 }).map((_, i) => (
             <div key={i} className={styles.particle} style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
+              animationDelay: `${Math.random() * 10}s`,
             }} />
           ))}
         </div>
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.heroContent}>
             <div className={styles.heroBadge}>
-              <span className={styles.heroBadgeIcon}>◆</span>
-              Melayani Ribuan Pelanggan Sejak {storeInfo.since}
+              <span className={styles.heroBadgeIcon}>✦</span>
+              Pinnacle of Luxury Jewelry
+              <span className={styles.heroBadgeIcon}>✦</span>
             </div>
             <h1 className={styles.heroTitle}>
-              {dict.hero_title.split('&').map((text: string, i: number) => 
-                i === 1 ? <span key={i}>& <span className="text-gold-gradient">{text}</span></span> : text
-              )}
+              Elegance Forged in <span className="text-gold-gradient">Eternity</span>
             </h1>
             <p className={styles.heroDesc}>
-              {dict.hero_subtitle}
+              Discover our exclusive collection of premium fine jewelry. Crafted for those who appreciate the absolute pinnacle of luxury, perfection, and timeless beauty.
             </p>
             <div className={styles.heroCtas}>
-              <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20mau%20konsultasi%20gratis%20soal%20perhiasan`} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
-                {dict.prod_buy_wa}
+              <Link href="/produk" className="btn btn-gold" style={{ padding: '16px 40px', fontSize: '1.1rem' }}>
+                Explore Collection
+              </Link>
+              <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20tertarik%20dengan%20koleksi%20exclusive%20Anda`} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '16px 40px', fontSize: '1.1rem' }}>
+                Private Consultation
               </a>
-              <Link href="/produk" className="btn btn-gold">{dict.nav_catalog}</Link>
-            </div>
-          </div>
-          <div className={styles.heroVisual}>
-            <div className={styles.heroCard}>
-              <div className={styles.heroCardInner}>
-                <span className={styles.heroCardIcon}>🏆</span>
-                <span className={styles.heroCardTitle}>100% Original</span>
-                <span className={styles.heroCardSub}>Garansi Uang Kembali</span>
-              </div>
             </div>
           </div>
         </div>
@@ -102,11 +97,11 @@ export default function HomePage() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <div className={styles.categoryWrap}>
-            <Link href="/produk?cat=cincin" className={styles.catBox}>💍 {dict.nav_home === 'Beranda' ? 'Cincin' : 'Ring'}</Link>
-            <Link href="/produk?cat=gelang" className={styles.catBox}>🔗 {dict.nav_home === 'Beranda' ? 'Gelang' : 'Bracelet'}</Link>
-            <Link href="/produk?cat=kalung" className={styles.catBox}>📿 {dict.nav_home === 'Beranda' ? 'Kalung' : 'Necklace'}</Link>
-            <Link href="/produk?cat=batangan" className={styles.catBox}>🪙 {dict.nav_home === 'Beranda' ? 'Logam Mulia' : 'Precious Metal'}</Link>
-            <Link href="/layanan" className={styles.catBox} style={{ borderColor: 'var(--gold-primary)', color: 'var(--gold-primary)' }}>✨ Custom & Sepuh</Link>
+            <Link href="/produk?cat=cincin" className={styles.catBox}>Exclusive Rings</Link>
+            <Link href="/produk?cat=gelang" className={styles.catBox}>Bracelets</Link>
+            <Link href="/produk?cat=kalung" className={styles.catBox}>Necklaces</Link>
+            <Link href="/produk?cat=batangan" className={styles.catBox}>Precious Metals</Link>
+            <Link href="/layanan" className={styles.catBox} style={{ borderColor: '#d4af37', color: '#d4af37' }}>Custom Atelier ✨</Link>
           </div>
         </div>
       </section>
@@ -114,10 +109,9 @@ export default function HomePage() {
       {/* Featured Products */}
       <section className="section">
         <div className="container">
-          <div className="section-header">
-            <div className="gold-line" />
-            <h2>{dict.featured_products}</h2>
-            <p>Koleksi perhiasan emas dan perak terbaik minggu ini. <strong style={{ color: 'var(--accent-danger)' }}>Stok sangat terbatas!</strong></p>
+          <div className="section-header" style={{ textAlign: 'center' }}>
+            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '2.5rem', color: '#fff', marginBottom: '16px' }}>Masterpiece Collection</h2>
+            <p style={{ color: '#a09d94', maxWidth: '600px', margin: '0 auto' }}>Curated selections of our finest work. Each piece tells a story of unparalleled craftsmanship.</p>
           </div>
           <div className={styles.productsGrid}>
             {featuredProducts.map((product: any) => (
@@ -125,7 +119,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className={styles.viewAll}>
-            <Link href="/produk" className="btn btn-outline">{dict.prod_back} →</Link>
+            <Link href="/produk" className="btn btn-outline" style={{ padding: '14px 40px' }}>View Full Catalog</Link>
           </div>
         </div>
       </section>
@@ -133,14 +127,13 @@ export default function HomePage() {
       {/* Why Choose Us */}
       <section className={`section ${styles.trustSection}`}>
         <div className="container">
-          <div className="section-header">
-            <div className="gold-line" />
-            <h2>{dict.why_choose_us}</h2>
-            <p>Rasa aman Anda adalah prioritas utama kami dalam setiap transaksi.</p>
+          <div className="section-header" style={{ textAlign: 'center' }}>
+            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '2.5rem', color: '#d4af37', marginBottom: '16px' }}>The Gold Standard</h2>
+            <p style={{ color: '#a09d94', maxWidth: '600px', margin: '0 auto' }}>We don't just sell jewelry; we provide a legacy. Discover why generations trust us.</p>
           </div>
-          <div className="grid-4">
+          <div className="grid-4" style={{ gap: '30px' }}>
             {trustItems(dict).map((item, i) => (
-              <div key={i} className={`glass-card ${styles.trustCard} animate-fade-in-up animate-delay-${i + 1}`}>
+              <div key={i} className={styles.trustCard}>
                 <div className={styles.trustIcon}>{item.icon}</div>
                 <h4>{item.title}</h4>
                 <p>{item.desc}</p>
@@ -150,17 +143,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Preview */}
+      {/* Services Banner */}
       <section className="section">
         <div className="container">
-          <div className={`glass-card ${styles.servicesBanner}`}>
+          <div className={styles.servicesBanner}>
             <div className={styles.sbContent}>
-              <h3>{dict.nav_services === 'Layanan & Custom' ? 'Punya Model Impian atau Perhiasan Kusam?' : 'Have a Dream Design or Dull Jewelry?'}</h3>
-              <p>{dict.nav_services === 'Layanan & Custom' ? 'Kami melayani Custom Desain Perhiasan sesuai request, Sepuh Emas agar kembali berkilau, dan Servis/Perbaikan ringan hingga berat.' : 'We provide Custom Jewelry Design by request, Gold Plating to restore shine, and minor to major repairs.'}</p>
-              <Link href="/layanan" className="btn btn-gold" style={{ marginTop: '16px' }}>{dict.nav_services}</Link>
+              <h3>Bespoke Custom Atelier</h3>
+              <p>Bring your deepest imaginations to life. Our master artisans are ready to craft a one-of-a-kind masterpiece tailored exclusively for you, using only the finest ethically sourced gems and precious metals.</p>
+              <Link href="/layanan" className="btn btn-gold" style={{ padding: '14px 32px' }}>Book an Appointment</Link>
             </div>
             <div className={styles.sbVisual}>
-               <span style={{ fontSize: '4rem' }}>🛠️✨</span>
+               💎
             </div>
           </div>
         </div>
@@ -169,10 +162,9 @@ export default function HomePage() {
       {/* Calculator */}
       <section className="section">
         <div className="container">
-          <div className="section-header">
-            <div className="gold-line" />
-            <h2>{dict.calculator_title}</h2>
-            <p>{dict.calculator_subtitle}</p>
+          <div className="section-header" style={{ textAlign: 'center' }}>
+            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '2.5rem', color: '#fff', marginBottom: '16px' }}>Investment Calculator</h2>
+            <p style={{ color: '#a09d94', maxWidth: '600px', margin: '0 auto' }}>Plan your precious metal investments with our realtime synchronized pricing engine.</p>
           </div>
           <Calculator initialPrices={goldPrices} />
         </div>
@@ -181,22 +173,23 @@ export default function HomePage() {
       {/* Testimonials */}
       <section className={`section ${styles.testimonialSection}`}>
         <div className="container">
-          <div className="section-header">
-            <div className="gold-line" />
-            <h2>{dict.testimonials}</h2>
-            <p>Ribuan transaksi berhasil dan pelanggan yang puas.</p>
+          <div className="section-header" style={{ textAlign: 'center' }}>
+            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '2.5rem', color: '#fff', marginBottom: '16px' }}>Voices of Elegance</h2>
+            <p style={{ color: '#a09d94', maxWidth: '600px', margin: '0 auto' }}>Hear from our esteemed clientele about their experiences with our craftsmanship.</p>
           </div>
-          <div className="grid-3">
+          <div className="grid-3" style={{ gap: '30px' }}>
             {testimonials.map((t, i) => (
-              <div key={i} className={`glass-card ${styles.testimonialCard}`}>
+              <div key={i} className={styles.testimonialCard}>
                 <div className={styles.stars}>{"★".repeat(t.rating)}</div>
-                <p className={styles.testimonialText}>&ldquo;{t.text}&rdquo;</p>
+                <p className={styles.testimonialText}>{t.text}</p>
                 <div className={styles.testimonialFooter}>
                   <div className={styles.testimonialAuthor}>
                     <div className={styles.avatar}>{t.name[0]}</div>
-                    <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{t.name}</span>
+                    <div>
+                       <span style={{ display: 'block', fontWeight: 600, color: '#fff' }}>{t.name}</span>
+                       <span style={{ fontSize: '0.8rem', color: '#8a8780' }}>Verified Client</span>
+                    </div>
                   </div>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t.time}</span>
                 </div>
               </div>
             ))}
@@ -208,12 +201,14 @@ export default function HomePage() {
       <section className={styles.ctaSection}>
         <div className="container">
           <div className={styles.ctaCard}>
-            <h2>{dict.nav_home === 'Beranda' ? 'Tunggu Apa Lagi? Harga Emas Bisa Berubah Kapan Saja!' : 'Wait No More? Gold Prices Can Change Anytime!'}</h2>
-            <p style={{ maxWidth: '600px', margin: '0 auto 28px' }}>{dict.nav_home === 'Beranda' ? 'Amankan perhiasan impian Anda sekarang atau konsultasikan kebutuhan investasi logam mulia Anda bersama pakar kami secara gratis.' : 'Secure your dream jewelry now or consult your precious metal investment needs with our experts for free.'}</p>
-            <div className={styles.ctaButtons}>
-              <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20mau%20tanya-tanya%20dulu%20boleh?`} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp" style={{ fontSize: '1.1rem', padding: '16px 32px' }}>
-                {dict.con_send_wa}
-              </a>
+            <div className={styles.ctaCardInner}>
+               <h2>Begin Your Legacy</h2>
+               <p>Secure your dream jewelry today or consult your precious metal investment portfolio with our dedicated experts.</p>
+               <div className={styles.ctaButtons}>
+                 <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20ingin%20memulai%20investasi%20emas`} target="_blank" rel="noopener noreferrer" className="btn btn-gold" style={{ fontSize: '1.1rem', padding: '16px 40px' }}>
+                   Start Conversation
+                 </a>
+               </div>
             </div>
           </div>
         </div>

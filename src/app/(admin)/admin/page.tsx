@@ -171,8 +171,11 @@ export default function AdminDashboard() {
           <button className={activeTab === 'dashboard' ? styles.navActive : ''} onClick={() => setActiveTab('dashboard')}>
             <span className={styles.navIcon}>📊</span> Dashboard Analytics
           </button>
+          <button className={activeTab === 'analytics' ? styles.navActive : ''} onClick={() => setActiveTab('analytics')}>
+            <span className={styles.navIcon}>📈</span> Customer Analytics
+          </button>
           <button className={activeTab === 'prices' ? styles.navActive : ''} onClick={() => setActiveTab('prices')}>
-            <span className={styles.navIcon}>📈</span> Live Gold Prices
+            <span className={styles.navIcon}>💰</span> Live Gold Prices
           </button>
           <button className={activeTab === 'products' ? styles.navActive : ''} onClick={() => setActiveTab('products')}>
             <span className={styles.navIcon}>🛍️</span> Product Management
@@ -195,6 +198,7 @@ export default function AdminDashboard() {
           <div className={styles.headerTitle}>
             <h1>
               {activeTab === 'dashboard' && 'Enterprise Dashboard'}
+              {activeTab === 'analytics' && 'Customer & Sales Analytics'}
               {activeTab === 'prices' && 'Live Gold Price Engine'}
               {activeTab === 'products' && 'Product Inventory'}
               {activeTab === 'settings' && 'Store Configuration'}
@@ -258,6 +262,45 @@ export default function AdminDashboard() {
                 )}
               </div>
             </>
+          )}
+
+          {activeTab === 'analytics' && (
+            <div className={styles.analyticsGrid}>
+              <div className={styles.chartCard}>
+                <h4>Monthly Revenue Projection <span>Last 6 Months</span></h4>
+                <div className={styles.mockChart}>
+                  {/* Mock Data for Chart */}
+                  {[45, 60, 50, 80, 65, 90].map((height, i) => (
+                    <div key={i} className={styles.barCol}>
+                      <div className={styles.bar} style={{ height: `${height}%` }} data-value={`Rp ${(height * 1.5).toFixed(1)}M`}></div>
+                      <span className={styles.barLabel}>{['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'][i]}</span>
+                    </div>
+                  ))}
+                </div>
+                <p style={{ color: '#8a8780', fontSize: '0.9rem', marginTop: '16px' }}>*Data shown is a projection based on current inventory valuation and average turnaround rate.</p>
+              </div>
+
+              <div className={styles.chartCard}>
+                <h4>Top Selling Products <span>By Value</span></h4>
+                <div className={styles.rankingList}>
+                  {products.sort((a, b) => b.price - a.price).slice(0, 5).map((p, i) => (
+                    <div key={p.id} className={styles.rankItem}>
+                      <div className={styles.rankNumber}>{i + 1}</div>
+                      <div className={styles.rankInfo}>
+                        <strong>{p.name}</strong>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#8a8780', marginBottom: '4px' }}>
+                          <span>Rp {(p.price / 1000000).toFixed(1)}M</span>
+                          <span>Stock: {p.stock}</span>
+                        </div>
+                        <div className={styles.rankBarBg}>
+                          <div className={styles.rankBarFill} style={{ width: `${Math.max(20, 100 - (i * 15))}%` }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           )}
 
           {activeTab === 'prices' && (

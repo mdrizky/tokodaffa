@@ -4,143 +4,112 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(ellipse at 30% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 80%, rgba(22, 33, 62, 0.5) 0%, transparent 50%),
-              var(--bg-primary);
+  background: radial-gradient(ellipse at center top, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+              linear-gradient(180deg, #050508 0%, #0a0a0f 100%);
 }
 
 .heroParticles {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 1;
 }
 
 .particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--gold-primary);
+  width: 3px;
+  height: 3px;
+  background: #d4af37;
   border-radius: 50%;
-  animation: sparkle 3s ease infinite;
-  opacity: 0.3;
+  animation: floatUp 10s linear infinite, glow 3s ease-in-out infinite alternate;
+  opacity: 0.5;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  20% { opacity: 0.8; transform: translateY(80vh) scale(1); }
+  80% { opacity: 0.5; transform: translateY(20vh) scale(1); }
+  100% { transform: translateY(-10vh) scale(0); opacity: 0; }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px #d4af37; }
+  100% { box-shadow: 0 0 15px #d4af37, 0 0 25px #f0d060; }
 }
 
 .heroInner {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 64px;
+  grid-template-columns: 1fr;
+  text-align: center;
+  gap: 40px;
   align-items: center;
-  padding-top: var(--navbar-height);
+  padding-top: calc(var(--navbar-height) + 40px);
+  z-index: 2;
+  position: relative;
 }
 
 .heroContent {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .heroBadge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--gold-muted);
-  border: 1px solid var(--border-gold);
-  padding: 8px 18px;
-  border-radius: var(--radius-full);
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 8px 24px;
+  border-radius: 30px;
   font-size: 0.85rem;
-  color: var(--gold-primary);
-  font-weight: 500;
-  width: fit-content;
-}
-
-.heroBadgeIcon {
-  animation: sparkle 3s ease infinite;
+  color: #d4af37;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
 }
 
 .heroTitle {
-  font-size: clamp(2.5rem, 5vw, 3.8rem);
-  line-height: 1.15;
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 1.1;
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  color: #fff;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.heroTitle span.text-gold-gradient {
+  background: linear-gradient(to right, #d4af37, #f0d060, #d4af37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
 }
 
 .heroDesc {
-  font-size: 1.1rem;
-  max-width: 520px;
+  font-size: 1.2rem;
+  max-width: 600px;
   line-height: 1.8;
+  color: #a09d94;
+  font-weight: 300;
 }
 
 .heroCtas {
   display: flex;
-  gap: 14px;
-  margin-top: 8px;
-}
-
-.heroVisual {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.heroCard {
-  width: 320px;
-  height: 400px;
-  background: linear-gradient(145deg, rgba(212, 175, 55, 0.15), rgba(26, 26, 46, 0.9));
-  border: 1px solid var(--border-gold);
-  border-radius: var(--radius-xl);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-gold-lg);
-  animation: float 6s ease infinite;
-  position: relative;
-  overflow: hidden;
-}
-
-.heroCard::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.1), transparent 30%);
-  animation: rotate 8s linear infinite;
-}
-
-@keyframes rotate {
-  to { transform: rotate(360deg); }
-}
-
-.heroCardInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 16px;
-  z-index: 1;
-}
-
-.heroCardIcon {
-  font-size: 4rem;
-  color: var(--gold-primary);
-  animation: sparkle 3s ease infinite;
-}
-
-.heroCardTitle {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  color: var(--gold-primary);
-  font-weight: 700;
-}
-
-.heroCardSub {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .priceSection {
   padding-top: 0;
-  margin-top: -40px;
+  margin-top: -60px;
   position: relative;
   z-index: 10;
 }
@@ -153,174 +122,278 @@
 }
 
 .catBox {
-  padding: 12px 24px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-subtle);
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition: all var(--transition-fast);
+  padding: 14px 32px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-weight: 500;
+  color: #a09d94;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
 }
 
 .catBox:hover {
-  background: var(--gold-muted);
-  color: var(--gold-primary);
-  border-color: var(--border-gold);
-  transform: translateY(-2px);
+  background: rgba(212, 175, 55, 0.1);
+  color: #d4af37;
+  border-color: rgba(212, 175, 55, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
 }
 
 .productsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 30px;
 }
 
 .viewAll {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .trustSection {
-  background: linear-gradient(180deg, transparent, rgba(22, 33, 62, 0.3), transparent);
+  background: linear-gradient(180deg, #0a0a0f, #111118, #0a0a0f);
+  position: relative;
+}
+
+.trustSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
 }
 
 .trustCard {
   text-align: center;
-  padding: 32px 24px;
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.trustCard:hover {
+  transform: translateY(-10px);
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(212, 175, 55, 0.05);
 }
 
 .trustIcon {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
+  font-size: 3rem;
+  margin-bottom: 24px;
+  display: inline-block;
+  padding: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
 }
 
 .trustCard h4 {
-  margin-bottom: 8px;
-  color: var(--gold-primary);
+  margin-bottom: 12px;
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
 }
 
 .trustCard p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  color: #8a8780;
+  line-height: 1.6;
 }
 
 .servicesBanner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(212, 175, 55, 0.1));
-  border: 1px solid var(--border-gold);
-  padding: 48px;
+  background: url('https://images.unsplash.com/photo-1599643478524-fb66f70d00ed?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 60px;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+.servicesBanner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10, 10, 15, 0.95), rgba(10, 10, 15, 0.8));
+  z-index: 1;
+}
+
+.sbContent {
+  position: relative;
+  z-index: 2;
+  flex: 1;
 }
 
 .sbContent h3 {
-  font-size: 2rem;
-  color: var(--gold-primary);
-  margin-bottom: 12px;
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 16px;
+  font-family: 'Playfair Display', serif;
 }
 
 .sbContent p {
   max-width: 600px;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  color: #c4c0b8;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.sbVisual {
+  position: relative;
+  z-index: 2;
+  font-size: 5rem;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
 }
 
 .testimonialSection {
-  background: linear-gradient(180deg, transparent, rgba(26, 26, 46, 0.5), transparent);
+  background: radial-gradient(circle at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
 }
 
 .testimonialCard {
-  padding: 28px;
+  padding: 36px;
   display: flex;
   flex-direction: column;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  position: relative;
+}
+
+.testimonialCard::before {
+  content: '"';
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 6rem;
+  color: rgba(212, 175, 55, 0.1);
+  font-family: serif;
+  line-height: 1;
 }
 
 .stars {
-  color: var(--gold-primary);
+  color: #d4af37;
   font-size: 1.2rem;
-  margin-bottom: 16px;
-  letter-spacing: 2px;
+  margin-bottom: 20px;
+  letter-spacing: 4px;
 }
 
 .testimonialText {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-style: italic;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  margin-bottom: 24px;
+  line-height: 1.8;
+  color: #c4c0b8;
+  margin-bottom: 30px;
   flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .testimonialFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 20px;
 }
 
 .testimonialAuthor {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .avatar {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
+  background: linear-gradient(135deg, #d4af37, #b8960c);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #0a0a0f;
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-weight: 800;
+  font-size: 1.2rem;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
 }
 
 .ctaSection {
-  padding: 80px 0;
+  padding: 100px 0;
+  background: #050508;
 }
 
 .ctaCard {
   text-align: center;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(26, 26, 46, 0.9));
-  border: 1px solid var(--border-gold);
-  border-radius: var(--radius-xl);
-  padding: 64px 48px;
-  box-shadow: var(--shadow-gold);
+  background: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 30px;
+  padding: 80px 40px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10, 10, 15, 0.98), rgba(10, 10, 15, 0.85));
+  z-index: 1;
+}
+
+.ctaCardInner {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .ctaCard h2 {
-  margin-bottom: 12px;
-  color: var(--gold-primary);
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: 3rem;
+  font-family: 'Playfair Display', serif;
 }
 
 .ctaCard p {
-  font-size: 1.1rem;
-  margin-bottom: 28px;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: #c4c0b8;
+  line-height: 1.6;
 }
 
 .ctaButtons {
   display: flex;
-  gap: 14px;
+  gap: 20px;
   justify-content: center;
 }
 
 @media (max-width: 1024px) {
   .productsGrid { grid-template-columns: repeat(2, 1fr); }
-  .servicesBanner { flex-direction: column; text-align: center; gap: 32px; }
-  .sbContent p { margin: 0 auto; }
+  .servicesBanner { flex-direction: column; text-align: center; gap: 40px; padding: 40px; }
+  .sbContent p { margin: 0 auto 30px; }
 }
 
 @media (max-width: 768px) {
-  .heroInner { grid-template-columns: 1fr; text-align: center; gap: 40px; padding-top: 100px; }
-  .heroContent { align-items: center; }
-  .heroDesc { text-align: center; }
-  .heroCtas { justify-content: center; flex-wrap: wrap; }
-  .heroVisual { display: none; }
+  .heroTitle { font-size: 2.5rem; }
+  .heroDesc { font-size: 1rem; }
   .productsGrid { grid-template-columns: 1fr; }
-  .ctaCard { padding: 40px 24px; }
-  .ctaButtons { flex-direction: column; align-items: center; }
-  .heroBadge { margin: 0 auto; }
-  .servicesBanner { padding: 32px 20px; }
+  .ctaCard { padding: 60px 24px; }
+  .ctaCard h2 { font-size: 2rem; }
+  .ctaButtons { flex-direction: column; align-items: stretch; }
+  .servicesBanner { padding: 30px 20px; }
+  .sbContent h3 { font-size: 2rem; }
 }
