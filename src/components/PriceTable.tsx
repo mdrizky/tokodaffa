@@ -24,10 +24,12 @@ export default function PriceTable({ initialPrices }: { initialPrices: any }) {
       minimumFractionDigits: 0 
     }).format(price);
 
-  const lastUpdated = new Date(initialPrices.last_updated).toLocaleDateString(lang === 'id' ? "id-ID" : "en-US", {
+  const lastUpdated = new Date(initialPrices.meta?.timestamp || initialPrices.last_updated || Date.now()).toLocaleDateString(lang === 'id' ? "id-ID" : "en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
   });
 
   return (
@@ -35,7 +37,7 @@ export default function PriceTable({ initialPrices }: { initialPrices: any }) {
       <div className={styles.header}>
         <div className={styles.titleWrap}>
           <span className={styles.icon}>📈</span>
-          <h2 className={styles.title}>{dict.nav_prices}</h2>
+          <h2 className={styles.title}>{dict.nav_prices} (Real-Time)</h2>
         </div>
         <div className={styles.updatedBadge}>
           <span className={styles.pulse}></span>
@@ -51,6 +53,15 @@ export default function PriceTable({ initialPrices }: { initialPrices: any }) {
             <div className={styles.perGram}>{lang === 'id' ? 'per gram' : 'per gram'}</div>
           </div>
         ))}
+        {initialPrices.buyback && (
+          <div className={`${styles.priceCard} ${styles.buybackCard}`}>
+            <div className={styles.kadarBadge} style={{ background: 'linear-gradient(135deg, #ef4444, #991b1b)' }}>
+              {lang === 'id' ? 'Buyback (Terima)' : 'Buyback Rate'}
+            </div>
+            <div className={styles.priceValue}>{formatPrice(initialPrices.buyback)}</div>
+            <div className={styles.perGram}>{lang === 'id' ? 'estimasi terima' : 'est. buyback'}</div>
+          </div>
+        )}
       </div>
 
       <div className={styles.footer}>

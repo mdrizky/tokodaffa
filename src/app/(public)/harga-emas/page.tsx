@@ -4,24 +4,22 @@ import styles from "./page.module.css";
 import PriceTable from "@/components/PriceTable";
 import Calculator from "@/components/Calculator";
 import { getGoldPrices } from "@/lib/dataFetch";
+import { useGoldPrice } from "@/hooks/useGoldPrice";
 import { useLanguage } from "@/lib/i18n";
 import { useState, useEffect } from "react";
 
 export default function HargaEmasPage() {
   const { dict, lang } = useLanguage();
-  const [goldPrices, setGoldPrices] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [loadingInitial, setLoadingInitial] = useState(true);
+  const { data: realTimeData, loading: goldLoading } = useGoldPrice();
 
   useEffect(() => {
-    async function load() {
-      const g = await getGoldPrices();
-      setGoldPrices(g);
-      setLoading(false);
-    }
-    load();
+    setLoadingInitial(false);
   }, []);
 
-  if (loading) return <div style={{ padding: '100px 0', textAlign: 'center' }}>Loading...</div>;
+  if (loadingInitial || goldLoading) return <div style={{ padding: '100px 0', textAlign: 'center' }}>Loading...</div>;
+
+  const goldPrices = realTimeData || { prices: {} };
 
   return (
     <div className={styles.page}>

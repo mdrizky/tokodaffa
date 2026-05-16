@@ -5,8 +5,9 @@ import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard";
 import PriceTable from "@/components/PriceTable";
 import Calculator from "@/components/Calculator";
-import { getProducts, getGoldPrices } from "@/lib/dataFetch";
+import { getProducts } from "@/lib/dataFetch";
 import { getStoreInfo } from "@/lib/storeFetch";
+import { useGoldPrice } from "@/hooks/useGoldPrice";
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronRight, Star, ShieldCheck, Diamond, Gem, Coins, ArrowUpRight, Clock, Award, Building } from "lucide-react";
@@ -32,24 +33,26 @@ const faqs = [
 
 export default function HomePage() {
   const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [loadingInitial, setLoadingInitial] = useState(true);
+  
+  // Real-time hook for gold prices
+  const { data: realTimeGoldData, loading: goldLoading } = useGoldPrice();
 
   useEffect(() => {
     async function load() {
       try {
         const p = await getProducts();
-        const g = await getGoldPrices();
         const s = await getStoreInfo();
-        setData({ products: p || [], goldPrices: g, storeInfo: s });
+        setData({ products: p || [], storeInfo: s });
       } catch (e) {
         console.error(e);
       }
-      setLoading(false);
+      setLoadingInitial(false);
     }
     load();
   }, []);
 
-  if (loading) return (
+  if (loadingInitial || goldLoading) return (
     <div className={styles.premiumLoading}>
       <div className={styles.pulseLogo}>
         <img src="/logo.png" alt="LUXGOLD" />
@@ -58,7 +61,8 @@ export default function HomePage() {
     </div>
   );
 
-  const { products = [], goldPrices, storeInfo } = data || {};
+  const { products = [], storeInfo } = data || {};
+  const goldPrices = realTimeGoldData || { prices: {} };
   const featuredProducts = products.filter((p: any) => p.featured).slice(0, 4);
 
   return (
@@ -201,7 +205,10 @@ export default function HomePage() {
             <h2>Wealth Preservation</h2>
             <p>Plan your precious metal investments with our realtime synchronized pricing engine and highly accurate calculator.</p>
           </div>
-          <Calculator initialPrices={goldPrices} />
+          <div className={styles.investmentGrid}>
+            <PriceTable initialPrices={goldPrices} />
+            <Calculator initialPrices={goldPrices} />
+          </div>
         </div>
       </section>
 
