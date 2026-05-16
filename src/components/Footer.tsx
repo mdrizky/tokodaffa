@@ -31,11 +31,7 @@ export default function Footer() {
           {/* Brand */}
           <div className={styles.brand}>
             <div className={styles.logo}>
-              <span className={styles.logoIcon}>◆</span>
-              <span>
-                {storeInfo?.name?.split(storeInfo?.logo_highlight || 'Daffa')[0] || 'Toko'}
-                <span className={styles.logoGold}>{storeInfo?.logo_highlight || 'Daffa'}</span>
-              </span>
+              <img src="/logo.png" alt="Toko Mas Daffa" style={{ height: '60px', width: 'auto', marginBottom: '16px' }} />
             </div>
             <p className={styles.description}>{dict.footer_description}</p>
             <div className={styles.socials}>

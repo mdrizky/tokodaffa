@@ -84,3 +84,18 @@ CREATE POLICY "Store settings are viewable by everyone."
 
 -- Supaya Vercel API (menggunakan service_role atau authenticated route handler) bisa UPDATE tanpa RLS untuk admin
 -- Tapi untuk saat ini, kita bisa bypass RLS jika query dilakukan dengan Server Components / API routes yang memakai SSR dengan proper key.
+
+-- Buat tabel untuk Admin PIN Login
+CREATE TABLE admin_users (
+  id SERIAL PRIMARY KEY,
+  pin VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Masukkan PIN default awal
+INSERT INTO admin_users (pin) VALUES ('240708daffa');
+
+ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Admin PIN viewable by everyone for login validation"
+  ON admin_users FOR SELECT
+  USING ( true );

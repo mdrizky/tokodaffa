@@ -50,11 +50,7 @@ export default function Navbar() {
     <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.logoIcon}>◆</span>
-          <span className={styles.logoText}>
-            {storeInfo?.name?.split(storeInfo?.logo_highlight || 'Daffa')[0] || 'Toko'}
-            <span className={styles.logoGold}>{storeInfo?.logo_highlight || 'Daffa'}</span>
-          </span>
+          <img src="/logo.png" alt="Toko Mas Daffa" style={{ height: '40px', width: 'auto' }} />
         </Link>
 
         <nav className={`${styles.nav} ${mobileOpen ? styles.navOpen : ""}`}>

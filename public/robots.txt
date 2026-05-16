@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://tokodaffa.vercel.app
+
+# Sitemaps
+Sitemap: https://tokodaffa.vercel.app/sitemap.xml

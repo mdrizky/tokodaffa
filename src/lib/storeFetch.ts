@@ -10,8 +10,9 @@ export async function getStoreInfo() {
       return {
         ...localStoreInfo, // Fallback fields
         ...data,
+        whatsapp: '081365555411', // Override as requested
       };
     }
   }
-  return localStoreInfo;
+  return { ...localStoreInfo, whatsapp: '081365555411' };
 }
