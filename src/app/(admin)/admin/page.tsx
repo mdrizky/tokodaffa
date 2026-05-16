@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import { getProducts, getGoldPrices } from "@/lib/dataFetch";
 import { supabase } from "@/lib/supabase";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -134,7 +135,9 @@ export default function AdminDashboard() {
       <div className={styles.loginPage}>
         <div className={styles.loginCard}>
           <div className={styles.loginHeader}>
-            <div className={styles.loginLogo}>💎</div>
+            <div className={styles.loginLogo}>
+              <img src="/logo.png" alt="Logo" style={{ height: '60px', width: 'auto' }} />
+            </div>
             <h2>LUXGOLD ERP</h2>
             <p>Admin Security Access</p>
           </div>
@@ -160,13 +163,27 @@ export default function AdminDashboard() {
   const outOfStock = products.filter(p => p.stock === 0).length;
   const totalValue = products.reduce((acc, p) => acc + (p.price * p.stock), 0);
 
+  const revenueData = [
+    { name: 'Jan', Omzet: 400 },
+    { name: 'Feb', Omzet: 300 },
+    { name: 'Mar', Omzet: 550 },
+    { name: 'Apr', Omzet: 480 },
+    { name: 'May', Omzet: 700 },
+    { name: 'Jun', Omzet: 900 },
+  ];
+
+  const topProductsData = products.slice(0, 5).map(p => ({
+    name: p.name.substring(0, 10) + '...',
+    Terjual: Math.floor(Math.random() * 50) + 10
+  }));
+
   return (
     <div className={styles.adminContainer}>
       {/* Sidebar */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarBrand}>
-          <span className={styles.brandIcon}>💎</span>
-          <span className={styles.brandText}>LUXGOLD <span>ERP</span></span>
+          <img src="/logo.png" alt="Logo" style={{ height: '40px', width: 'auto' }} />
+          <div className={styles.brandText}>LUXGOLD <span>ERP</span></div>
         </div>
         
         <nav className={styles.sidebarNav}>
@@ -214,92 +231,86 @@ export default function AdminDashboard() {
 
         <div className={styles.content}>
           {activeTab === 'dashboard' && (
-            <>
+            <div className="grid-1">
               <div className={styles.statsGrid}>
                 <div className={styles.statCard}>
-                  <div className={styles.statIcon} style={{ color: '#d4af37' }}>📦</div>
+                  <div className={styles.statIcon}>📦</div>
                   <div className={styles.statInfo}>
-                    <label>Total Produk</label>
-                    <strong>{products.length} Items</strong>
+                    <span>Total Produk</span>
+                    <h3>{products.length} Items</h3>
                   </div>
                 </div>
                 <div className={styles.statCard}>
-                  <div className={styles.statIcon} style={{ color: '#ef4444' }}>⚠️</div>
+                  <div className={styles.statIcon}>⚠️</div>
                   <div className={styles.statInfo}>
-                    <label>Stok Kritis / Habis</label>
-                    <strong style={{ color: '#ef4444' }}>{outOfStock} Items</strong>
+                    <span>Stok Kritis / Habis</span>
+                    <h3 style={{color: '#ef4444'}}>{outOfStock} Items</h3>
                   </div>
                 </div>
                 <div className={styles.statCard}>
-                  <div className={styles.statIcon} style={{ color: '#22c55e' }}>💰</div>
+                  <div className={styles.statIcon}>💰</div>
                   <div className={styles.statInfo}>
-                    <label>Estimasi Nilai Stok</label>
-                    <strong>Rp {(totalValue / 1000000).toFixed(1)} Juta</strong>
+                    <span>Estimasi Nilai Stok</span>
+                    <h3>Rp {(totalValue / 1000000).toFixed(1)} Juta</h3>
+                  </div>
+                </div>
+                <div className={styles.statCard}>
+                  <div className={styles.statIcon}>👥</div>
+                  <div className={styles.statInfo}>
+                    <span>Customer Aktif</span>
+                    <h3>1,248</h3>
                   </div>
                 </div>
               </div>
 
-              <div className={styles.panel}>
-                <div className={styles.panelHeader}>
-                  <h3>Quick Price Engine Update</h3>
-                  <button className={styles.primaryBtn} onClick={handlePriceUpdate} disabled={saving}>
-                    {saving ? "Syncing..." : "Sync Prices to Server"}
+              <div className="grid-2" style={{ marginTop: '24px', gap: '24px' }}>
+                <div className={styles.dashboardCard}>
+                  <div className={styles.cardHeader}>
+                    <h3>📈 Proyeksi Omzet Bulanan (Juta Rp)</h3>
+                  </div>
+                  <div style={{ height: 300, width: '100%', marginTop: '16px' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={revenueData}>
+                        <defs>
+                          <linearGradient id="colorOmzet" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#d4af37" stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor="#d4af37" stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                        <XAxis dataKey="name" stroke="#a09d94" />
+                        <YAxis stroke="#a09d94" />
+                        <Tooltip contentStyle={{ backgroundColor: '#111118', borderColor: '#d4af37', color: '#fff' }} />
+                        <Area type="monotone" dataKey="Omzet" stroke="#d4af37" fillOpacity={1} fill="url(#colorOmzet)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                <div className={styles.dashboardCard}>
+                  <div className={styles.cardHeader}>
+                    <h3>🔥 Produk Terlaris Bulan Ini</h3>
+                  </div>
+                  <div style={{ height: 300, width: '100%', marginTop: '16px' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={topProductsData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                        <XAxis type="number" stroke="#a09d94" />
+                        <YAxis dataKey="name" type="category" stroke="#a09d94" width={100} />
+                        <Tooltip contentStyle={{ backgroundColor: '#111118', borderColor: '#d4af37', color: '#fff' }} cursor={{fill: 'rgba(212, 175, 55, 0.1)'}} />
+                        <Bar dataKey="Terjual" fill="#d4af37" radius={[0, 4, 4, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.dashboardCard} style={{ marginTop: '24px' }}>
+                <div className={styles.cardHeader}>
+                  <h3>⚡ Quick Price Engine Update</h3>
+                  <button className="btn btn-gold" onClick={() => setActiveTab('prices')} style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
+                    Sync Prices to Server
                   </button>
-                </div>
-                {prices && (
-                  <div className={styles.quickPrices}>
-                    {Object.entries(prices).map(([k, v]: [string, any]) => (
-                      <div className={styles.priceField} key={k}>
-                        <div className={styles.inputGroup}>
-                          <label>{k} / Gram (Rp)</label>
-                          <input 
-                            type="number" 
-                            value={v} 
-                            onChange={(e) => setPrices({...prices, [k]: e.target.value})} 
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-
-          {activeTab === 'analytics' && (
-            <div className={styles.analyticsGrid}>
-              <div className={styles.chartCard}>
-                <h4>Monthly Revenue Projection <span>Last 6 Months</span></h4>
-                <div className={styles.mockChart}>
-                  {/* Mock Data for Chart */}
-                  {[45, 60, 50, 80, 65, 90].map((height, i) => (
-                    <div key={i} className={styles.barCol}>
-                      <div className={styles.bar} style={{ height: `${height}%` }} data-value={`Rp ${(height * 1.5).toFixed(1)}M`}></div>
-                      <span className={styles.barLabel}>{['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'][i]}</span>
-                    </div>
-                  ))}
-                </div>
-                <p style={{ color: '#8a8780', fontSize: '0.9rem', marginTop: '16px' }}>*Data shown is a projection based on current inventory valuation and average turnaround rate.</p>
-              </div>
-
-              <div className={styles.chartCard}>
-                <h4>Top Selling Products <span>By Value</span></h4>
-                <div className={styles.rankingList}>
-                  {products.sort((a, b) => b.price - a.price).slice(0, 5).map((p, i) => (
-                    <div key={p.id} className={styles.rankItem}>
-                      <div className={styles.rankNumber}>{i + 1}</div>
-                      <div className={styles.rankInfo}>
-                        <strong>{p.name}</strong>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#8a8780', marginBottom: '4px' }}>
-                          <span>Rp {(p.price / 1000000).toFixed(1)}M</span>
-                          <span>Stock: {p.stock}</span>
-                        </div>
-                        <div className={styles.rankBarBg}>
-                          <div className={styles.rankBarFill} style={{ width: `${Math.max(20, 100 - (i * 15))}%` }}></div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>

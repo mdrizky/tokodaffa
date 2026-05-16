@@ -2,9 +2,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 export const metadata: Metadata = {
   title: "Toko Mas Daffa - Jewelry Premium & Emas Berkualitas",
@@ -55,10 +52,7 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          <Navbar />
           {children}
-          <Footer />
-          <WhatsAppFloat />
         </Providers>
       </body>
     </html>

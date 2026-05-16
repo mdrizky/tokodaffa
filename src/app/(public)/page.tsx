@@ -7,66 +7,88 @@ import PriceTable from "@/components/PriceTable";
 import Calculator from "@/components/Calculator";
 import { getProducts, getGoldPrices } from "@/lib/dataFetch";
 import { getStoreInfo } from "@/lib/storeFetch";
-import { useLanguage } from "@/lib/i18n";
 import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronRight, Star, ShieldCheck, Diamond, Gem, Coins, ArrowUpRight, Clock, Award, Building } from "lucide-react";
 
-const trustItems = (dict: any) => [
-  { icon: "💎", title: "Premium Quality", desc: "Every piece is crafted with precision, complete with official certificates of authenticity." },
-  { icon: "📈", title: "Realtime Pricing", desc: "Our prices update daily directly from the global gold market standards." },
-  { icon: "🔄", title: "100% Buyback", desc: "Guaranteed buyback policy with fair and transparent market rates." },
-  { icon: "⚖️", title: "Certified Precision", desc: "We use perfectly calibrated digital scales certified by national metrology." },
+const trustItems = [
+  { icon: <ShieldCheck size={32} />, title: "Lifetime Guarantee", desc: "Every piece comes with an ironclad lifetime warranty." },
+  { icon: <Clock size={32} />, title: "Realtime Pricing", desc: "Synchronized directly with global gold markets." },
+  { icon: <Coins size={32} />, title: "100% Buyback", desc: "Transparent, guaranteed buyback at fair market rates." },
+  { icon: <Award size={32} />, title: "Certified Masters", desc: "Crafted by award-winning artisans." },
 ];
 
 const testimonials = [
-  { name: "Sarah Wijaya", text: "I've been collecting their 24K pieces since 2018. The craftsmanship is simply unparalleled. A true luxury experience.", rating: 5, time: "2 days ago" },
-  { name: "Ahmad Malik", text: "The investment gold bars come with perfect certification. Their buyback process is instant and highly professional.", rating: 5, time: "1 week ago" },
-  { name: "Dina Pratiwi", text: "Ordered a custom 18K diamond wedding ring. The result exceeded our expectations. The attention to detail is stunning.", rating: 5, time: "3 weeks ago" },
+  { name: "Sarah Wijaya", role: "Collector", text: "I've been collecting their 24K pieces since 2018. The craftsmanship is simply unparalleled. A true luxury experience.", rating: 5 },
+  { name: "Ahmad Malik", role: "Investor", text: "The investment gold bars come with perfect certification. Their buyback process is instant and highly professional.", rating: 5 },
+  { name: "Dina Pratiwi", role: "Bride", text: "Ordered a custom 18K diamond wedding ring. The result exceeded our expectations. The attention to detail is stunning.", rating: 5 },
+];
+
+const faqs = [
+  { q: "Do you ship internationally?", a: "Yes, we provide fully insured premium international shipping via FedEx Priority." },
+  { q: "Are your diamonds conflict-free?", a: "Absolutely. All our gemstones are Kimberley Process certified and ethically sourced." },
+  { q: "How does the custom 3D process work?", a: "You design your piece online. Our masters then cast it in your chosen precious metal and deliver it within 14 days." },
 ];
 
 export default function HomePage() {
-  const { dict } = useLanguage();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
-      const p = await getProducts();
-      const g = await getGoldPrices();
-      const s = await getStoreInfo();
-      setData({ products: p, goldPrices: g, storeInfo: s });
+      try {
+        const p = await getProducts();
+        const g = await getGoldPrices();
+        const s = await getStoreInfo();
+        setData({ products: p || [], goldPrices: g, storeInfo: s });
+      } catch (e) {
+        console.error(e);
+      }
       setLoading(false);
     }
     load();
   }, []);
 
   if (loading) return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a0a0f', color: '#d4af37' }}>
-      <div style={{ animation: 'pulse 2s infinite', fontSize: '2rem' }}>💎 LUXGOLD...</div>
+    <div className={styles.premiumLoading}>
+      <div className={styles.pulseLogo}>
+        <img src="/logo.png" alt="LUXGOLD" />
+      </div>
+      <p>ENTERING THE VAULT...</p>
     </div>
   );
 
-  const { products, goldPrices, storeInfo } = data;
-  const featuredProducts = products.filter((p: any) => p.featured).slice(0, 6);
+  const { products = [], goldPrices, storeInfo } = data || {};
+  const featuredProducts = products.filter((p: any) => p.featured).slice(0, 4);
 
   return (
     <>
-      {/* Hero Section */}
-      <section className={styles.hero}>
+      {/* 1. LUXURY HERO SECTION */}
+      <section className={styles.heroNew}>
+        <div className={styles.heroOverlay}></div>
         <div className={styles.heroParticles}>
-          {Array.from({ length: 40 }).map((_, i) => (
-            <div key={i} className={styles.particle} style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-            }} />
+          {Array.from({ length: 50 }).map((_, i) => (
+            <motion.div 
+              key={i} 
+              className={styles.particle} 
+              initial={{ y: "100vh", opacity: 0 }}
+              animate={{ y: "-10vh", opacity: [0, 1, 0] }}
+              transition={{ duration: Math.random() * 5 + 5, repeat: Infinity, delay: Math.random() * 5 }}
+              style={{ left: `${Math.random() * 100}%` }}
+            />
           ))}
         </div>
-        <div className={`container ${styles.heroInner}`}>
-          <div className={styles.heroContent}>
+        <div className="container relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className={styles.heroContent}
+          >
             <div className={styles.heroBadge}>
-              <span className={styles.heroBadgeIcon}>✦</span>
-              Pinnacle of Luxury Jewelry
-              <span className={styles.heroBadgeIcon}>✦</span>
+              <Diamond size={14} className="text-gold" />
+              <span>Pinnacle of Luxury Jewelry</span>
+              <Diamond size={14} className="text-gold" />
             </div>
             <h1 className={styles.heroTitle}>
               Elegance Forged in <span className="text-gold-gradient">Eternity</span>
@@ -75,66 +97,149 @@ export default function HomePage() {
               Discover our exclusive collection of premium fine jewelry. Crafted for those who appreciate the absolute pinnacle of luxury, perfection, and timeless beauty.
             </p>
             <div className={styles.heroCtas}>
-              <Link href="/produk" className="btn btn-gold" style={{ padding: '16px 40px', fontSize: '1.1rem' }}>
+              <Link href="/produk" className="btn-premium">
                 Explore Collection
               </Link>
-              <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20tertarik%20dengan%20koleksi%20exclusive%20Anda`} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '16px 40px', fontSize: '1.1rem' }}>
-                Private Consultation
-              </a>
+              <Link href="/builder" className="btn-outline-premium">
+                <Gem size={18} /> Bespoke 3D Atelier
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 2. REALTIME GOLD PRICE (Ticker format) */}
+      <div className={styles.tickerTape}>
+        <div className={styles.tickerContent}>
+          {Object.entries(goldPrices?.prices || {}).map(([k, v]: [string, any]) => (
+            <span key={k} className={styles.tickerItem}>
+              <span className={styles.tickerLabel}>{k}</span>
+              <span className={styles.tickerPrice}>Rp {Number(v).toLocaleString()}/g</span>
+              <span className={styles.tickerArrow}>▲</span>
+            </span>
+          ))}
+          {Object.entries(goldPrices?.prices || {}).map(([k, v]: [string, any]) => (
+            <span key={k+"dup"} className={styles.tickerItem}>
+              <span className={styles.tickerLabel}>{k}</span>
+              <span className={styles.tickerPrice}>Rp {Number(v).toLocaleString()}/g</span>
+              <span className={styles.tickerArrow}>▲</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* 3. TRENDING CATEGORIES */}
+      <section className={styles.sectionPremium}>
+        <div className="container">
+          <div className={styles.grid4}>
+            <Link href="/produk?cat=cincin" className={styles.catCard}>
+              <div className={styles.catImage}>💍</div>
+              <h3>Exclusive Rings</h3>
+            </Link>
+            <Link href="/produk?cat=gelang" className={styles.catCard}>
+              <div className={styles.catImage}>⭕</div>
+              <h3>Bracelets</h3>
+            </Link>
+            <Link href="/produk?cat=kalung" className={styles.catCard}>
+              <div className={styles.catImage}>📿</div>
+              <h3>Necklaces</h3>
+            </Link>
+            <Link href="/produk?cat=batangan" className={styles.catCard}>
+              <div className={styles.catImage}>💰</div>
+              <h3>Precious Metals</h3>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. FEATURED COLLECTIONS */}
+      <section className={styles.sectionPremiumDark}>
+        <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2>Masterpiece Collection</h2>
+            <p>Curated selections of our finest work. Each piece tells a story of unparalleled craftsmanship.</p>
+          </div>
+          <div className={styles.productGridNew}>
+            {featuredProducts.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link href="/produk" className="btn-outline-premium">View Full Catalog <ArrowUpRight size={18}/></Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. CUSTOM JEWELRY BUILDER PREVIEW */}
+      <section className={styles.builderPreview}>
+        <div className="container">
+          <div className={styles.builderSplit}>
+            <div className={styles.builderText}>
+              <div className={styles.heroBadge}><span>Interactive 3D Studio</span></div>
+              <h2>Design Your Own Legacy</h2>
+              <p>Step into our virtual atelier. Choose your precious metal, select your flawless gemstone, and engrave your eternal message in real-time 3D.</p>
+              <ul className={styles.builderFeatures}>
+                <li><CheckCircle /> 360° Real-time Rendering</li>
+                <li><CheckCircle /> Instant Price Calculation</li>
+                <li><CheckCircle /> 24K, Rose Gold, Platinum Options</li>
+                <li><CheckCircle /> Diamond, Ruby, Sapphire, Emerald</li>
+              </ul>
+              <Link href="/builder" className="btn-premium mt-8">Enter 3D Studio</Link>
+            </div>
+            <div className={styles.builderVisual}>
+              <div className={styles.floatingRing}>💍</div>
+              <div className={styles.glowEffect}></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Price Ticker */}
-      <section className={`section ${styles.priceSection}`}>
+      {/* 6. INVESTMENT GOLD SECTION */}
+      <section className={styles.sectionPremium}>
         <div className="container">
-          <PriceTable initialPrices={goldPrices} />
+          <div className={styles.sectionHeader}>
+            <h2>Wealth Preservation</h2>
+            <p>Plan your precious metal investments with our realtime synchronized pricing engine and highly accurate calculator.</p>
+          </div>
+          <Calculator initialPrices={goldPrices} />
         </div>
       </section>
 
-      {/* Categories Fast Link */}
-      <section className="section" style={{ paddingTop: 0 }}>
+      {/* 7. STATISTICS COUNTER */}
+      <section className={styles.statsSection}>
         <div className="container">
-          <div className={styles.categoryWrap}>
-            <Link href="/produk?cat=cincin" className={styles.catBox}>Exclusive Rings</Link>
-            <Link href="/produk?cat=gelang" className={styles.catBox}>Bracelets</Link>
-            <Link href="/produk?cat=kalung" className={styles.catBox}>Necklaces</Link>
-            <Link href="/produk?cat=batangan" className={styles.catBox}>Precious Metals</Link>
-            <Link href="/layanan" className={styles.catBox} style={{ borderColor: '#d4af37', color: '#d4af37' }}>Custom Atelier ✨</Link>
+          <div className={styles.grid4}>
+            <div className={styles.statBox}>
+              <h2>10K+</h2>
+              <p>Happy Clients</p>
+            </div>
+            <div className={styles.statBox}>
+              <h2>500+</h2>
+              <p>Exclusive Designs</p>
+            </div>
+            <div className={styles.statBox}>
+              <h2>25</h2>
+              <p>Years of Heritage</p>
+            </div>
+            <div className={styles.statBox}>
+              <h2>100%</h2>
+              <p>Certified Authenticity</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="section">
+      {/* 8. WHY CHOOSE US (TRUST) */}
+      <section className={styles.sectionPremiumDark}>
         <div className="container">
-          <div className="section-header" style={{ textAlign: 'center' }}>
-            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '2.5rem', color: '#fff', marginBottom: '16px' }}>Masterpiece Collection</h2>
-            <p style={{ color: '#a09d94', maxWidth: '600px', margin: '0 auto' }}>Curated selections of our finest work. Each piece tells a story of unparalleled craftsmanship.</p>
+          <div className={styles.sectionHeader}>
+            <h2>The Gold Standard</h2>
+            <p>We don't just sell jewelry; we provide a legacy. Discover why generations trust us.</p>
           </div>
-          <div className={styles.productsGrid}>
-            {featuredProducts.map((product: any) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <div className={styles.viewAll}>
-            <Link href="/produk" className="btn btn-outline" style={{ padding: '14px 40px' }}>View Full Catalog</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className={`section ${styles.trustSection}`}>
-        <div className="container">
-          <div className="section-header" style={{ textAlign: 'center' }}>
-            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '2.5rem', color: '#d4af37', marginBottom: '16px' }}>The Gold Standard</h2>
-            <p style={{ color: '#a09d94', maxWidth: '600px', margin: '0 auto' }}>We don't just sell jewelry; we provide a legacy. Discover why generations trust us.</p>
-          </div>
-          <div className="grid-4" style={{ gap: '30px' }}>
-            {trustItems(dict).map((item, i) => (
-              <div key={i} className={styles.trustCard}>
-                <div className={styles.trustIcon}>{item.icon}</div>
+          <div className={styles.grid4}>
+            {trustItems.map((item, i) => (
+              <div key={i} className={styles.trustCardNew}>
+                <div className={styles.trustIconNew}>{item.icon}</div>
                 <h4>{item.title}</h4>
                 <p>{item.desc}</p>
               </div>
@@ -143,52 +248,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Banner */}
-      <section className="section">
+      {/* 9. TESTIMONIALS */}
+      <section className={styles.sectionPremium}>
         <div className="container">
-          <div className={styles.servicesBanner}>
-            <div className={styles.sbContent}>
-              <h3>Bespoke Custom Atelier</h3>
-              <p>Bring your deepest imaginations to life. Our master artisans are ready to craft a one-of-a-kind masterpiece tailored exclusively for you, using only the finest ethically sourced gems and precious metals.</p>
-              <Link href="/layanan" className="btn btn-gold" style={{ padding: '14px 32px' }}>Book an Appointment</Link>
-            </div>
-            <div className={styles.sbVisual}>
-               💎
-            </div>
+          <div className={styles.sectionHeader}>
+            <h2>Voices of Elegance</h2>
+            <p>Hear from our esteemed clientele about their experiences with our craftsmanship.</p>
           </div>
-        </div>
-      </section>
-
-      {/* Calculator */}
-      <section className="section">
-        <div className="container">
-          <div className="section-header" style={{ textAlign: 'center' }}>
-            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '2.5rem', color: '#fff', marginBottom: '16px' }}>Investment Calculator</h2>
-            <p style={{ color: '#a09d94', maxWidth: '600px', margin: '0 auto' }}>Plan your precious metal investments with our realtime synchronized pricing engine.</p>
-          </div>
-          <Calculator initialPrices={goldPrices} />
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className={`section ${styles.testimonialSection}`}>
-        <div className="container">
-          <div className="section-header" style={{ textAlign: 'center' }}>
-            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '2.5rem', color: '#fff', marginBottom: '16px' }}>Voices of Elegance</h2>
-            <p style={{ color: '#a09d94', maxWidth: '600px', margin: '0 auto' }}>Hear from our esteemed clientele about their experiences with our craftsmanship.</p>
-          </div>
-          <div className="grid-3" style={{ gap: '30px' }}>
+          <div className={styles.grid3}>
             {testimonials.map((t, i) => (
-              <div key={i} className={styles.testimonialCard}>
-                <div className={styles.stars}>{"★".repeat(t.rating)}</div>
-                <p className={styles.testimonialText}>{t.text}</p>
-                <div className={styles.testimonialFooter}>
-                  <div className={styles.testimonialAuthor}>
-                    <div className={styles.avatar}>{t.name[0]}</div>
-                    <div>
-                       <span style={{ display: 'block', fontWeight: 600, color: '#fff' }}>{t.name}</span>
-                       <span style={{ fontSize: '0.8rem', color: '#8a8780' }}>Verified Client</span>
-                    </div>
+              <div key={i} className={styles.testimonialCardNew}>
+                <div className={styles.stars}>
+                  {Array.from({length: 5}).map((_, j) => <Star key={j} size={16} fill="#d4af37" color="#d4af37" />)}
+                </div>
+                <p>"{t.text}"</p>
+                <div className={styles.tAuthor}>
+                  <div className={styles.tAvatar}>{t.name[0]}</div>
+                  <div>
+                    <h5>{t.name}</h5>
+                    <span>{t.role}</span>
                   </div>
                 </div>
               </div>
@@ -197,22 +275,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Strong CTA Action */}
-      <section className={styles.ctaSection}>
+      {/* 10. LUXURY BRAND & RESELLER */}
+      <section className={styles.brandSection}>
+        <div className={styles.brandOverlay}></div>
+        <div className="container relative z-10 text-center">
+          <Building size={48} className="text-gold mx-auto mb-6" />
+          <h2 style={{ fontSize: '3rem', fontFamily: '"Playfair Display", serif', marginBottom: '20px' }}>Join Our Empire</h2>
+          <p style={{ maxWidth: '600px', margin: '0 auto', color: '#ccc', marginBottom: '40px', fontSize: '1.1rem' }}>
+            Become a part of the Toko Mas Daffa legacy. We offer exclusive reseller and affiliate programs for high-net-worth individuals and businesses.
+          </p>
+          <a href={`https://wa.me/${storeInfo?.whatsapp}?text=Halo%20saya%20tertarik%20dengan%20program%20reseller`} target="_blank" className="btn-premium">Inquire Now</a>
+        </div>
+      </section>
+
+      {/* 11. FAQ */}
+      <section className={styles.sectionPremium}>
         <div className="container">
-          <div className={styles.ctaCard}>
-            <div className={styles.ctaCardInner}>
-               <h2>Begin Your Legacy</h2>
-               <p>Secure your dream jewelry today or consult your precious metal investment portfolio with our dedicated experts.</p>
-               <div className={styles.ctaButtons}>
-                 <a href={`https://wa.me/${storeInfo.whatsapp}?text=Halo%20TokoDaffa,%20saya%20ingin%20memulai%20investasi%20emas`} target="_blank" rel="noopener noreferrer" className="btn btn-gold" style={{ fontSize: '1.1rem', padding: '16px 40px' }}>
-                   Start Conversation
-                 </a>
-               </div>
-            </div>
+          <div className={styles.sectionHeader}>
+            <h2>Frequently Asked Questions</h2>
+          </div>
+          <div className={styles.faqList}>
+            {faqs.map((faq, i) => (
+              <div key={i} className={styles.faqItem}>
+                <h4>{faq.q}</h4>
+                <p>{faq.a}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
     </>
   );
+}
+
+function CheckCircle() {
+  return <ShieldCheck size={20} color="#d4af37" style={{ display: 'inline', marginRight: '8px' }} />;
 }

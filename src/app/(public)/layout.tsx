@@ -21,11 +21,11 @@ export default function PublicLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
+    <>
       <Navbar />
       <main>{children}</main>
       <Footer />
       <WhatsAppFloat />
-    </Providers>
+    </>
   );
 }
