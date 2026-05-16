@@ -24,6 +24,7 @@ export default function Navbar() {
     { href: "/kalkulator", label: dict.nav_calculator },
     { href: "/layanan", label: dict.nav_services },
     { href: "/tentang", label: dict.nav_about },
+    { href: "/builder", label: "✨ 3D Builder" },
   ];
 
   useEffect(() => {
