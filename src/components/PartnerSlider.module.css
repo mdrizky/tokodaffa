@@ -1,0 +1,136 @@
+.partnerSection {
+  padding: 60px 0;
+  background: var(--bg-secondary);
+  overflow: hidden;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sectionHeader h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.sectionHeader p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.sliderContainer {
+  position: relative;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.sliderContainer::before,
+.sliderContainer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sliderContainer::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-secondary), transparent);
+}
+
+.sliderContainer::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-secondary), transparent);
+}
+
+.sliderTrack {
+  display: flex;
+  gap: 30px;
+  animation: scroll 30s linear infinite;
+  width: max-content;
+}
+
+.sliderTrack:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.33%);
+  }
+}
+
+.partnerCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-card);
+  padding: 16px 24px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+  min-width: 280px;
+}
+
+.partnerCard:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-4px);
+  background: var(--bg-card-hover);
+}
+
+.partnerLogo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  padding: 8px;
+  flex-shrink: 0;
+}
+
+.partnerName {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .partnerSection {
+    padding: 40px 0;
+  }
+
+  .sliderTrack {
+    gap: 20px;
+    animation: scroll 20s linear infinite;
+  }
+
+  .partnerCard {
+    min-width: 240px;
+    padding: 12px 20px;
+    gap: 12px;
+  }
+
+  .partnerLogo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .partnerName {
+    font-size: 0.85rem;
+  }
+
+  .sliderContainer::before,
+  .sliderContainer::after {
+    width: 80px;
+  }
+}

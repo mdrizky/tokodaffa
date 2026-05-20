@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import ProductCard from "@/components/ProductCard";
 import PriceTable from "@/components/PriceTable";
 import Calculator from "@/components/Calculator";
+import PartnerSlider from "@/components/PartnerSlider";
 import { getProducts } from "@/lib/dataFetch";
 import { getStoreInfo } from "@/lib/storeFetch";
 import { useGoldPrice } from "@/hooks/useGoldPrice";
@@ -34,6 +35,7 @@ const faqs = [
 export default function HomePage() {
   const [data, setData] = useState<any>(null);
   const [loadingInitial, setLoadingInitial] = useState(true);
+  const [news, setNews] = useState<any[]>([]);
   
   // Real-time hook for gold prices
   const { data: realTimeGoldData, loading: goldLoading } = useGoldPrice();
@@ -41,9 +43,15 @@ export default function HomePage() {
   useEffect(() => {
     async function load() {
       try {
-        const p = await getProducts();
-        const s = await getStoreInfo();
+        // Fetch data in parallel for better performance
+        const [p, s, newsRes] = await Promise.all([
+          getProducts(),
+          getStoreInfo(),
+          fetch("/api/news").then(res => res.json())
+        ]);
+        
         setData({ products: p || [], storeInfo: s });
+        setNews(newsRes.data || []);
       } catch (e) {
         console.error(e);
       }
@@ -236,6 +244,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 7.5 PARTNERS SLIDER */}
+      <PartnerSlider />
+
       {/* 8. WHY CHOOSE US (TRUST) */}
       <section className={styles.sectionPremiumDark}>
         <div className="container">
@@ -281,6 +292,37 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 9.5 NEWS SECTION */}
+      {news.length > 0 && (
+        <section className={styles.sectionPremiumDark}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <h2>Berita Emas Terkini</h2>
+              <p>Update terbaru seputar harga emas dan industri perhiasan</p>
+            </div>
+            <div className={styles.newsGrid}>
+              {news.slice(0, 3).map((item: any, index: number) => (
+                <div key={index} className={styles.newsCard}>
+                  <div className={styles.newsImage}>
+                    <img src={item.image} alt={item.title} />
+                  </div>
+                  <div className={styles.newsContent}>
+                    <h4>{item.title}</h4>
+                    <p>{item.description}</p>
+                    <Link href="/news" className="btn-outline-premium" style={{ marginTop: '12px', display: 'inline-block', padding: '8px 16px', fontSize: '0.9rem' }}>
+                      Baca Selengkapnya
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link href="/news" className="btn-outline-premium">Lihat Semua Berita <ArrowUpRight size={18}/></Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 10. LUXURY BRAND & RESELLER */}
       <section className={styles.brandSection}>

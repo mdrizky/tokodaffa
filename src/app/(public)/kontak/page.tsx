@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import { getStoreInfo } from "@/lib/storeFetch";
 import { useLanguage } from "@/lib/i18n";
 import { useState, useEffect } from "react";
+import ContactForm from "@/components/ContactForm";
 
 export default function KontakPage() {
   const { dict } = useLanguage();
@@ -77,6 +78,8 @@ export default function KontakPage() {
                 </div>
               </div>
             </div>
+
+            <ContactForm />
           </div>
 
           <div className={styles.map}>

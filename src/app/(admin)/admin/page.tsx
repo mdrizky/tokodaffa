@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { getProducts, getGoldPrices } from "@/lib/dataFetch";
 import { supabase } from "@/lib/supabase";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import partners from "@/data/partners.json";
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,6 +19,9 @@ export default function AdminDashboard() {
   const [storeInfo, setStoreInfo] = useState<any>(null);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const [partnersList, setPartnersList] = useState<any[]>(partners);
+  const [editingPartner, setEditingPartner] = useState<any>(null);
+  const [isAddingPartner, setIsAddingPartner] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -130,6 +134,33 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleSavePartner = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      if (isAddingPartner) {
+        const newPartner = {
+          ...editingPartner,
+          id: partnersList.length + 1
+        };
+        setPartnersList([...partnersList, newPartner]);
+      } else {
+        setPartnersList(partnersList.map(p => p.id === editingPartner.id ? editingPartner : p));
+      }
+      alert("Partner berhasil disimpan!");
+      setEditingPartner(null);
+      setIsAddingPartner(false);
+    } catch (err) {
+      alert("Gagal simpan partner");
+    }
+    setSaving(false);
+  };
+
+  const handleDeletePartner = (id: number) => {
+    if (!confirm("Hapus partner ini secara permanen?")) return;
+    setPartnersList(partnersList.filter(p => p.id !== id));
+  };
+
   if (!isAuthenticated) {
     return (
       <div className={styles.loginPage}>
@@ -199,6 +230,9 @@ export default function AdminDashboard() {
           <button className={activeTab === 'products' ? styles.navActive : ''} onClick={() => setActiveTab('products')}>
             <span className={styles.navIcon}>🛍️</span> Product Management
           </button>
+          <button className={activeTab === 'partners' ? styles.navActive : ''} onClick={() => setActiveTab('partners')}>
+            <span className={styles.navIcon}>🤝</span> Partners & Collaborations
+          </button>
           <button className={activeTab === 'settings' ? styles.navActive : ''} onClick={() => setActiveTab('settings')}>
             <span className={styles.navIcon}>⚙️</span> Store Configuration
           </button>
@@ -220,6 +254,7 @@ export default function AdminDashboard() {
               {activeTab === 'analytics' && 'Customer & Sales Analytics'}
               {activeTab === 'prices' && 'Live Gold Price Engine'}
               {activeTab === 'products' && 'Product Inventory'}
+              {activeTab === 'partners' && 'Partners & Collaborations'}
               {activeTab === 'settings' && 'Store Configuration'}
             </h1>
             <p>Sistem ERP & Manajemen TokoDaffa Gold</p>
@@ -403,6 +438,66 @@ export default function AdminDashboard() {
                         <td>
                           <button onClick={() => { setEditingProduct(p); setIsAddingProduct(false); }} style={{ color: '#60a5fa', marginRight: '16px', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>Edit</button>
                           <button onClick={() => handleDeleteProduct(p.id)} style={{ color: '#f87171', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>Delete</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'partners' && (
+            <div className={styles.panel}>
+              <div className={styles.panelHeader}>
+                <h3>Partners & Collaborations</h3>
+                <button className={styles.primaryBtn} onClick={() => {
+                  setEditingPartner({ name: '', logo: '', website: '' });
+                  setIsAddingPartner(true);
+                }}>+ Tambah Partner</button>
+              </div>
+
+              {editingPartner && (
+                <div className={styles.editPanel}>
+                  <h4>{isAddingPartner ? 'Tambah Partner Baru' : 'Edit Data Partner'}</h4>
+                  <form onSubmit={handleSavePartner} className={styles.editGrid}>
+                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>Nama Partner/Instansi</label><input required value={editingPartner.name} onChange={e => setEditingPartner({...editingPartner, name: e.target.value})} /></div>
+                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>URL Logo</label><input required value={editingPartner.logo} onChange={e => setEditingPartner({...editingPartner, logo: e.target.value})} placeholder="https://example.com/logo.png" /></div>
+                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>Website URL</label><input required value={editingPartner.website} onChange={e => setEditingPartner({...editingPartner, website: e.target.value})} placeholder="https://example.com" /></div>
+                    
+                    <div className={styles.editActions}>
+                      <button type="submit" className={styles.primaryBtn}>{saving ? 'Menyimpan...' : 'Simpan Partner'}</button>
+                      <button type="button" onClick={() => setEditingPartner(null)} className={styles.secondaryBtn}>Batal</button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              <div className={styles.tableWrap}>
+                <table className={styles.adminTable}>
+                  <thead>
+                    <tr>
+                      <th>Logo</th>
+                      <th>Nama Partner</th>
+                      <th>Website</th>
+                      <th>Tindakan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {partnersList.map(p => (
+                      <tr key={p.id}>
+                        <td>
+                          <img src={p.logo} alt={p.name} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'contain', border: '1px solid rgba(212, 175, 55, 0.3)', background: '#fff', padding: '8px' }} />
+                        </td>
+                        <td>
+                           <strong style={{ display: 'block', color: '#fff' }}>{p.name}</strong>
+                        </td>
+                        <td>
+                           <a href={p.website} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'none' }}>{p.website}</a>
+                        </td>
+                        <td>
+                          <button onClick={() => { setEditingPartner(p); setIsAddingPartner(false); }} style={{ color: '#60a5fa', marginRight: '16px', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>Edit</button>
+                          <button onClick={() => handleDeletePartner(p.id)} style={{ color: '#f87171', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>Delete</button>
                         </td>
                       </tr>
                     ))}
