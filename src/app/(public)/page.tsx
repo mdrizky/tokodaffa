@@ -62,14 +62,7 @@ export default function HomePage() {
     load();
   }, []);
 
-  if (loadingInitial || goldLoading) return (
-    <div className={styles.premiumLoading}>
-      <div className={styles.pulseLogo}>
-        <img src="/logo.png" alt="LUXGOLD" />
-      </div>
-      <p>ENTERING THE VAULT...</p>
-    </div>
-  );
+
 
   const { products = [], storeInfo } = data || {};
   const goldPrices = realTimeGoldData || { prices: {} };
