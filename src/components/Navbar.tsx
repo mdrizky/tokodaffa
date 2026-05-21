@@ -24,7 +24,6 @@ export default function Navbar() {
     { href: "/kalkulator", label: dict.nav_calculator },
     { href: "/layanan", label: dict.nav_services },
     { href: "/tentang", label: dict.nav_about },
-    { href: "/builder", label: "✨ 3D Builder" },
   ];
 
   useEffect(() => {
@@ -45,7 +44,7 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  if (!mounted || pathname === '/builder') return null;
+  if (!mounted) return null;
 
   return (
     <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>

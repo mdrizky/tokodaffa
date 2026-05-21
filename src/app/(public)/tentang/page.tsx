@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import { getStoreInfo } from "@/lib/storeFetch";
 import { useLanguage } from "@/lib/i18n";
 import { useState, useEffect } from "react";
+import PartnerSlider from "@/components/PartnerSlider";
 
 export default function TentangPage() {
   const { dict, lang } = useLanguage();
@@ -63,6 +64,29 @@ export default function TentangPage() {
                 ))}
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <PartnerSlider />
+
+      <section className="section" style={{ paddingBottom: 0 }}>
+        <div className="container" style={{ marginBottom: "40px" }}>
+          <div className="section-header">
+            <h2>{lang === 'id' ? 'Kunjungi Toko Kami' : 'Visit Our Store'}</h2>
+            <div className="gold-line" />
+            <p>{lang === 'id' ? 'Datang dan lihat langsung koleksi perhiasan premium kami.' : 'Come and see our premium jewelry collection in person.'}</p>
+          </div>
+          <div style={{ width: "100%", height: "450px", borderRadius: "20px", overflow: "hidden", border: "1px solid var(--border-subtle)", boxShadow: "var(--shadow-md)" }}>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.654341517431!2d101.0183186105822!3d0.3262650996655181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5bc044a69634d%3A0xe549ebfa8b993efb!2sToko%20Emas%20Daffa!5e0!3m2!1sid!2sid!4v1715831515234!5m2!1sid!2sid" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={true} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade">
+            </iframe>
           </div>
         </div>
       </section>

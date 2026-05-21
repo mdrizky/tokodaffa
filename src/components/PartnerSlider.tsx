@@ -1,38 +1,57 @@
-import styles from "./PartnerSlider.module.css";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 import partners from "@/data/partners.json";
+import styles from "./PartnerSlider.module.css";
+import { useLanguage } from "@/lib/i18n";
 
 export default function PartnerSlider() {
-  // Duplicate partners for infinite scroll effect
-  const duplicatedPartners = [...partners, ...partners, ...partners];
+  const [mounted, setMounted] = useState(false);
+  const { lang } = useLanguage();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || partners.length === 0) return null;
 
   return (
-    <section className={styles.partnerSection}>
+    <section className={styles.sliderSection}>
       <div className="container">
-        <div className={styles.sectionHeader}>
-          <h2>Trusted Partners & Collaborations</h2>
-          <p>Bekerja sama dengan institusi terkemuka untuk memberikan layanan terbaik</p>
+        <div className={styles.sliderHeader}>
+          <p>{lang === 'id' ? 'Telah Dipercaya & Bekerjasama Dengan' : 'Trusted & Collaborating With'}</p>
         </div>
-        
-        <div className={styles.sliderContainer}>
-          <div className={styles.sliderTrack}>
-            {duplicatedPartners.map((partner, index) => (
-              <a
-                key={`${partner.id}-${index}`}
-                href={partner.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.partnerCard}
-              >
-                <img 
-                  src={partner.logo} 
-                  alt={partner.name}
-                  className={styles.partnerLogo}
-                />
+        <Swiper
+          modules={[Autoplay]}
+          loop={true}
+          slidesPerView={2}
+          spaceBetween={20}
+          speed={4000}
+          autoplay={{
+            delay: 0,
+            disableOnInteraction: false,
+          }}
+          breakpoints={{
+            640: { slidesPerView: 3 },
+            768: { slidesPerView: 4 },
+            1024: { slidesPerView: 5 },
+          }}
+          className={styles.partnerSwiper}
+        >
+          {partners.map((partner) => (
+            <SwiperSlide key={partner.id}>
+              <div className={styles.partnerCard}>
+                <div className={styles.partnerLogoWrap}>
+                  <img src={partner.logo} alt={partner.name} />
+                </div>
                 <span className={styles.partnerName}>{partner.name}</span>
-              </a>
-            ))}
-          </div>
-        </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );

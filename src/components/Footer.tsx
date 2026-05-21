@@ -20,7 +20,7 @@ export default function Footer() {
     load();
   }, []);
 
-  if (!storeInfo || pathname === '/builder') return null;
+  if (!storeInfo) return null;
 
   const instagram = storeInfo.instagram || storeInfo.social_media?.instagram;
   const facebook = storeInfo.facebook || storeInfo.social_media?.facebook;

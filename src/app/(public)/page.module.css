@@ -522,70 +522,8 @@
   gap: 30px;
 }
 
-.builderPreview {
-  padding: 100px 0;
-  background: linear-gradient(135deg, #050508, #111118);
-  border-top: 1px solid rgba(212, 175, 55, 0.2);
-}
-.builderSplit {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
-.builderText h2 {
-  font-family: '"Playfair Display", serif';
-  font-size: 3rem;
-  color: #d4af37;
-  margin: 16px 0;
-}
-.builderText p {
-  color: #a09d94;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 30px;
-}
-.builderFeatures {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.builderFeatures li {
-  display: flex;
-  align-items: center;
-  color: #fff;
-  font-weight: 500;
-}
-.builderVisual {
-  position: relative;
-  height: 400px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 24px;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.floatingRing {
-  font-size: 100px;
-  animation: float 4s ease-in-out infinite;
-  z-index: 2;
-}
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0); }
-}
-.glowEffect {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: #d4af37;
-  filter: blur(100px);
-  opacity: 0.2;
-}
+
+
 
 .statsSection {
   padding: 80px 0;
@@ -714,12 +652,10 @@
 
 @media (max-width: 1024px) {
   .productGridNew { grid-template-columns: repeat(2, 1fr); }
-  .builderSplit { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   .productGridNew { grid-template-columns: 1fr; }
   .sectionHeader h2 { font-size: 2rem; }
-  .builderText h2 { font-size: 2rem; }
   .statBox h2 { font-size: 2.5rem; }
 }
 

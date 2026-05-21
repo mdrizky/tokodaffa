@@ -10,6 +10,7 @@ import { getProducts } from "@/lib/dataFetch";
 import { getStoreInfo } from "@/lib/storeFetch";
 import { useGoldPrice } from "@/hooks/useGoldPrice";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/i18n";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronRight, Star, ShieldCheck, Diamond, Gem, Coins, ArrowUpRight, Clock, Award, Building } from "lucide-react";
 
@@ -33,6 +34,7 @@ const faqs = [
 ];
 
 export default function HomePage() {
+  const { dict, lang } = useLanguage();
   const [data, setData] = useState<any>(null);
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [news, setNews] = useState<any[]>([]);
@@ -103,17 +105,14 @@ export default function HomePage() {
               <Diamond size={14} className="text-gold" />
             </div>
             <h1 className={styles.heroTitle}>
-              Elegance Forged in <span className="text-gold-gradient">Eternity</span>
+              {dict.hero_title.split(' ')[0]} <span className="text-gold-gradient">{dict.hero_title.split(' ').slice(1).join(' ')}</span>
             </h1>
             <p className={styles.heroDesc}>
-              Discover our exclusive collection of premium fine jewelry. Crafted for those who appreciate the absolute pinnacle of luxury, perfection, and timeless beauty.
+              {dict.hero_subtitle}
             </p>
             <div className={styles.heroCtas}>
               <Link href="/produk" className="btn-premium">
-                Explore Collection
-              </Link>
-              <Link href="/builder" className="btn-outline-premium">
-                <Gem size={18} /> Bespoke 3D Atelier
+                {lang === 'id' ? 'Lihat Koleksi' : 'Explore Collection'}
               </Link>
             </div>
           </motion.div>
@@ -146,19 +145,19 @@ export default function HomePage() {
           <div className={styles.grid4}>
             <Link href="/produk?cat=cincin" className={styles.catCard}>
               <div className={styles.catImage}>💍</div>
-              <h3>Exclusive Rings</h3>
+              <h3>{lang === 'id' ? 'Cincin Eksklusif' : 'Exclusive Rings'}</h3>
             </Link>
             <Link href="/produk?cat=gelang" className={styles.catCard}>
               <div className={styles.catImage}>⭕</div>
-              <h3>Bracelets</h3>
+              <h3>{lang === 'id' ? 'Gelang' : 'Bracelets'}</h3>
             </Link>
             <Link href="/produk?cat=kalung" className={styles.catCard}>
               <div className={styles.catImage}>📿</div>
-              <h3>Necklaces</h3>
+              <h3>{lang === 'id' ? 'Kalung' : 'Necklaces'}</h3>
             </Link>
             <Link href="/produk?cat=batangan" className={styles.catCard}>
               <div className={styles.catImage}>💰</div>
-              <h3>Precious Metals</h3>
+              <h3>{lang === 'id' ? 'Logam Mulia' : 'Precious Metals'}</h3>
             </Link>
           </div>
         </div>
@@ -168,8 +167,8 @@ export default function HomePage() {
       <section className={styles.sectionPremiumDark}>
         <div className="container">
           <div className={styles.sectionHeader}>
-            <h2>Masterpiece Collection</h2>
-            <p>Curated selections of our finest work. Each piece tells a story of unparalleled craftsmanship.</p>
+            <h2>{dict.featured_products}</h2>
+            <p>{lang === 'id' ? 'Pilihan karya terbaik kami. Setiap perhiasan menceritakan kisah keahlian yang tak tertandingi.' : 'Curated selections of our finest work. Each piece tells a story of unparalleled craftsmanship.'}</p>
           </div>
           <div className={styles.productGridNew}>
             {featuredProducts.map((product: any) => (
@@ -182,36 +181,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. CUSTOM JEWELRY BUILDER PREVIEW */}
-      <section className={styles.builderPreview}>
-        <div className="container">
-          <div className={styles.builderSplit}>
-            <div className={styles.builderText}>
-              <div className={styles.heroBadge}><span>Interactive 3D Studio</span></div>
-              <h2>Design Your Own Legacy</h2>
-              <p>Step into our virtual atelier. Choose your precious metal, select your flawless gemstone, and engrave your eternal message in real-time 3D.</p>
-              <ul className={styles.builderFeatures}>
-                <li><CheckCircle /> 360° Real-time Rendering</li>
-                <li><CheckCircle /> Instant Price Calculation</li>
-                <li><CheckCircle /> 24K, Rose Gold, Platinum Options</li>
-                <li><CheckCircle /> Diamond, Ruby, Sapphire, Emerald</li>
-              </ul>
-              <Link href="/builder" className="btn-premium mt-8">Enter 3D Studio</Link>
-            </div>
-            <div className={styles.builderVisual}>
-              <div className={styles.floatingRing}>💍</div>
-              <div className={styles.glowEffect}></div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* 6. INVESTMENT GOLD SECTION */}
       <section className={styles.sectionPremium}>
         <div className="container">
           <div className={styles.sectionHeader}>
-            <h2>Wealth Preservation</h2>
-            <p>Plan your precious metal investments with our realtime synchronized pricing engine and highly accurate calculator.</p>
+            <h2>{dict.calculator_title}</h2>
+            <p>{dict.calculator_subtitle}</p>
           </div>
           <div className={styles.investmentGrid}>
             <PriceTable initialPrices={goldPrices} />
@@ -251,8 +228,8 @@ export default function HomePage() {
       <section className={styles.sectionPremiumDark}>
         <div className="container">
           <div className={styles.sectionHeader}>
-            <h2>The Gold Standard</h2>
-            <p>We don't just sell jewelry; we provide a legacy. Discover why generations trust us.</p>
+            <h2>{dict.why_choose_us}</h2>
+            <p>{lang === 'id' ? 'Kami tidak sekadar menjual perhiasan; kami memberikan warisan. Temukan mengapa pelanggan mempercayai kami.' : 'We don\'t just sell jewelry; we provide a legacy. Discover why generations trust us.'}</p>
           </div>
           <div className={styles.grid4}>
             {trustItems.map((item, i) => (
@@ -270,8 +247,8 @@ export default function HomePage() {
       <section className={styles.sectionPremium}>
         <div className="container">
           <div className={styles.sectionHeader}>
-            <h2>Voices of Elegance</h2>
-            <p>Hear from our esteemed clientele about their experiences with our craftsmanship.</p>
+            <h2>{dict.testimonials}</h2>
+            <p>{lang === 'id' ? 'Dengar dari pelanggan kami tentang pengalaman mereka.' : 'Hear from our esteemed clientele about their experiences with our craftsmanship.'}</p>
           </div>
           <div className={styles.grid3}>
             {testimonials.map((t, i) => (

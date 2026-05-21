@@ -1,50 +1,50 @@
 [
   {
     "id": 1,
-    "name": "Universitas Indonesia",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Logo_UI.png/200px-Logo_UI.png",
-    "website": "https://www.ui.ac.id"
+    "name": "PT Antam Tbk",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Antam_logo.svg/200px-Antam_logo.svg.png",
+    "website": "https://www.antam.com"
   },
   {
     "id": 2,
-    "name": "Institut Teknologi Bandung",
-    "logo": "https://upload.wikimedia.org/wikipedia/id/thumb/3/38/Logo_ITB.png/200px-Logo_ITB.png",
-    "website": "https://www.itb.ac.id"
+    "name": "UBS Gold",
+    "logo": "https://www.ubsgold.com/images/ubs-gold-logo.png",
+    "website": "https://www.ubsgold.com"
   },
   {
     "id": 3,
-    "name": "Universitas Gadjah Mada",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Logo_UGM.png/200px-Logo_UGM.png",
-    "website": "https://www.ugm.ac.id"
+    "name": "Pegadaian",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Logo_Pegadaian.svg/200px-Logo_Pegadaian.svg.png",
+    "website": "https://www.pegadaian.co.id"
   },
   {
     "id": 4,
-    "name": "BPOM",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_BPOM.png/200px-Logo_BPOM.png",
-    "website": "https://www.pom.go.id"
+    "name": "Perhimpunan Pengusaha Emas & Permata Indonesia",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Gold_ingots.jpg/200px-Gold_ingots.jpg",
+    "website": "https://www.ppepi.or.id"
   },
   {
     "id": 5,
-    "name": "Halal MUI",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Logo_MUI.png/200px-Logo_MUI.png",
-    "website": "https://halal.mui.or.id"
+    "name": "Badan Standardisasi Nasional (SNI)",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Logo_BSN.png/200px-Logo_BSN.png",
+    "website": "https://www.bsn.go.id"
   },
   {
     "id": 6,
-    "name": "WHO Indonesia",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/WHO_logo.svg/200px-WHO_logo.svg.png",
-    "website": "https://www.who.int/id"
+    "name": "Bank Indonesia",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Logo_of_Bank_Indonesia.svg/200px-Logo_of_Bank_Indonesia.svg.png",
+    "website": "https://www.bi.go.id"
   },
   {
     "id": 7,
-    "name": "Kementerian Kesehatan RI",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Logo_Kementerian_Kesehatan_Republik_Indonesia_%28baru%29.svg/200px-Logo_Kementerian_Kesehatan_Republik_Indonesia_%28baru%29.svg.png",
-    "website": "https://www.kemenkes.go.id"
+    "name": "Kementerian Perdagangan RI",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Logo_of_the_Ministry_of_Trade_of_the_Republic_of_Indonesia.svg/200px-Logo_of_the_Ministry_of_Trade_of_the_Republic_of_Indonesia.svg.png",
+    "website": "https://www.kemendag.go.id"
   },
   {
     "id": 8,
-    "name": "SNI",
-    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Logo_BSN.png/200px-Logo_BSN.png",
-    "website": "https://www.bsn.go.id"
+    "name": "London Bullion Market Association",
+    "logo": "https://www.lbma.org.uk/assets/lbma-logo.svg",
+    "website": "https://www.lbma.org.uk"
   }
 ]
