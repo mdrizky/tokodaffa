@@ -21,6 +21,7 @@ interface Dictionary {
   footer_menu: string;
   footer_info: string;
   footer_contact: string;
+  footer_map: string;
   calculator_title: string;
   calculator_subtitle: string;
   // Product Detail
@@ -86,6 +87,7 @@ const id: Dictionary = {
   footer_menu: 'Menu',
   footer_info: 'Informasi',
   footer_contact: 'Kontak',
+  footer_map: 'Lokasi',
   calculator_title: 'Kalkulator Simulasi Harga',
   calculator_subtitle: 'Hitung estimasi harga perhiasan emas & perak Anda dengan harga pasar terbaru.',
   prod_material: 'Material',
@@ -146,6 +148,7 @@ const en: Dictionary = {
   footer_menu: 'Menu',
   footer_info: 'Information',
   footer_contact: 'Contact',
+  footer_map: 'Location',
   calculator_title: 'Price Simulation Calculator',
   calculator_subtitle: 'Estimate the value of your gold & silver jewelry based on the latest market prices.',
   prod_material: 'Material',
@@ -200,13 +203,20 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [lang, setLang] = useState<Language>('id');
 
   useEffect(() => {
     const saved = localStorage.getItem('lang') as Language;
-    if (saved && (saved === 'id' || saved === 'en')) {
+    if (saved === 'id' || saved === 'en') {
       setLang(saved);
+      return;
     }
+
+    const browserLang = window.navigator.language.startsWith('en') ? 'en' : 'id';
+    setLang(browserLang);
+    localStorage.setItem('lang', browserLang);
   }, []);
 
   const handleSetLang = (l: Language) => {

@@ -54,7 +54,7 @@
 
 .kadarActive {
   background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary)) !important;
-  color: #0a0a0f !important;
+  color: var(--bg-primary) !important;
   border-color: var(--gold-primary) !important;
 }
 

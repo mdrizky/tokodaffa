@@ -24,6 +24,17 @@ CREATE TABLE store_settings (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- Buat tabel untuk Konten About yang dapat dikelola admin secara terpisah
+CREATE TABLE about_content (
+  id SERIAL PRIMARY KEY,
+  history TEXT NOT NULL,
+  extra TEXT,
+  vision TEXT NOT NULL,
+  strengths TEXT[] DEFAULT ARRAY[]::TEXT[],
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
 -- Buat tabel untuk Produk
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,

@@ -55,7 +55,7 @@ export default function PriceTable({ initialPrices }: { initialPrices: any }) {
         ))}
         {initialPrices.buyback && (
           <div className={`${styles.priceCard} ${styles.buybackCard}`}>
-            <div className={styles.kadarBadge} style={{ background: 'linear-gradient(135deg, #ef4444, #991b1b)' }}>
+            <div className={styles.kadarBadge} style={{ background: 'linear-gradient(135deg, var(--accent-danger), var(--accent-danger-dark))' }}>
               {lang === 'id' ? 'Buyback (Terima)' : 'Buyback Rate'}
             </div>
             <div className={styles.priceValue}>{formatPrice(initialPrices.buyback)}</div>
@@ -71,6 +71,12 @@ export default function PriceTable({ initialPrices }: { initialPrices: any }) {
             {dict.con_send_wa} →
           </a>
         )}
+        <div style={{ marginTop: 8, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+          <strong>Source:</strong> {initialPrices.source || initialPrices.meta?.source || (initialPrices.last_updated ? 'Supabase / Server' : 'Local JSON (manual)')}
+          {initialPrices.source === 'goldapi' && (
+            <span> — data fetched from GoldAPI (requires GOLD_API_KEY)</span>
+          )}
+        </div>
       </div>
     </div>
   );

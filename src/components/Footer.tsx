@@ -84,6 +84,35 @@ export default function Footer() {
               <span>{dict.con_hours_sun}: {storeInfo.operating_hours?.sunday}</span>
             </div>
           </div>
+
+          {/* Map */}
+          <div className={styles.column}>
+            <h4 className={styles.columnTitle}>{dict.footer_map || 'Location'}</h4>
+            {storeInfo.maps_embed ? (
+              <div className={styles.mapWrapper}>
+                <iframe
+                  title="TokoDaffa Location"
+                  src={storeInfo.maps_embed}
+                  width="100%"
+                  height="180"
+                  style={{ border: 0, borderRadius: 8 }}
+                  allowFullScreen={false}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            ) : (
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  storeInfo.address || ""
+                )}`}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Open in Google Maps
+              </a>
+            )}
+          </div>
         </div>
 
         <div className={styles.bottom}>

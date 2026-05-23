@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import { getProducts, getGoldPrices } from "@/lib/dataFetch";
+import { getProducts, getGoldPrices, getAboutContent } from "@/lib/dataFetch";
 import { supabase } from "@/lib/supabase";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import partners from "@/data/partners.json";
@@ -17,6 +17,7 @@ export default function AdminDashboard() {
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [storeInfo, setStoreInfo] = useState<any>(null);
+  const [aboutContent, setAboutContent] = useState<any>(null);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
   const [partnersList, setPartnersList] = useState<any[]>(partners);
@@ -32,10 +33,12 @@ export default function AdminDashboard() {
   async function loadData() {
     const p = await getProducts();
     const g = await getGoldPrices();
+    const a = await getAboutContent();
     const { data: s } = await supabase.from('store_settings').select('*').limit(1).single();
     
     setProducts(p);
     setStoreInfo(s);
+    setAboutContent(a);
     
     setPrices({
       "24K": g.prices["24K"] || 1100000,
@@ -120,6 +123,37 @@ export default function AdminDashboard() {
       loadData();
     } catch (err) {
       alert("Gagal simpan produk");
+    }
+    setSaving(false);
+  };
+
+  const handleSaveAbout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      const response = await fetch('/api/about', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-token': process.env.NEXT_PUBLIC_ADMIN_PIN || '240708daffa',
+        },
+        body: JSON.stringify({
+          history: aboutContent?.history || '',
+          extra: aboutContent?.extra || '',
+          vision: aboutContent?.vision || '',
+          strengths: aboutContent?.strengths || [],
+        }),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || 'Unable to update about content');
+      }
+
+      alert('About content berhasil disimpan!');
+      loadData();
+    } catch (err) {
+      alert('Gagal simpan About content');
     }
     setSaving(false);
   };
@@ -235,6 +269,9 @@ export default function AdminDashboard() {
           </button>
           <button className={activeTab === 'settings' ? styles.navActive : ''} onClick={() => setActiveTab('settings')}>
             <span className={styles.navIcon}>⚙️</span> Store Configuration
+          </button>
+          <button className={activeTab === 'about' ? styles.navActive : ''} onClick={() => setActiveTab('about')}>
+            <span className={styles.navIcon}>📝</span> Site Content / About
           </button>
         </nav>
 
@@ -443,6 +480,40 @@ export default function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'about' && (
+            <div className={styles.panel}>
+              <div className={styles.panelHeader}>
+                <h3>Site Content — About Us</h3>
+                <button className={styles.primaryBtn} onClick={handleSaveAbout} disabled={saving}>Simpan Perubahan</button>
+              </div>
+              <div style={{ padding: '24px' }}>
+                <form onSubmit={handleSaveAbout}>
+                  <div className={styles.editGrid}>
+                    <div className={styles.inputGroup}>
+                      <label>Intro / History</label>
+                      <textarea rows={4} value={aboutContent?.history || ''} onChange={(e) => setAboutContent({...aboutContent, history: e.target.value})} />
+                    </div>
+                    <div className={styles.inputGroup}>
+                      <label>Extra paragraph</label>
+                      <textarea rows={3} value={aboutContent?.extra || ''} onChange={(e) => setAboutContent({...aboutContent, extra: e.target.value})} />
+                    </div>
+                    <div className={styles.inputGroup}>
+                      <label>Vision / Mission</label>
+                      <textarea rows={3} value={aboutContent?.vision || ''} onChange={(e) => setAboutContent({...aboutContent, vision: e.target.value})} />
+                    </div>
+                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}>
+                      <label>Strengths (one per line)</label>
+                      <textarea rows={4} value={(aboutContent?.strengths || []).join('\n')} onChange={(e) => setAboutContent({...aboutContent, strengths: e.target.value.split('\n')})} />
+                    </div>
+                  </div>
+                  <div style={{ marginTop: 12 }}>
+                    <button type="submit" className={styles.primaryBtn}>{saving ? 'Menyimpan...' : 'Simpan ke Database'}</button>
+                  </div>
+                </form>
               </div>
             </div>
           )}

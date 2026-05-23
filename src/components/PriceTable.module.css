@@ -94,14 +94,14 @@
 }
 
 .buybackCard:hover {
-  border-color: #ef4444;
+  border-color: var(--accent-danger);
   background: rgba(239, 68, 68, 0.1);
 }
 
 .kadarBadge {
   display: inline-block;
   background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
-  color: #0a0a0f;
+  color: var(--bg-primary);
   padding: 4px 16px;
   border-radius: var(--radius-full);
   font-size: 0.8rem;

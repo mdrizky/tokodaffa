@@ -78,7 +78,7 @@
 .submitBtn {
   padding: 16px 32px;
   background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
-  color: #000;
+  color: var(--bg-primary);
   border: none;
   border-radius: var(--radius-md);
   font-size: 1rem;
@@ -108,15 +108,15 @@
 }
 
 .statusMessage.success {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: var(--accent-success);
 }
 
 .statusMessage.error {
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  color: var(--accent-danger);
 }
 
 @keyframes fadeIn {

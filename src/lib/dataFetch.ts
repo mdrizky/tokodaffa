@@ -16,7 +16,6 @@ export async function getGoldPrices() {
   if (hasSupabase) {
     const { data, error } = await supabase.from('gold_prices').select('*');
     if (!error && data && data.length > 0) {
-      // Convert array of { kadar, price_per_gram } to the same format as JSON: { '24K': 1100000, ... }
       const pricesMap: Record<string, number> = {};
       data.forEach((item) => {
         pricesMap[item.kadar] = item.price_per_gram;
@@ -25,4 +24,25 @@ export async function getGoldPrices() {
     }
   }
   return localGoldPrices;
+}
+
+export async function getAboutContent() {
+  if (hasSupabase) {
+    const { data, error } = await supabase.from('about_content').select('*').limit(1).single();
+    if (!error && data) {
+      return {
+        history: data.history,
+        extra: data.extra,
+        vision: data.vision,
+        strengths: data.strengths,
+      };
+    }
+  }
+
+  return {
+    history: localStoreInfo.about_history,
+    extra: localStoreInfo.about_extra,
+    vision: localStoreInfo.about_vision,
+    strengths: localStoreInfo.about_strengths || localStoreInfo.certifications,
+  };
 }
