@@ -247,7 +247,7 @@ export default function HomePage() {
             {testimonials.map((t, i) => (
               <div key={i} className={styles.testimonialCardNew}>
                 <div className={styles.stars}>
-                  {Array.from({length: 5}).map((_, j) => <Star key={j} size={16} fill="#d4af37" color="#d4af37" />)}
+                  {Array.from({length: 5}).map((_, j) => <Star key={j} size={16} fill="currentColor" color="currentColor" />)}
                 </div>
                 <p>"{t.text}"</p>
                 <div className={styles.tAuthor}>
@@ -300,7 +300,7 @@ export default function HomePage() {
         <div className="container relative z-10 text-center">
           <Building size={48} className="text-gold mx-auto mb-6" />
           <h2 style={{ fontSize: '3rem', fontFamily: '"Playfair Display", serif', marginBottom: '20px' }}>Join Our Empire</h2>
-          <p style={{ maxWidth: '600px', margin: '0 auto', color: '#ccc', marginBottom: '40px', fontSize: '1.1rem' }}>
+          <p style={{ maxWidth: '600px', margin: '0 auto', color: 'var(--text-secondary)', marginBottom: '40px', fontSize: '1.1rem' }}>
             Become a part of the Toko Mas Daffa legacy. We offer exclusive reseller and affiliate programs for high-net-worth individuals and businesses.
           </p>
           <a href={`https://wa.me/${storeInfo?.whatsapp}?text=Halo%20saya%20tertarik%20dengan%20program%20reseller`} target="_blank" className="btn-premium">Inquire Now</a>
@@ -328,5 +328,5 @@ export default function HomePage() {
 }
 
 function CheckCircle() {
-  return <ShieldCheck size={20} color="#d4af37" style={{ display: 'inline', marginRight: '8px' }} />;
+  return <ShieldCheck size={20} color="currentColor" style={{ display: 'inline', marginRight: '8px' }} />;
 }

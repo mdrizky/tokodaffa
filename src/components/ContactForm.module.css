@@ -67,7 +67,7 @@
 .formGroup textarea:focus {
   outline: none;
   border-color: var(--border-gold);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 0 3px var(--gold-soft-strong);
 }
 
 .formGroup input::placeholder,
@@ -91,7 +91,7 @@
 
 .submitBtn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 10px 30px var(--border-gold);
 }
 
 .submitBtn:disabled {
@@ -108,14 +108,14 @@
 }
 
 .statusMessage.success {
-  background: rgba(34, 197, 94, 0.08);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: var(--accent-success-soft-bg);
+  border: 1px solid var(--accent-success-border);
   color: var(--accent-success);
 }
 
 .statusMessage.error {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: var(--accent-danger-soft);
+  border: 1px solid var(--accent-danger-border-strong);
   color: var(--accent-danger);
 }
 

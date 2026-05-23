@@ -10,22 +10,13 @@
   align-items: center;
   justify-content: center;
   z-index: 900;
-  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--whatsapp) 40%, transparent);
   transition: all var(--transition-normal);
 }
 
 .float:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
-}
-
-.pulse {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
--  border: 2px solid #25D366;
-+  border: 2px solid var(--whatsapp);
-  animation: waPulse 2s ease infinite;
+  box-shadow: 0 6px 30px color-mix(in srgb, var(--whatsapp) 50%, transparent);
 }
 
 .float:hover .tooltip {
@@ -38,7 +29,7 @@
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 2px solid #25D366;
+  border: 2px solid var(--whatsapp);
   animation: waPulse 2s ease infinite;
 }
 

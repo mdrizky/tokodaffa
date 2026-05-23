@@ -5,7 +5,7 @@
 .header {
   text-align: center;
   padding: 60px 0 40px;
-  background: radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 50% 100%, var(--gold-haze) 0%, transparent 60%);
 }
 
 .header h1 { margin-bottom: 12px; }
@@ -26,7 +26,7 @@
 }
 
 .serviceVisual {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(212, 175, 55, 0.15));
+  background: linear-gradient(135deg, var(--panel-start), var(--gold-muted));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,7 +79,7 @@
   align-items: center;
   gap: 16px;
   margin: 12px 0 20px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-faint);
   padding: 16px;
   border-radius: var(--radius-md);
   border: 1px dashed var(--border-subtle);
@@ -96,7 +96,7 @@
 }
 
 .ctaBanner {
-  background: linear-gradient(0deg, rgba(212, 175, 55, 0.05), transparent);
+  background: linear-gradient(0deg, var(--gold-wash), transparent);
   padding: 80px 0;
   border-top: 1px solid var(--border-gold);
 }
