@@ -1,5 +1,5 @@
 .tableWrap {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.7));
+  background: linear-gradient(135deg, var(--panel-start-strong), var(--panel-strong));
   border: 1px solid var(--border-gold);
   border-radius: var(--radius-lg);
   padding: 32px;
@@ -24,7 +24,7 @@
 .date {
   font-size: 0.85rem;
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface-muted);
   padding: 6px 14px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-subtle);
@@ -46,7 +46,7 @@
   gap: 8px;
   font-size: 0.85rem;
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface-muted);
   padding: 6px 14px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-subtle);
@@ -57,14 +57,14 @@
   height: 8px;
   background: var(--accent-success);
   border-radius: 50%;
-  box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
+  box-shadow: 0 0 0 var(--accent-success-glow-strong);
   animation: pulse-green 2s infinite;
 }
 
 @keyframes pulse-green {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--accent-success-pulse); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px transparent; }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 transparent; }
 }
 
 .grid {
@@ -76,7 +76,7 @@
 .priceCard {
   text-align: center;
   padding: 24px 16px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-soft);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
   transition: all var(--transition-normal);
@@ -89,13 +89,13 @@
 }
 
 .buybackCard {
-  border-color: rgba(239, 68, 68, 0.3);
-  background: rgba(239, 68, 68, 0.03);
+  border-color: var(--accent-danger-border-strong);
+  background: var(--accent-danger-faint);
 }
 
 .buybackCard:hover {
   border-color: var(--accent-danger);
-  background: rgba(239, 68, 68, 0.1);
+  background: var(--accent-danger-soft);
 }
 
 .kadarBadge {
@@ -137,17 +137,17 @@
 
 .up {
   color: var(--accent-success);
-  background: rgba(34, 197, 94, 0.1);
+  background: var(--accent-success-soft);
 }
 
 .down {
   color: var(--accent-danger);
-  background: rgba(239, 68, 68, 0.1);
+  background: var(--accent-danger-soft);
 }
 
 .stable {
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-glass);
 }
 
 .footer {

@@ -161,7 +161,7 @@ const en: Dictionary = {
   prod_buy_wa: 'Inquire via WhatsApp',
   prod_back: 'Back to Catalog',
   prod_guarantee: 'Authenticity & 100% Buyback Guarantee',
-  prod_price_alert: 'Gold prices are fluctuate. Contact admin for real-time prices.',
+  prod_price_alert: 'Gold prices fluctuate. Please contact admin for real-time updates.',
   cat_title: 'Our Jewelry Collection',
   cat_subtitle: 'Choose the best gold & silver jewelry to perfect your look.',
   cat_all: 'All Products',
@@ -175,9 +175,9 @@ const en: Dictionary = {
   con_hours_sun: 'Sunday',
   con_send_wa: 'Chat WhatsApp Now',
   ser_title: 'Services & Custom',
-  ser_subtitle: 'Realize your dream jewelry or restore the shine of old jewelry',
+  ser_subtitle: 'Bring your dream jewelry to life or restore the shine of your existing pieces',
   ser_custom_title: 'Custom Jewelry Design',
-  ser_custom_desc: 'Have wedding ring or necklace references from Pinterest/Instagram? We can make it for you with high accuracy.',
+  ser_custom_desc: 'Have wedding ring or necklace references from Pinterest/Instagram? We can craft them with high precision.',
   ser_sepuh_title: 'Gold Plating (Wash)',
   ser_sepuh_desc: 'Old jewelry starting to look dull? Restore the bright yellow shine of your jewelry as if it were new.',
   ser_servis_title: 'Service & Repair',
@@ -185,7 +185,7 @@ const en: Dictionary = {
   ser_cta_title: 'Unsure Which Service You Need?',
   ser_cta_subtitle: 'Bring your jewelry directly to our store, our experts will inspect it for free.',
   abt_title: 'About Us',
-  abt_subtitle: 'Getting to know TokoDaffa Gold closer',
+  abt_subtitle: 'Get to know TokoDaffa Gold better',
   abt_history_title: 'Our History',
   abt_history_desc: 'TokoDaffa Gold has become a trusted destination for gold enthusiasts and investors. We prioritize honesty and customer satisfaction.',
   abt_vision_title: 'Vision & Mission',
@@ -203,8 +203,6 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const pathname = usePathname();
   const [lang, setLang] = useState<Language>('id');
 
   useEffect(() => {

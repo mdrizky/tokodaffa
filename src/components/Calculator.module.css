@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.7));
+  background: linear-gradient(135deg, var(--panel-start-strong), var(--panel-strong));
   border: 1px solid var(--border-gold);
   border-radius: var(--radius-lg);
   padding: 32px;
@@ -38,7 +38,7 @@
 .kadarBtn {
   padding: 12px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface-muted);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   font-weight: 600;
@@ -61,7 +61,7 @@
 .inputWrap {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface-muted);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 0 16px;
@@ -90,7 +90,7 @@
 }
 
 .result {
-  background: rgba(212, 175, 55, 0.05);
+  background: var(--gold-wash);
   border: 1px solid var(--border-gold);
   border-radius: var(--radius-md);
   padding: 28px;

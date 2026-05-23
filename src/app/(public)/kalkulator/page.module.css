@@ -6,7 +6,7 @@
 .header {
   text-align: center;
   padding: 60px 0 40px;
-  background: radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 50% 100%, var(--gold-haze) 0%, transparent 60%);
 }
 
 .header h1 {
@@ -29,7 +29,7 @@
   max-width: 900px;
   margin: 40px auto 0;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-faint);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
 }
