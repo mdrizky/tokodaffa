@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { assertAdminRequest } from "@/lib/adminAuth";
@@ -57,3 +58,40 @@ export async function GET(req: Request) {
 
   return NextResponse.json({ success: true, summary, recent: data.slice(0, 50) });
 }
+=======
+import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { source, reference_id, reference_name, message_template } = body;
+
+    if (!source) {
+      return NextResponse.json({ error: 'Source is required' }, { status: 400 });
+    }
+
+    const ip_address = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    const user_agent = req.headers.get('user-agent') || 'unknown';
+    const device_type = user_agent.match(/Mobile|Android|iPhone|iPad|iPod/i) ? 'mobile' : 'desktop';
+
+    const { data, error } = await supabase.from('wa_inquiries').insert({
+      source,
+      reference_id: reference_id || null,
+      reference_name: reference_name || null,
+      message_template: message_template || null,
+      ip_address,
+      user_agent,
+      device_type,
+      created_at: new Date().toISOString(),
+    }).select().single();
+
+    if (error) throw error;
+
+    return NextResponse.json({ success: true, message: 'WhatsApp inquiry tracked', data });
+  } catch (err: any) {
+    console.error('WA Track API error:', err);
+    return NextResponse.json({ error: 'Failed to track WhatsApp inquiry', details: err.message }, { status: 500 });
+  }
+}
+>>>>>>> ad8eef7 (continue)

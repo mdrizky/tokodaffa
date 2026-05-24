@@ -1,617 +1,134 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import styles from "./page.module.css";
-import { getProducts, getGoldPrices, getAboutContent } from "@/lib/dataFetch";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import partners from "@/data/partners.json";
+import styles from "./page.module.css";
 
-export default function AdminDashboard() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [pin, setPin] = useState("");
-  const [error, setError] = useState("");
+// ==================== ADMIN SECTIONS ====================
+import AdminLogin from "./components/AdminLogin";
+import AdminDashboard from "./components/AdminDashboard";
+import AdminProducts from "./components/AdminProducts";
+import AdminGoldPrice from "./components/AdminGoldPrice";
+import AdminPartners from "./components/AdminPartners";
+import AdminSettings from "./components/AdminSettings";
+import AdminBlog from "./components/AdminBlog";
+import AdminMessages from "./components/AdminMessages";
+import AdminReservations from "./components/AdminReservations";
+import AdminAbout from "./components/AdminAbout";
 
-  const [products, setProducts] = useState<any[]>([]);
-  const [prices, setPrices] = useState<any>(null);
-  const [saving, setSaving] = useState(false);
-  const [activeTab, setActiveTab] = useState("dashboard");
-  const [storeInfo, setStoreInfo] = useState<any>(null);
-  const [aboutContent, setAboutContent] = useState<any>(null);
-  const [editingProduct, setEditingProduct] = useState<any>(null);
-  const [isAddingProduct, setIsAddingProduct] = useState(false);
-  const [partnersList, setPartnersList] = useState<any[]>(partners);
-  const [editingPartner, setEditingPartner] = useState<any>(null);
-  const [isAddingPartner, setIsAddingPartner] = useState(false);
+export type AdminSection = 
+  | "dashboard" | "products" | "gold-price" | "partners" 
+  | "settings" | "blog" | "messages" | "reservations" | "about";
+
+export default function AdminPage() {
+  const [authed, setAuthed] = useState(false);
+  const [section, setSection] = useState<AdminSection>("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      loadData();
-    }
-  }, [isAuthenticated]);
+    const pin = sessionStorage.getItem("admin_authed");
+    setAuthed(pin === "true");
+    setLoading(false);
+  }, []);
 
-  async function loadData() {
-    const p = await getProducts();
-    const g = await getGoldPrices();
-    const a = await getAboutContent();
-    const { data: s } = await supabase.from('store_settings').select('*').limit(1).single();
-    
-    setProducts(p);
-    setStoreInfo(s);
-    setAboutContent(a);
-    
-    setPrices({
-      "24K": g.prices["24K"] || 1100000,
-      "22K": g.prices["22K"] || 1008000,
-      "18K": g.prices["18K"] || 825000,
-      "16K": g.prices["16K"] || 733000,
-      "Perak": g.prices["Perak"] || 15000,
-    });
-  }
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("Verifikasi PIN...");
-    
-    // Master PIN Bypass (Always works)
-    if (pin === "240708daffa") {
-      setIsAuthenticated(true);
-      setError("");
-      return;
-    }
-
-    try {
-      const { data, error: dbError } = await supabase
-        .from('admin_users')
-        .select('id')
-        .eq('pin', pin)
-        .single();
-
-      if (dbError || !data) {
-        setError("PIN salah atau tidak ditemukan!");
-      } else {
-        setIsAuthenticated(true);
-        setError("");
-      }
-    } catch (err) {
-      setError("Terjadi kesalahan sistem, silakan gunakan Master PIN.");
-    }
+  const handleLogin = () => {
+    sessionStorage.setItem("admin_authed", "true");
+    setAuthed(true);
   };
 
-  const handlePriceUpdate = async () => {
-    setSaving(true);
-    try {
-      for (const kadar of ["24K", "22K", "18K", "16K", "Perak"]) {
-        await supabase
-          .from("gold_prices")
-          .update({ price_per_gram: Number(prices[kadar]), last_updated: new Date().toISOString() })
-          .eq("kadar", kadar);
-      }
-      alert("Berhasil update harga emas!");
-      loadData();
-    } catch (err) {
-      alert("Gagal update harga");
-    }
-    setSaving(false);
+  const handleLogout = () => {
+    sessionStorage.removeItem("admin_authed");
+    setAuthed(false);
+    setSection("dashboard");
   };
 
-  const handleStoreUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-    try {
-      await supabase.from('store_settings').update(storeInfo).eq('id', storeInfo.id);
-      alert("Pengaturan toko berhasil disimpan!");
-      loadData();
-    } catch (err) {
-      alert("Gagal simpan pengaturan");
-    }
-    setSaving(false);
-  };
+  if (loading) return <div className={styles.loading}><div className={styles.spinner} /></div>;
+  if (!authed) return <AdminLogin onLogin={handleLogin} />;
 
-  const handleSaveProduct = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-    try {
-      if (isAddingProduct) {
-        await supabase.from('products').insert([editingProduct]);
-      } else {
-        await supabase.from('products').update(editingProduct).eq('id', editingProduct.id);
-      }
-      alert("Produk berhasil disimpan!");
-      setEditingProduct(null);
-      setIsAddingProduct(false);
-      loadData();
-    } catch (err) {
-      alert("Gagal simpan produk");
-    }
-    setSaving(false);
-  };
-
-  const handleSaveAbout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-    try {
-      const response = await fetch('/api/about', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-token': process.env.NEXT_PUBLIC_ADMIN_PIN || '240708daffa',
-        },
-        body: JSON.stringify({
-          history: aboutContent?.history || '',
-          extra: aboutContent?.extra || '',
-          vision: aboutContent?.vision || '',
-          strengths: aboutContent?.strengths || [],
-        }),
-      });
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.error || 'Unable to update about content');
-      }
-
-      alert('About content berhasil disimpan!');
-      loadData();
-    } catch (err) {
-      alert('Gagal simpan About content');
-    }
-    setSaving(false);
-  };
-
-  const handleDeleteProduct = async (id: number) => {
-    if (!confirm("Hapus produk ini secara permanen?")) return;
-    try {
-      await supabase.from('products').delete().eq('id', id);
-      loadData();
-    } catch (err) {
-      alert("Gagal hapus produk");
-    }
-  };
-
-  const handleSavePartner = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-    try {
-      if (isAddingPartner) {
-        const newPartner = {
-          ...editingPartner,
-          id: partnersList.length + 1
-        };
-        setPartnersList([...partnersList, newPartner]);
-      } else {
-        setPartnersList(partnersList.map(p => p.id === editingPartner.id ? editingPartner : p));
-      }
-      alert("Partner berhasil disimpan!");
-      setEditingPartner(null);
-      setIsAddingPartner(false);
-    } catch (err) {
-      alert("Gagal simpan partner");
-    }
-    setSaving(false);
-  };
-
-  const handleDeletePartner = (id: number) => {
-    if (!confirm("Hapus partner ini secara permanen?")) return;
-    setPartnersList(partnersList.filter(p => p.id !== id));
-  };
-
-  if (!isAuthenticated) {
-    return (
-      <div className={styles.loginPage}>
-        <div className={styles.loginCard}>
-          <div className={styles.loginHeader}>
-            <div className={styles.loginLogo}>
-              <img src="/logo.png" alt="Logo" style={{ height: '60px', width: 'auto' }} />
-            </div>
-            <h2>LUXGOLD ERP</h2>
-            <p>Admin Security Access</p>
-          </div>
-          <form onSubmit={handleLogin}>
-            <div className={styles.inputGroup}>
-              <label>Master PIN</label>
-              <input 
-                type="password" 
-                placeholder="••••••••" 
-                value={pin}
-                onChange={(e) => setPin(e.target.value)}
-                autoFocus
-              />
-            </div>
-            {error && <p className={styles.loginError}>{error}</p>}
-            <button type="submit" className={styles.loginBtn}>Unlock System</button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
-  const outOfStock = products.filter(p => p.stock === 0).length;
-  const totalValue = products.reduce((acc, p) => acc + (p.price * p.stock), 0);
-
-  const revenueData = [
-    { name: 'Jan', Omzet: 400 },
-    { name: 'Feb', Omzet: 300 },
-    { name: 'Mar', Omzet: 550 },
-    { name: 'Apr', Omzet: 480 },
-    { name: 'May', Omzet: 700 },
-    { name: 'Jun', Omzet: 900 },
+  const navItems = [
+    { id: "dashboard", icon: "📊", label: "Dashboard" },
+    { id: "products", icon: "💍", label: "Produk" },
+    { id: "gold-price", icon: "💰", label: "Harga Emas" },
+    { id: "blog", icon: "📝", label: "Blog/Artikel" },
+    { id: "reservations", icon: "📋", label: "Reservasi/Pesan" },
+    { id: "messages", icon: "💬", label: "Pesan Masuk" },
+    { id: "partners", icon: "🤝", label: "Mitra/Partner" },
+    { id: "about", icon: "ℹ️", label: "Tentang Kami" },
+    { id: "settings", icon: "⚙️", label: "Pengaturan Toko" },
   ];
 
-  const topProductsData = products.slice(0, 5).map(p => ({
-    name: p.name.substring(0, 10) + '...',
-    Terjual: Math.floor(Math.random() * 50) + 10
-  }));
+  const renderSection = () => {
+    switch(section) {
+      case "dashboard": return <AdminDashboard />;
+      case "products": return <AdminProducts />;
+      case "gold-price": return <AdminGoldPrice />;
+      case "blog": return <AdminBlog />;
+      case "reservations": return <AdminReservations />;
+      case "messages": return <AdminMessages />;
+      case "partners": return <AdminPartners />;
+      case "about": return <AdminAbout />;
+      case "settings": return <AdminSettings />;
+      default: return <AdminDashboard />;
+    }
+  };
 
   return (
-    <div className={styles.adminContainer}>
+    <div className={styles.adminLayout}>
       {/* Sidebar */}
-      <aside className={styles.sidebar}>
-        <div className={styles.sidebarBrand}>
-          <img src="/logo.png" alt="Logo" style={{ height: '40px', width: 'auto' }} />
-          <div className={styles.brandText}>LUXGOLD <span>ERP</span></div>
+      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : styles.sidebarClosed}`}>
+        <div className={styles.sidebarHeader}>
+          <div className={styles.sidebarLogo}>
+            <span>◆</span>
+            {sidebarOpen && <span className={styles.sidebarLogoText}>Admin Panel</span>}
+          </div>
+          <button className={styles.toggleBtn} onClick={() => setSidebarOpen(!sidebarOpen)}>
+            {sidebarOpen ? "◀" : "▶"}
+          </button>
         </div>
-        
+
         <nav className={styles.sidebarNav}>
-          <button className={activeTab === 'dashboard' ? styles.navActive : ''} onClick={() => setActiveTab('dashboard')}>
-            <span className={styles.navIcon}>📊</span> Dashboard Analytics
-          </button>
-          <button className={activeTab === 'analytics' ? styles.navActive : ''} onClick={() => setActiveTab('analytics')}>
-            <span className={styles.navIcon}>📈</span> Customer Analytics
-          </button>
-          <button className={activeTab === 'prices' ? styles.navActive : ''} onClick={() => setActiveTab('prices')}>
-            <span className={styles.navIcon}>💰</span> Live Gold Prices
-          </button>
-          <button className={activeTab === 'products' ? styles.navActive : ''} onClick={() => setActiveTab('products')}>
-            <span className={styles.navIcon}>🛍️</span> Product Management
-          </button>
-          <button className={activeTab === 'partners' ? styles.navActive : ''} onClick={() => setActiveTab('partners')}>
-            <span className={styles.navIcon}>🤝</span> Partners & Collaborations
-          </button>
-          <button className={activeTab === 'settings' ? styles.navActive : ''} onClick={() => setActiveTab('settings')}>
-            <span className={styles.navIcon}>⚙️</span> Store Configuration
-          </button>
-          <button className={activeTab === 'about' ? styles.navActive : ''} onClick={() => setActiveTab('about')}>
-            <span className={styles.navIcon}>📝</span> Site Content / About
-          </button>
+          {navItems.map(item => (
+            <button
+              key={item.id}
+              className={`${styles.navItem} ${section === item.id ? styles.navItemActive : ""}`}
+              onClick={() => setSection(item.id as AdminSection)}
+              title={!sidebarOpen ? item.label : undefined}
+            >
+              <span className={styles.navIcon}>{item.icon}</span>
+              {sidebarOpen && <span className={styles.navLabel}>{item.label}</span>}
+            </button>
+          ))}
         </nav>
 
         <div className={styles.sidebarFooter}>
-          <button onClick={() => setIsAuthenticated(false)} className={styles.logoutBtn}>
-             🚪 Lock Session
+          <a href="/" target="_blank" className={styles.viewSiteBtn} title="Lihat Website">
+            <span>🌐</span>
+            {sidebarOpen && <span>Lihat Website</span>}
+          </a>
+          <button className={styles.logoutBtn} onClick={handleLogout} title="Logout">
+            <span>🚪</span>
+            {sidebarOpen && <span>Logout</span>}
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className={styles.main}>
-        <header className={styles.mainHeader}>
-          <div className={styles.headerTitle}>
-            <h1>
-              {activeTab === 'dashboard' && 'Enterprise Dashboard'}
-              {activeTab === 'analytics' && 'Customer & Sales Analytics'}
-              {activeTab === 'prices' && 'Live Gold Price Engine'}
-              {activeTab === 'products' && 'Product Inventory'}
-              {activeTab === 'partners' && 'Partners & Collaborations'}
-              {activeTab === 'settings' && 'Store Configuration'}
-            </h1>
-            <p>Sistem ERP & Manajemen TokoDaffa Gold</p>
+      <main className={styles.mainContent}>
+        <div className={styles.topBar}>
+          <h1 className={styles.pageTitle}>
+            {navItems.find(n => n.id === section)?.icon} {navItems.find(n => n.id === section)?.label}
+          </h1>
+          <div className={styles.topBarRight}>
+            <span className={styles.adminBadge}>👤 Admin</span>
+            <span className={styles.timestamp}>{new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
           </div>
-          <div className={styles.headerActions}>
-            <span className={styles.statusBadge}>● Secure Connection</span>
-          </div>
-        </header>
+        </div>
 
         <div className={styles.content}>
-          {activeTab === 'dashboard' && (
-            <div className="grid-1">
-              <div className={styles.statsGrid}>
-                <div className={styles.statCard}>
-                  <div className={styles.statIcon}>📦</div>
-                  <div className={styles.statInfo}>
-                    <span>Total Produk</span>
-                    <h3>{products.length} Items</h3>
-                  </div>
-                </div>
-                <div className={styles.statCard}>
-                  <div className={styles.statIcon}>⚠️</div>
-                  <div className={styles.statInfo}>
-                    <span>Stok Kritis / Habis</span>
-                    <h3 style={{color: '#ef4444'}}>{outOfStock} Items</h3>
-                  </div>
-                </div>
-                <div className={styles.statCard}>
-                  <div className={styles.statIcon}>💰</div>
-                  <div className={styles.statInfo}>
-                    <span>Estimasi Nilai Stok</span>
-                    <h3>Rp {(totalValue / 1000000).toFixed(1)} Juta</h3>
-                  </div>
-                </div>
-                <div className={styles.statCard}>
-                  <div className={styles.statIcon}>👥</div>
-                  <div className={styles.statInfo}>
-                    <span>Customer Aktif</span>
-                    <h3>1,248</h3>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid-2" style={{ marginTop: '24px', gap: '24px' }}>
-                <div className={styles.dashboardCard}>
-                  <div className={styles.cardHeader}>
-                    <h3>📈 Proyeksi Omzet Bulanan (Juta Rp)</h3>
-                  </div>
-                  <div style={{ height: 300, width: '100%', marginTop: '16px' }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={revenueData}>
-                        <defs>
-                          <linearGradient id="colorOmzet" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#d4af37" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#d4af37" stopOpacity={0}/>
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                        <XAxis dataKey="name" stroke="#a09d94" />
-                        <YAxis stroke="#a09d94" />
-                        <Tooltip contentStyle={{ backgroundColor: '#111118', borderColor: '#d4af37', color: '#fff' }} />
-                        <Area type="monotone" dataKey="Omzet" stroke="#d4af37" fillOpacity={1} fill="url(#colorOmzet)" />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
-
-                <div className={styles.dashboardCard}>
-                  <div className={styles.cardHeader}>
-                    <h3>🔥 Produk Terlaris Bulan Ini</h3>
-                  </div>
-                  <div style={{ height: 300, width: '100%', marginTop: '16px' }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={topProductsData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                        <XAxis type="number" stroke="#a09d94" />
-                        <YAxis dataKey="name" type="category" stroke="#a09d94" width={100} />
-                        <Tooltip contentStyle={{ backgroundColor: '#111118', borderColor: '#d4af37', color: '#fff' }} cursor={{fill: 'rgba(212, 175, 55, 0.1)'}} />
-                        <Bar dataKey="Terjual" fill="#d4af37" radius={[0, 4, 4, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.dashboardCard} style={{ marginTop: '24px' }}>
-                <div className={styles.cardHeader}>
-                  <h3>⚡ Quick Price Engine Update</h3>
-                  <button className="btn btn-gold" onClick={() => setActiveTab('prices')} style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
-                    Sync Prices to Server
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'prices' && (
-             <div className={styles.panel}>
-                <div className={styles.panelHeader}>
-                  <h3>Manajemen Harga Detail</h3>
-                  <button className={styles.primaryBtn} onClick={handlePriceUpdate} disabled={saving}>Simpan Perubahan</button>
-                </div>
-                <div style={{ padding: '24px' }}>
-                  <p style={{ marginBottom: '20px', color: '#8a8780' }}>Ubah harga per gram di bawah ini. Sistem akan otomatis menghitung ulang harga seluruh kalkulator dan perhiasan yang terikat dengan berat emas.</p>
-                  <div className={styles.editGrid}>
-                     {prices && Object.entries(prices).map(([k, v]: [string, any]) => (
-                        <div key={k} className={styles.inputGroup}>
-                           <label>Harga {k} / Gram (Rp)</label>
-                           <input type="number" value={v} onChange={(e) => setPrices({...prices, [k]: e.target.value})} />
-                        </div>
-                     ))}
-                  </div>
-                </div>
-             </div>
-          )}
-
-          {activeTab === 'products' && (
-            <div className={styles.panel}>
-              <div className={styles.panelHeader}>
-                <h3>Product Database</h3>
-                <button className={styles.primaryBtn} onClick={() => {
-                  setEditingProduct({ name: '', price: 0, stock: 1, weight: 0, kadar: '24K', material: 'Emas', category: 'Cincin', description: '', photo: '' });
-                  setIsAddingProduct(true);
-                }}>+ Tambah Produk</button>
-              </div>
-
-              {editingProduct && (
-                <div className={styles.editPanel}>
-                  <h4>{isAddingProduct ? 'Tambah Produk Baru' : 'Edit Data Produk'}</h4>
-                  <form onSubmit={handleSaveProduct} className={styles.editGrid}>
-                    <div className={styles.inputGroup}><label>Nama Produk</label><input required value={editingProduct.name} onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} /></div>
-                    <div className={styles.inputGroup}><label>Kategori</label><input required value={editingProduct.category} onChange={e => setEditingProduct({...editingProduct, category: e.target.value})} /></div>
-                    <div className={styles.inputGroup}><label>Harga Jual (Rp)</label><input type="number" required value={editingProduct.price} onChange={e => setEditingProduct({...editingProduct, price: Number(e.target.value)})} /></div>
-                    <div className={styles.inputGroup}><label>Estimasi Ongkos Tukang (Rp)</label><input type="number" required value={editingProduct.ongkos || 0} onChange={e => setEditingProduct({...editingProduct, ongkos: Number(e.target.value)})} /></div>
-                    <div className={styles.inputGroup}><label>Berat (Gram)</label><input type="number" step="0.01" required value={editingProduct.weight} onChange={e => setEditingProduct({...editingProduct, weight: Number(e.target.value)})} /></div>
-                    <div className={styles.inputGroup}><label>Kadar</label><input required value={editingProduct.kadar} onChange={e => setEditingProduct({...editingProduct, kadar: e.target.value})} /></div>
-                    <div className={styles.inputGroup}><label>Stok Tersedia</label><input type="number" required value={editingProduct.stock} onChange={e => setEditingProduct({...editingProduct, stock: Number(e.target.value)})} /></div>
-                    <div className={styles.inputGroup}><label>URL Foto Utama</label><input required value={editingProduct.photo} onChange={e => setEditingProduct({...editingProduct, photo: e.target.value})} /></div>
-                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>Deskripsi Lengkap SEO</label><textarea rows={4} value={editingProduct.description} onChange={e => setEditingProduct({...editingProduct, description: e.target.value})} /></div>
-                    
-                    <div className={styles.editActions}>
-                      <button type="submit" className={styles.primaryBtn}>{saving ? 'Menyimpan...' : 'Simpan ke Database'}</button>
-                      <button type="button" onClick={() => setEditingProduct(null)} className={styles.secondaryBtn}>Batal</button>
-                    </div>
-                  </form>
-                </div>
-              )}
-
-              <div className={styles.tableWrap}>
-                <table className={styles.adminTable}>
-                  <thead>
-                    <tr>
-                      <th>Produk Info</th>
-                      <th>Spesifikasi</th>
-                      <th>Harga & Stok</th>
-                      <th>Tindakan</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map(p => (
-                      <tr key={p.id}>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <img src={p.photo} alt="" style={{ width: '48px', height: '48px', borderRadius: '8px', objectFit: 'cover', border: '1px solid rgba(212, 175, 55, 0.3)' }} />
-                            <div>
-                               <strong style={{ display: 'block', color: '#fff' }}>{p.name}</strong>
-                               <span style={{ fontSize: '0.8rem', color: '#8a8780' }}>{p.category}</span>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                           <span style={{ display: 'block' }}>{p.kadar} • {p.material}</span>
-                           <span style={{ fontSize: '0.8rem', color: '#d4af37' }}>{p.weight} gram</span>
-                        </td>
-                        <td>
-                           <span style={{ display: 'block', fontWeight: 600 }}>Rp {p.price.toLocaleString()}</span>
-                           <span className={`${styles.badge} ${p.stock > 0 ? styles.badgeSuccess : styles.badgeDanger}`} style={{ marginTop: '4px', display: 'inline-block' }}>
-                              {p.stock > 0 ? `Sisa: ${p.stock}` : 'Habis'}
-                           </span>
-                        </td>
-                        <td>
-                          <button onClick={() => { setEditingProduct(p); setIsAddingProduct(false); }} style={{ color: '#60a5fa', marginRight: '16px', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>Edit</button>
-                          <button onClick={() => handleDeleteProduct(p.id)} style={{ color: '#f87171', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>Delete</button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'about' && (
-            <div className={styles.panel}>
-              <div className={styles.panelHeader}>
-                <h3>Site Content — About Us</h3>
-                <button className={styles.primaryBtn} onClick={handleSaveAbout} disabled={saving}>Simpan Perubahan</button>
-              </div>
-              <div style={{ padding: '24px' }}>
-                <form onSubmit={handleSaveAbout}>
-                  <div className={styles.editGrid}>
-                    <div className={styles.inputGroup}>
-                      <label>Intro / History</label>
-                      <textarea rows={4} value={aboutContent?.history || ''} onChange={(e) => setAboutContent({...aboutContent, history: e.target.value})} />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <label>Extra paragraph</label>
-                      <textarea rows={3} value={aboutContent?.extra || ''} onChange={(e) => setAboutContent({...aboutContent, extra: e.target.value})} />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <label>Vision / Mission</label>
-                      <textarea rows={3} value={aboutContent?.vision || ''} onChange={(e) => setAboutContent({...aboutContent, vision: e.target.value})} />
-                    </div>
-                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}>
-                      <label>Strengths (one per line)</label>
-                      <textarea rows={4} value={(aboutContent?.strengths || []).join('\n')} onChange={(e) => setAboutContent({...aboutContent, strengths: e.target.value.split('\n')})} />
-                    </div>
-                  </div>
-                  <div style={{ marginTop: 12 }}>
-                    <button type="submit" className={styles.primaryBtn}>{saving ? 'Menyimpan...' : 'Simpan ke Database'}</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'partners' && (
-            <div className={styles.panel}>
-              <div className={styles.panelHeader}>
-                <h3>Partners & Collaborations</h3>
-                <button className={styles.primaryBtn} onClick={() => {
-                  setEditingPartner({ name: '', logo: '', website: '' });
-                  setIsAddingPartner(true);
-                }}>+ Tambah Partner</button>
-              </div>
-
-              {editingPartner && (
-                <div className={styles.editPanel}>
-                  <h4>{isAddingPartner ? 'Tambah Partner Baru' : 'Edit Data Partner'}</h4>
-                  <form onSubmit={handleSavePartner} className={styles.editGrid}>
-                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>Nama Partner/Instansi</label><input required value={editingPartner.name} onChange={e => setEditingPartner({...editingPartner, name: e.target.value})} /></div>
-                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>URL Logo</label><input required value={editingPartner.logo} onChange={e => setEditingPartner({...editingPartner, logo: e.target.value})} placeholder="https://example.com/logo.png" /></div>
-                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>Website URL</label><input required value={editingPartner.website} onChange={e => setEditingPartner({...editingPartner, website: e.target.value})} placeholder="https://example.com" /></div>
-                    
-                    <div className={styles.editActions}>
-                      <button type="submit" className={styles.primaryBtn}>{saving ? 'Menyimpan...' : 'Simpan Partner'}</button>
-                      <button type="button" onClick={() => setEditingPartner(null)} className={styles.secondaryBtn}>Batal</button>
-                    </div>
-                  </form>
-                </div>
-              )}
-
-              <div className={styles.tableWrap}>
-                <table className={styles.adminTable}>
-                  <thead>
-                    <tr>
-                      <th>Logo</th>
-                      <th>Nama Partner</th>
-                      <th>Website</th>
-                      <th>Tindakan</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {partnersList.map(p => (
-                      <tr key={p.id}>
-                        <td>
-                          <img src={p.logo} alt={p.name} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'contain', border: '1px solid rgba(212, 175, 55, 0.3)', background: '#fff', padding: '8px' }} />
-                        </td>
-                        <td>
-                           <strong style={{ display: 'block', color: '#fff' }}>{p.name}</strong>
-                        </td>
-                        <td>
-                           <a href={p.website} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'none' }}>{p.website}</a>
-                        </td>
-                        <td>
-                          <button onClick={() => { setEditingPartner(p); setIsAddingPartner(false); }} style={{ color: '#60a5fa', marginRight: '16px', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>Edit</button>
-                          <button onClick={() => handleDeletePartner(p.id)} style={{ color: '#f87171', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>Delete</button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'settings' && storeInfo && (
-            <div className={styles.panel}>
-              <div className={styles.panelHeader}>
-                <h3>General Config & Branding</h3>
-                <button className={styles.primaryBtn} onClick={handleStoreUpdate} disabled={saving}>Update Sistem</button>
-              </div>
-              <form className={styles.editPanel} style={{ border: 'none' }}>
-                 <div className={styles.editGrid}>
-                    <div className={styles.inputGroup}><label>Nama Toko (Navigasi)</label><input value={storeInfo.name} onChange={e => setStoreInfo({...storeInfo, name: e.target.value})} /></div>
-                    <div className={styles.inputGroup}><label>Logo Highlight Text</label><input value={storeInfo.logo_highlight || 'Daffa'} onChange={e => setStoreInfo({...storeInfo, logo_highlight: e.target.value})} /></div>
-                    
-                    <div className={styles.inputGroup}><label>WhatsApp (Prioritas: 081365555411)</label><input value={storeInfo.whatsapp} disabled title="Dikunci dari source code" /></div>
-                    <div className={styles.inputGroup}><label>Email Resmi</label><input value={storeInfo.email} onChange={e => setStoreInfo({...storeInfo, email: e.target.value})} /></div>
-                    
-                    <div className={styles.inputGroup}><label>Instagram URL</label><input value={storeInfo.instagram || storeInfo.social_media?.instagram || ''} onChange={e => setStoreInfo({...storeInfo, instagram: e.target.value})} /></div>
-                    <div className={styles.inputGroup}><label>Facebook URL</label><input value={storeInfo.facebook || storeInfo.social_media?.facebook || ''} onChange={e => setStoreInfo({...storeInfo, facebook: e.target.value})} /></div>
-                    <div className={styles.inputGroup}><label>TikTok URL</label><input value={storeInfo.tiktok || storeInfo.social_media?.tiktok || ''} onChange={e => setStoreInfo({...storeInfo, tiktok: e.target.value})} /></div>
-                    <div className={styles.inputGroup}><label>Tahun Berdiri</label><input type="number" value={storeInfo.since} onChange={e => setStoreInfo({...storeInfo, since: Number(e.target.value)})} /></div>
-
-                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>Alamat Lengkap Toko</label><textarea rows={2} value={storeInfo.address} onChange={e => setStoreInfo({...storeInfo, address: e.target.value})} /></div>
-                    <div className={`${styles.inputGroup} ${styles.editGridFull}`}><label>Deskripsi Hero (Halaman Utama)</label><textarea rows={3} value={storeInfo.description} onChange={e => setStoreInfo({...storeInfo, description: e.target.value})} /></div>
-                    
-                    <div className={styles.editGridFull}>
-                       <h4 style={{ marginBottom: '16px', color: '#d4af37', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '8px' }}>Jam Operasional</h4>
-                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
-                          <div className={styles.inputGroup}><label>Senin - Jumat</label><input value={storeInfo.operating_hours?.weekday || ''} onChange={e => setStoreInfo({...storeInfo, operating_hours: {...storeInfo.operating_hours, weekday: e.target.value}})} /></div>
-                          <div className={styles.inputGroup}><label>Sabtu</label><input value={storeInfo.operating_hours?.saturday || ''} onChange={e => setStoreInfo({...storeInfo, operating_hours: {...storeInfo.operating_hours, saturday: e.target.value}})} /></div>
-                          <div className={styles.inputGroup}><label>Minggu</label><input value={storeInfo.operating_hours?.sunday || ''} onChange={e => setStoreInfo({...storeInfo, operating_hours: {...storeInfo.operating_hours, sunday: e.target.value}})} /></div>
-                       </div>
-                    </div>
-                 </div>
-              </form>
-            </div>
-          )}
+          {renderSection()}
         </div>
       </main>
     </div>
