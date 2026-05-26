@@ -27,6 +27,30 @@
   border-radius: var(--radius-lg);
 }
 
+.activeSearch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface-glass);
+  border: 1px solid var(--gold-primary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: var(--gold-primary);
+  font-size: 0.9rem;
+}
+
+.activeSearch button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.activeSearch button:hover {
+  color: #ef4444;
+}
+
 .filterGroup {
   display: flex;
   flex-direction: column;

@@ -1,9 +1,5 @@
 .card {
-<<<<<<< HEAD
-  background: linear-gradient(135deg, var(--panel-start-strong), var(--panel-strong));
-=======
   background: var(--bg-card);
->>>>>>> ad8eef7 (continue)
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -150,18 +146,11 @@
 .specs {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: 12px;
   padding: 10px 14px;
   background: var(--surface-soft);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
-=======
-  gap: 8px;
-  padding: 10px 12px;
-  background: var(--bg-surface);
-  border-radius: var(--radius-sm);
->>>>>>> ad8eef7 (continue)
 }
 
 .spec {

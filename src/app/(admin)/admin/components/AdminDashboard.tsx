@@ -22,8 +22,8 @@ export default function AdminDashboard() {
         supabase.from('reservations').select('*').order('created_at', { ascending: false }).limit(5),
       ]);
 
-      // Count WA clicks from activity_logs
-      const waClick = await supabase.from('activity_logs').select('id', { count: 'exact', head: true }).eq('action', 'wa_click');
+      // Count WA clicks from wa_inquiries
+      const waClick = await supabase.from('wa_inquiries').select('id', { count: 'exact', head: true });
 
       setStats({
         products: prod.count || 0,
@@ -140,8 +140,8 @@ export default function AdminDashboard() {
             <div className={styles.list}>
               {recentReservations.map(rsv => (
                 <div key={rsv.id} className={styles.listItem}>
-                  <div className={styles.listItemTitle}>{rsv.name} <span className={`${styles.badge} ${rsv.status === 'pending' ? styles.badgeNew : styles.badgeRead}`}>{rsv.status}</span></div>
-                  <div className={styles.listItemMeta}>{rsv.service_type} - {rsv.preferred_date}</div>
+                  <div className={styles.listItemTitle}>{rsv.customer_name} <span className={`${styles.badge} ${rsv.status === 'pending' ? styles.badgeNew : styles.badgeRead}`}>{rsv.status}</span></div>
+                  <div className={styles.listItemMeta}>{rsv.reservation_type} - {rsv.visit_date}</div>
                   <div className={styles.listItemDate}>{formatDate(rsv.created_at)}</div>
                 </div>
               ))}

@@ -30,13 +30,9 @@
   background: rgba(10, 10, 15, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-<<<<<<< HEAD
   border-bottom: 1px solid var(--border-subtle);
   padding: 10px 0;
-  box-shadow: 0 4px 30px var(--shadow-medium);
-=======
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), 0 1px 0 var(--border-gold);
->>>>>>> ad8eef7 (continue)
+  box-shadow: 0 4px 30px var(--shadow-medium), 0 1px 0 var(--border-gold);
 }
 
 [data-theme='light'] .navbar.scrolled::before {
@@ -135,16 +131,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-<<<<<<< HEAD
-  border-radius: var(--radius-full);
-  background: var(--surface-glass);
-  border: 1px solid var(--border-subtle);
-=======
   background: var(--surface-glass);
   border: 1px solid var(--surface-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   cursor: pointer;
->>>>>>> ad8eef7 (continue)
   color: var(--text-secondary);
   transition: all var(--transition-fast);
 }
@@ -323,13 +313,13 @@
   list-style: none;
 }
 
-<<<<<<< HEAD
 .overlay {
   position: fixed;
   inset: 0;
   background: var(--shadow-heavy);
   z-index: 999;
-=======
+}
+
 .mobileLink {
   display: block;
   padding: 12px 16px;
@@ -339,7 +329,6 @@
   color: var(--text-secondary);
   text-decoration: none;
   transition: all var(--transition-fast);
->>>>>>> ad8eef7 (continue)
 }
 
 .mobileLink:hover,

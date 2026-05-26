@@ -1,0 +1,864 @@
+
+> kedai-emas@0.1.0 build
+> next build
+
+▲ Next.js 16.2.4 (Turbopack)
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 23 errors:
+./src/app/(admin)/admin/page.module.css:138:1
+Parsing CSS source code failed
+  [90m136 |[0m .navItem:hover { background: rgba([35m212[0m, [35m175[0m, [35m55[0m, [35m0.08[0m); color: #fff; }
+  [90m137 |[0m
+[31m[1m>[0m [90m138 |[0m <<<<<<< [33mHEAD[0m
+  [90m    |[0m [31m[1m^[0m
+  [90m139 |[0m .navActive {
+  [90m140 |[0m   background: linear-gradient([35m135[0mdeg, [36mvar[0m(--gold-soft), [36mvar[0m(--gold-so...
+  [90m141 |[0m =======
+
+Invalid empty selector
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:138:1
+  [90m136 |[0m .navItem:hover { background: rgba([35m212[0m, [35m175[0m, [35m55[0m, [35m0.08[0m); color: #fff; }
+  [90m137 |[0m
+[31m[1m>[0m [90m138 |[0m <<<<<<< [33mHEAD[0m
+  [90m    |[0m [31m[1m^[0m
+  [90m139 |[0m .navActive {
+  [90m140 |[0m   background: linear-gradient([35m135[0mdeg, [36mvar[0m(--gold-soft), [36mvar[0m(--gold-so...
+  [90m141 |[0m =======
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:33:1
+Parsing CSS source code failed
+  [90m31 |[0m   background: #[35m0[0ma0a0f;
+  [90m32 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m33 |[0m }
+  [90m   |[0m [31m[1m^[0m
+  [90m34 |[0m
+  [90m35 |[0m [90m/* Sidebar */[0m
+  [90m36 |[0m .sidebar {
+
+Unexpected end of input
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:33:1
+  [90m31 |[0m   background: #[35m0[0ma0a0f;
+  [90m32 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m33 |[0m }
+  [90m   |[0m [31m[1m^[0m
+  [90m34 |[0m
+  [90m35 |[0m [90m/* Sidebar */[0m
+  [90m36 |[0m .sidebar {
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:58:1
+Parsing CSS source code failed
+  [90m56 |[0m   overflow: hidden;
+  [90m57 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m58 |[0m }
+  [90m   |[0m [31m[1m^[0m
+  [90m59 |[0m
+  [90m60 |[0m .sidebarOpen { width: [35m240[0mpx; }
+  [90m61 |[0m .sidebarClosed { width: [35m64[0mpx; }
+
+Unexpected end of input
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:58:1
+  [90m56 |[0m   overflow: hidden;
+  [90m57 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m58 |[0m }
+  [90m   |[0m [31m[1m^[0m
+  [90m59 |[0m
+  [90m60 |[0m .sidebarOpen { width: [35m240[0mpx; }
+  [90m61 |[0m .sidebarClosed { width: [35m64[0mpx; }
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:75:1
+Parsing CSS source code failed
+  [90m73 |[0m   min-height: [35m64[0mpx;
+  [90m74 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m75 |[0m }
+  [90m   |[0m [31m[1m^[0m
+  [90m76 |[0m
+  [90m77 |[0m .sidebarLogo {
+  [90m78 |[0m   display: flex;
+
+Unexpected end of input
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:75:1
+  [90m73 |[0m   min-height: [35m64[0mpx;
+  [90m74 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m75 |[0m }
+  [90m   |[0m [31m[1m^[0m
+  [90m76 |[0m
+  [90m77 |[0m .sidebarLogo {
+  [90m78 |[0m   display: flex;
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:5:16
+Parsing CSS source code failed
+  [90m3 |[0m   display: flex;
+  [90m4 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m5 |[0m   height: [35m100[0mvh;
+  [90m  |[0m                [31m[1m^[0m
+  [90m6 |[0m   background: [36mvar[0m(--bg-primary);
+  [90m7 |[0m   color: [36mvar[0m(--text-primary);
+  [90m8 |[0m   font-family: [32m'Inter'[0m, sans-serif;
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:5:16
+  [90m3 |[0m   display: flex;
+  [90m4 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m5 |[0m   height: [35m100[0mvh;
+  [90m  |[0m                [31m[1m^[0m
+  [90m6 |[0m   background: [36mvar[0m(--bg-primary);
+  [90m7 |[0m   color: [36mvar[0m(--text-primary);
+  [90m8 |[0m   font-family: [32m'Inter'[0m, sans-serif;
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:11:22
+Parsing CSS source code failed
+  [90m 9 |[0m   overflow: hidden;
+  [90m10 |[0m =======
+[31m[1m>[0m [90m11 |[0m   align-items: center;
+  [90m   |[0m                      [31m[1m^[0m
+  [90m12 |[0m   justify-content: center;
+  [90m13 |[0m   background: #[35m0[0ma0a0f;
+  [90m14 |[0m }
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:11:22
+  [90m 9 |[0m   overflow: hidden;
+  [90m10 |[0m =======
+[31m[1m>[0m [90m11 |[0m   align-items: center;
+  [90m   |[0m                      [31m[1m^[0m
+  [90m12 |[0m   justify-content: center;
+  [90m13 |[0m   background: #[35m0[0ma0a0f;
+  [90m14 |[0m }
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:38:15
+Parsing CSS source code failed
+  [90m36 |[0m .sidebar {
+  [90m37 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m38 |[0m   width: [35m280[0mpx;
+  [90m   |[0m               [31m[1m^[0m
+  [90m39 |[0m   background: [36mvar[0m(--bg-secondary);
+  [90m40 |[0m   border-right: [35m1[0mpx solid [36mvar[0m(--gold-muted); [90m/* border-gold subtle */[0m
+  [90m41 |[0m   display: flex;
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:38:15
+  [90m36 |[0m .sidebar {
+  [90m37 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m38 |[0m   width: [35m280[0mpx;
+  [90m   |[0m               [31m[1m^[0m
+  [90m39 |[0m   background: [36mvar[0m(--bg-secondary);
+  [90m40 |[0m   border-right: [35m1[0mpx solid [36mvar[0m(--gold-muted); [90m/* border-gold subtle */[0m
+  [90m41 |[0m   display: flex;
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:46:18
+Parsing CSS source code failed
+  [90m44 |[0m   z-index: [35m10[0m;
+  [90m45 |[0m =======
+[31m[1m>[0m [90m46 |[0m   position: fixed;
+  [90m   |[0m                  [31m[1m^[0m
+  [90m47 |[0m   top: [35m0[0m;
+  [90m48 |[0m   left: [35m0[0m;
+  [90m49 |[0m   height: [35m100[0mvh;
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:46:18
+  [90m44 |[0m   z-index: [35m10[0m;
+  [90m45 |[0m =======
+[31m[1m>[0m [90m46 |[0m   position: fixed;
+  [90m   |[0m                  [31m[1m^[0m
+  [90m47 |[0m   top: [35m0[0m;
+  [90m48 |[0m   left: [35m0[0m;
+  [90m49 |[0m   height: [35m100[0mvh;
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:67:12
+Parsing CSS source code failed
+  [90m65 |[0m   align-items: center;
+  [90m66 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m67 |[0m   gap: [35m12[0mpx;
+  [90m   |[0m            [31m[1m^[0m
+  [90m68 |[0m   border-bottom: [35m1[0mpx solid [36mvar[0m(--surface-glass);
+  [90m69 |[0m =======
+  [90m70 |[0m   justify-content: space-between;
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:67:12
+  [90m65 |[0m   align-items: center;
+  [90m66 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m67 |[0m   gap: [35m12[0mpx;
+  [90m   |[0m            [31m[1m^[0m
+  [90m68 |[0m   border-bottom: [35m1[0mpx solid [36mvar[0m(--surface-glass);
+  [90m69 |[0m =======
+  [90m70 |[0m   justify-content: space-between;
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/app/(admin)/admin/page.module.css:70:33
+Parsing CSS source code failed
+  [90m68 |[0m   border-bottom: [35m1[0mpx solid [36mvar[0m(--surface-glass);
+  [90m69 |[0m =======
+[31m[1m>[0m [90m70 |[0m   justify-content: space-between;
+  [90m   |[0m                                 [31m[1m^[0m
+  [90m71 |[0m   padding: [35m20[0mpx [35m16[0mpx;
+  [90m72 |[0m   border-bottom: [35m1[0mpx solid rgba([35m212[0m, [35m175[0m, [35m55[0m, [35m0.1[0m);
+  [90m73 |[0m   min-height: [35m64[0mpx;
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/app/(admin)/admin/page.module.css:
+./src/app/(admin)/admin/page.module.css:70:33
+  [90m68 |[0m   border-bottom: [35m1[0mpx solid [36mvar[0m(--surface-glass);
+  [90m69 |[0m =======
+[31m[1m>[0m [90m70 |[0m   justify-content: space-between;
+  [90m   |[0m                                 [31m[1m^[0m
+  [90m71 |[0m   padding: [35m20[0mpx [35m16[0mpx;
+  [90m72 |[0m   border-bottom: [35m1[0mpx solid rgba([35m212[0m, [35m175[0m, [35m55[0m, [35m0.1[0m);
+  [90m73 |[0m   min-height: [35m64[0mpx;
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(admin)/admin/page.module.css [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Client Component Browser]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(admin)/admin/page.module.css [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Client Component SSR]
+    ./src/app/(admin)/admin/page.tsx [Server Component]
+
+
+./src/components/Navbar.module.css:326:1
+Parsing CSS source code failed
+  [90m324 |[0m }
+  [90m325 |[0m
+[31m[1m>[0m [90m326 |[0m <<<<<<< [33mHEAD[0m
+  [90m    |[0m [31m[1m^[0m
+  [90m327 |[0m .overlay {
+  [90m328 |[0m   position: fixed;
+  [90m329 |[0m   inset: [35m0[0m;
+
+Invalid empty selector
+
+Generated code of PostCSS transform of file content of src/components/Navbar.module.css:
+./src/components/Navbar.module.css:326:1
+  [90m324 |[0m }
+  [90m325 |[0m
+[31m[1m>[0m [90m326 |[0m <<<<<<< [33mHEAD[0m
+  [90m    |[0m [31m[1m^[0m
+  [90m327 |[0m .overlay {
+  [90m328 |[0m   position: fixed;
+  [90m329 |[0m   inset: [35m0[0m;
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Navbar.module.css [Client Component Browser]
+    ./src/components/Navbar.tsx [Client Component Browser]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Navbar.module.css [Client Component SSR]
+    ./src/components/Navbar.tsx [Client Component SSR]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+
+./src/components/Navbar.module.css:40:1
+Parsing CSS source code failed
+  [90m38 |[0m   box-shadow: [35m0[0m [35m4[0mpx [35m30[0mpx rgba([35m0[0m, [35m0[0m, [35m0[0m, [35m0.4[0m), [35m0[0m [35m1[0mpx [35m0[0m [36mvar[0m(--border-gold);
+  [90m39 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m40 |[0m }
+  [90m   |[0m [31m[1m^[0m
+  [90m41 |[0m
+  [90m42 |[0m [data-theme=[32m'light'[0m] .navbar.scrolled::before {
+  [90m43 |[0m   background: rgba([35m255[0m, [35m255[0m, [35m255[0m, [35m0.95[0m);
+
+Unexpected end of input
+
+Generated code of PostCSS transform of file content of src/components/Navbar.module.css:
+./src/components/Navbar.module.css:40:1
+  [90m38 |[0m   box-shadow: [35m0[0m [35m4[0mpx [35m30[0mpx rgba([35m0[0m, [35m0[0m, [35m0[0m, [35m0.4[0m), [35m0[0m [35m1[0mpx [35m0[0m [36mvar[0m(--border-gold);
+  [90m39 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m40 |[0m }
+  [90m   |[0m [31m[1m^[0m
+  [90m41 |[0m
+  [90m42 |[0m [data-theme=[32m'light'[0m] .navbar.scrolled::before {
+  [90m43 |[0m   background: rgba([35m255[0m, [35m255[0m, [35m255[0m, [35m0.95[0m);
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Navbar.module.css [Client Component Browser]
+    ./src/components/Navbar.tsx [Client Component Browser]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Navbar.module.css [Client Component SSR]
+    ./src/components/Navbar.tsx [Client Component SSR]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+
+./src/components/Navbar.module.css:34:48
+Parsing CSS source code failed
+  [90m32 |[0m   -webkit-backdrop-filter: blur([35m20[0mpx);
+  [90m33 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m34 |[0m   border-bottom: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m   |[0m                                                [31m[1m^[0m
+  [90m35 |[0m   padding: [35m10[0mpx [35m0[0m;
+  [90m36 |[0m   box-shadow: [35m0[0m [35m4[0mpx [35m30[0mpx [36mvar[0m(--shadow-medium);
+  [90m37 |[0m =======
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/Navbar.module.css:
+./src/components/Navbar.module.css:34:48
+  [90m32 |[0m   -webkit-backdrop-filter: blur([35m20[0mpx);
+  [90m33 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m34 |[0m   border-bottom: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m   |[0m                                                [31m[1m^[0m
+  [90m35 |[0m   padding: [35m10[0mpx [35m0[0m;
+  [90m36 |[0m   box-shadow: [35m0[0m [35m4[0mpx [35m30[0mpx [36mvar[0m(--shadow-medium);
+  [90m37 |[0m =======
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Navbar.module.css [Client Component Browser]
+    ./src/components/Navbar.tsx [Client Component Browser]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Navbar.module.css [Client Component SSR]
+    ./src/components/Navbar.tsx [Client Component SSR]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+
+./src/components/Navbar.module.css:38:72
+Parsing CSS source code failed
+  [90m36 |[0m   box-shadow: [35m0[0m [35m4[0mpx [35m30[0mpx [36mvar[0m(--shadow-medium);
+  [90m37 |[0m =======
+[31m[1m>[0m [90m38 |[0m   box-shadow: [35m0[0m [35m4[0mpx [35m30[0mpx rgba([35m0[0m, [35m0[0m, [35m0[0m, [35m0.4[0m), [35m0[0m [35m1[0mpx [35m0[0m [36mvar[0m(--border-gold);
+  [90m   |[0m                                                                        [31m[1m^[0m
+  [90m39 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+  [90m40 |[0m }
+  [90m41 |[0m
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/Navbar.module.css:
+./src/components/Navbar.module.css:38:72
+  [90m36 |[0m   box-shadow: [35m0[0m [35m4[0mpx [35m30[0mpx [36mvar[0m(--shadow-medium);
+  [90m37 |[0m =======
+[31m[1m>[0m [90m38 |[0m   box-shadow: [35m0[0m [35m4[0mpx [35m30[0mpx rgba([35m0[0m, [35m0[0m, [35m0[0m, [35m0.4[0m), [35m0[0m [35m1[0mpx [35m0[0m [36mvar[0m(--border-gold);
+  [90m   |[0m                                                                        [31m[1m^[0m
+  [90m39 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+  [90m40 |[0m }
+  [90m41 |[0m
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Navbar.module.css [Client Component Browser]
+    ./src/components/Navbar.tsx [Client Component Browser]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Navbar.module.css [Client Component SSR]
+    ./src/components/Navbar.tsx [Client Component SSR]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+
+./src/components/Navbar.module.css:139:36
+Parsing CSS source code failed
+  [90m137 |[0m   justify-content: center;
+  [90m138 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m139 |[0m   border-radius: [36mvar[0m(--radius-full);
+  [90m    |[0m                                    [31m[1m^[0m
+  [90m140 |[0m   background: [36mvar[0m(--surface-glass);
+  [90m141 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m142 |[0m =======
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/Navbar.module.css:
+./src/components/Navbar.module.css:139:36
+  [90m137 |[0m   justify-content: center;
+  [90m138 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m139 |[0m   border-radius: [36mvar[0m(--radius-full);
+  [90m    |[0m                                    [31m[1m^[0m
+  [90m140 |[0m   background: [36mvar[0m(--surface-glass);
+  [90m141 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m142 |[0m =======
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Navbar.module.css [Client Component Browser]
+    ./src/components/Navbar.tsx [Client Component Browser]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Navbar.module.css [Client Component SSR]
+    ./src/components/Navbar.tsx [Client Component SSR]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+
+./src/components/Navbar.module.css:143:35
+Parsing CSS source code failed
+  [90m141 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m142 |[0m =======
+[31m[1m>[0m [90m143 |[0m   background: [36mvar[0m(--surface-glass);
+  [90m    |[0m                                   [31m[1m^[0m
+  [90m144 |[0m   border: [35m1[0mpx solid [36mvar[0m(--surface-border);
+  [90m145 |[0m   border-radius: [36mvar[0m(--radius-md);
+  [90m146 |[0m   cursor: pointer;
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/Navbar.module.css:
+./src/components/Navbar.module.css:143:35
+  [90m141 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m142 |[0m =======
+[31m[1m>[0m [90m143 |[0m   background: [36mvar[0m(--surface-glass);
+  [90m    |[0m                                   [31m[1m^[0m
+  [90m144 |[0m   border: [35m1[0mpx solid [36mvar[0m(--surface-border);
+  [90m145 |[0m   border-radius: [36mvar[0m(--radius-md);
+  [90m146 |[0m   cursor: pointer;
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Navbar.module.css [Client Component Browser]
+    ./src/components/Navbar.tsx [Client Component Browser]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Navbar.module.css [Client Component SSR]
+    ./src/components/Navbar.tsx [Client Component SSR]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+
+./src/components/Navbar.module.css:148:31
+Parsing CSS source code failed
+  [90m146 |[0m   cursor: pointer;
+  [90m147 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m148 |[0m   color: [36mvar[0m(--text-secondary);
+  [90m    |[0m                               [31m[1m^[0m
+  [90m149 |[0m   transition: all [36mvar[0m(--transition-fast);
+  [90m150 |[0m }
+  [90m151 |[0m
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/Navbar.module.css:
+./src/components/Navbar.module.css:148:31
+  [90m146 |[0m   cursor: pointer;
+  [90m147 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m148 |[0m   color: [36mvar[0m(--text-secondary);
+  [90m    |[0m                               [31m[1m^[0m
+  [90m149 |[0m   transition: all [36mvar[0m(--transition-fast);
+  [90m150 |[0m }
+  [90m151 |[0m
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Navbar.module.css [Client Component Browser]
+    ./src/components/Navbar.tsx [Client Component Browser]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Navbar.module.css [Client Component SSR]
+    ./src/components/Navbar.tsx [Client Component SSR]
+    ./src/components/Navbar.tsx [Server Component]
+    ./src/app/(public)/layout.tsx [Server Component]
+
+
+./src/components/ProductCard.module.css:165:1
+Parsing CSS source code failed
+  [90m163 |[0m   border-radius: [36mvar[0m(--radius-sm);
+  [90m164 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m165 |[0m }
+  [90m    |[0m [31m[1m^[0m
+  [90m166 |[0m
+  [90m167 |[0m .spec {
+  [90m168 |[0m   display: flex;
+
+Unexpected end of input
+
+Generated code of PostCSS transform of file content of src/components/ProductCard.module.css:
+./src/components/ProductCard.module.css:165:1
+  [90m163 |[0m   border-radius: [36mvar[0m(--radius-sm);
+  [90m164 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m165 |[0m }
+  [90m    |[0m [31m[1m^[0m
+  [90m166 |[0m
+  [90m167 |[0m .spec {
+  [90m168 |[0m   display: flex;
+
+Import traces:
+  Client Component Browser:
+    ./src/components/ProductCard.module.css [Client Component Browser]
+    ./src/components/ProductCard.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/ProductCard.module.css [Client Component SSR]
+    ./src/components/ProductCard.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+
+./src/components/ProductCard.module.css:3:86
+Parsing CSS source code failed
+  [90m1 |[0m ...
+  [90m2 |[0m ...
+[31m[1m>[0m [90m3 |[0m ...tart-strong), [36mvar[0m(--panel-strong));
+  [90m  |[0m                                      [31m[1m^[0m
+  [90m4 |[0m ...
+  [90m5 |[0m ...
+  [90m6 |[0m ...
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/ProductCard.module.css:
+./src/components/ProductCard.module.css:3:86
+  [90m1 |[0m ...
+  [90m2 |[0m ...
+[31m[1m>[0m [90m3 |[0m ...tart-strong), [36mvar[0m(--panel-strong));
+  [90m  |[0m                                      [31m[1m^[0m
+  [90m4 |[0m ...
+  [90m5 |[0m ...
+  [90m6 |[0m ...
+
+Import traces:
+  Client Component Browser:
+    ./src/components/ProductCard.module.css [Client Component Browser]
+    ./src/components/ProductCard.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/ProductCard.module.css [Client Component SSR]
+    ./src/components/ProductCard.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+
+./src/components/ProductCard.module.css:5:29
+Parsing CSS source code failed
+  [90m3 |[0m   background: linear-gradient([35m135[0mdeg, [36mvar[0m(--panel-start-strong), [36mvar[0m(--...
+  [90m4 |[0m =======
+[31m[1m>[0m [90m5 |[0m   background: [36mvar[0m(--bg-card);
+  [90m  |[0m                             [31m[1m^[0m
+  [90m6 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+  [90m7 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m8 |[0m   border-radius: [36mvar[0m(--radius-lg);
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/ProductCard.module.css:
+./src/components/ProductCard.module.css:5:29
+  [90m3 |[0m   background: linear-gradient([35m135[0mdeg, [36mvar[0m(--panel-start-strong), [36mvar[0m(--...
+  [90m4 |[0m =======
+[31m[1m>[0m [90m5 |[0m   background: [36mvar[0m(--bg-card);
+  [90m  |[0m                             [31m[1m^[0m
+  [90m6 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+  [90m7 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m8 |[0m   border-radius: [36mvar[0m(--radius-lg);
+
+Import traces:
+  Client Component Browser:
+    ./src/components/ProductCard.module.css [Client Component Browser]
+    ./src/components/ProductCard.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/ProductCard.module.css [Client Component SSR]
+    ./src/components/ProductCard.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+
+./src/components/ProductCard.module.css:7:41
+Parsing CSS source code failed
+  [90m 5 |[0m   background: [36mvar[0m(--bg-card);
+  [90m 6 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m 7 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m   |[0m                                         [31m[1m^[0m
+  [90m 8 |[0m   border-radius: [36mvar[0m(--radius-lg);
+  [90m 9 |[0m   overflow: hidden;
+  [90m10 |[0m   transition: all [36mvar[0m(--transition-normal);
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/ProductCard.module.css:
+./src/components/ProductCard.module.css:7:41
+  [90m 5 |[0m   background: [36mvar[0m(--bg-card);
+  [90m 6 |[0m >>>>>>> ad8eef7 ([36mcontinue[0m)
+[31m[1m>[0m [90m 7 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m   |[0m                                         [31m[1m^[0m
+  [90m 8 |[0m   border-radius: [36mvar[0m(--radius-lg);
+  [90m 9 |[0m   overflow: hidden;
+  [90m10 |[0m   transition: all [36mvar[0m(--transition-normal);
+
+Import traces:
+  Client Component Browser:
+    ./src/components/ProductCard.module.css [Client Component Browser]
+    ./src/components/ProductCard.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/ProductCard.module.css [Client Component SSR]
+    ./src/components/ProductCard.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+
+./src/components/ProductCard.module.css:154:12
+Parsing CSS source code failed
+  [90m152 |[0m   align-items: center;
+  [90m153 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m154 |[0m   gap: [35m12[0mpx;
+  [90m    |[0m            [31m[1m^[0m
+  [90m155 |[0m   padding: [35m10[0mpx [35m14[0mpx;
+  [90m156 |[0m   background: [36mvar[0m(--surface-soft);
+  [90m157 |[0m   border-radius: [36mvar[0m(--radius-md);
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/ProductCard.module.css:
+./src/components/ProductCard.module.css:154:12
+  [90m152 |[0m   align-items: center;
+  [90m153 |[0m <<<<<<< [33mHEAD[0m
+[31m[1m>[0m [90m154 |[0m   gap: [35m12[0mpx;
+  [90m    |[0m            [31m[1m^[0m
+  [90m155 |[0m   padding: [35m10[0mpx [35m14[0mpx;
+  [90m156 |[0m   background: [36mvar[0m(--surface-soft);
+  [90m157 |[0m   border-radius: [36mvar[0m(--radius-md);
+
+Import traces:
+  Client Component Browser:
+    ./src/components/ProductCard.module.css [Client Component Browser]
+    ./src/components/ProductCard.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/ProductCard.module.css [Client Component SSR]
+    ./src/components/ProductCard.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+
+./src/components/ProductCard.module.css:160:11
+Parsing CSS source code failed
+  [90m158 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m159 |[0m =======
+[31m[1m>[0m [90m160 |[0m   gap: [35m8[0mpx;
+  [90m    |[0m           [31m[1m^[0m
+  [90m161 |[0m   padding: [35m10[0mpx [35m12[0mpx;
+  [90m162 |[0m   background: [36mvar[0m(--bg-surface);
+  [90m163 |[0m   border-radius: [36mvar[0m(--radius-sm);
+
+Unexpected token Semicolon
+
+Generated code of PostCSS transform of file content of src/components/ProductCard.module.css:
+./src/components/ProductCard.module.css:160:11
+  [90m158 |[0m   border: [35m1[0mpx solid [36mvar[0m(--border-subtle);
+  [90m159 |[0m =======
+[31m[1m>[0m [90m160 |[0m   gap: [35m8[0mpx;
+  [90m    |[0m           [31m[1m^[0m
+  [90m161 |[0m   padding: [35m10[0mpx [35m12[0mpx;
+  [90m162 |[0m   background: [36mvar[0m(--bg-surface);
+  [90m163 |[0m   border-radius: [36mvar[0m(--radius-sm);
+
+Import traces:
+  Client Component Browser:
+    ./src/components/ProductCard.module.css [Client Component Browser]
+    ./src/components/ProductCard.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Client Component Browser]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/ProductCard.module.css [Client Component SSR]
+    ./src/components/ProductCard.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Client Component SSR]
+    ./src/app/(public)/wishlist/page.tsx [Server Component]
+
+
+    at <unknown> (./src/app/(admin)/admin/page.module.css:138:1)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:138:1)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:33:1)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:33:1)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:58:1)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:58:1)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:75:1)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:75:1)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:5:16)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:5:16)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:11:22)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:11:22)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:38:15)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:38:15)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:46:18)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:46:18)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:67:12)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:67:12)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:70:33)
+    at <unknown> (./src/app/(admin)/admin/page.module.css:70:33)
+    at <unknown> (./src/components/Navbar.module.css:326:1)
+    at <unknown> (./src/components/Navbar.module.css:326:1)
+    at <unknown> (./src/components/Navbar.module.css:40:1)
+    at <unknown> (./src/components/Navbar.module.css:40:1)
+    at <unknown> (./src/components/Navbar.module.css:34:48)
+    at <unknown> (./src/components/Navbar.module.css:34:48)
+    at <unknown> (./src/components/Navbar.module.css:38:72)
+    at <unknown> (./src/components/Navbar.module.css:38:72)
+    at <unknown> (./src/components/Navbar.module.css:139:36)
+    at <unknown> (./src/components/Navbar.module.css:139:36)
+    at <unknown> (./src/components/Navbar.module.css:143:35)
+    at <unknown> (./src/components/Navbar.module.css:143:35)
+    at <unknown> (./src/components/Navbar.module.css:148:31)
+    at <unknown> (./src/components/Navbar.module.css:148:31)
+    at <unknown> (./src/components/ProductCard.module.css:165:1)
+    at <unknown> (./src/components/ProductCard.module.css:165:1)
+    at <unknown> (./src/components/ProductCard.module.css:3:86)
+    at <unknown> (./src/components/ProductCard.module.css:3:86)
+    at <unknown> (./src/components/ProductCard.module.css:5:29)
+    at <unknown> (./src/components/ProductCard.module.css:5:29)
+    at <unknown> (./src/components/ProductCard.module.css:7:41)
+    at <unknown> (./src/components/ProductCard.module.css:7:41)
+    at <unknown> (./src/components/ProductCard.module.css:154:12)
+    at <unknown> (./src/components/ProductCard.module.css:154:12)
+    at <unknown> (./src/components/ProductCard.module.css:160:11)
+    at <unknown> (./src/components/ProductCard.module.css:160:11)

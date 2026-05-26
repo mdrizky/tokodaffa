@@ -3,13 +3,13 @@ import { useEffect, useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import styles from "./Admin.module.css";
 
-const CATEGORIES = ['cincin', 'gelang', 'kalung', 'anting', 'liontin', 'batangan', 'koin', 'jam', 'bros', 'perak', 'lainnya'];
-const KADAR = ['24K', '22K', '18K', '17K', '16K', '14K', 'perak 925'];
+const CATEGORIES = ['cincin', 'gelang', 'kalung', 'anting', 'liontin', 'batangan', 'set', 'koin', 'jam', 'bros', 'lainnya'];
+const KADAR = ['24K', '22K', '18K', '17K', '16K', '14K', '925', 'perak'];
 
 const EMPTY_FORM = {
-  name: '', slug: '', category: 'cincin', kadar: '24K', weight: '', price: '', stock: '',
-  material: 'emas', photo: '', description: '', short_description: '', featured: false,
-  is_new: false, is_bestseller: false, tags: ''
+  sku: '', name: '', slug: '', category: 'cincin', kadar: '24K', weight: '', price: '', stock: '',
+  material: 'emas', photo: '', images: [], description: '', short_description: '', warranty_info: '',
+  featured: false, is_new: false, is_bestseller: false, is_active: true, tags: ''
 };
 
 export default function AdminProducts() {
@@ -23,6 +23,7 @@ export default function AdminProducts() {
   const [uploading, setUploading] = useState(false);
   const [msg, setMsg] = useState<{type:'ok'|'err', text:string}|null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const multiFileRef = useRef<HTMLInputElement>(null);
 
   const fetchProducts = async () => {
     const { data } = await supabase.from('products').select('*').order('id', { ascending: false });
@@ -34,11 +35,16 @@ export default function AdminProducts() {
 
   const filtered = products.filter(p =>
     p.name.toLowerCase().includes(search.toLowerCase()) ||
-    p.category.toLowerCase().includes(search.toLowerCase())
+    p.category.toLowerCase().includes(search.toLowerCase()) ||
+    (p.sku && p.sku.toLowerCase().includes(search.toLowerCase()))
   );
 
   const handleEdit = (p: any) => {
-    setForm({ ...p, tags: Array.isArray(p.tags) ? p.tags.join(', ') : (p.tags || '') });
+    setForm({ 
+      ...p, 
+      tags: Array.isArray(p.tags) ? p.tags.join(', ') : (p.tags || ''),
+      images: p.images || []
+    });
     setEditId(p.id);
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -49,6 +55,20 @@ export default function AdminProducts() {
     await supabase.from('products').delete().eq('id', id);
     fetchProducts();
     showMsg('ok', 'Produk dihapus');
+  };
+
+  const handleDuplicate = async (p: any) => {
+    if (!confirm('Duplikat produk ini?')) return;
+    const { id, ...rest } = p;
+    rest.name = `${rest.name} (Copy)`;
+    rest.slug = rest.slug ? `${rest.slug}-copy-${Date.now()}` : null;
+    rest.sku = rest.sku ? `${rest.sku}-COPY` : null;
+    const { error } = await supabase.from('products').insert(rest);
+    if (error) showMsg('err', 'Gagal duplikat: ' + error.message);
+    else {
+      showMsg('ok', 'Produk berhasil diduplikat');
+      fetchProducts();
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -87,17 +107,42 @@ export default function AdminProducts() {
     setTimeout(() => setMsg(null), 3000);
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, isPrimary: boolean = true) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
     setUploading(true);
-    const fileName = `products/${Date.now()}-${file.name.replace(/\s/g, '_')}`;
-    const { data, error } = await supabase.storage.from('images').upload(fileName, file);
-    if (error) { showMsg('err', 'Upload gagal: ' + error.message); setUploading(false); return; }
-    const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
-    setForm((f: any) => ({ ...f, photo: urlData.publicUrl }));
+
+    if (isPrimary) {
+      const file = files[0];
+      const fileName = `products/${Date.now()}-${file.name.replace(/\s/g, '_')}`;
+      const { data, error } = await supabase.storage.from('images').upload(fileName, file);
+      if (error) { showMsg('err', 'Upload gagal: ' + error.message); setUploading(false); return; }
+      const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
+      setForm((f: any) => ({ ...f, photo: urlData.publicUrl }));
+    } else {
+      const uploadedUrls: string[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileName = `products/${Date.now()}-${file.name.replace(/\s/g, '_')}`;
+        const { error } = await supabase.storage.from('images').upload(fileName, file);
+        if (!error) {
+          const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
+          uploadedUrls.push(urlData.publicUrl);
+        }
+      }
+      setForm((f: any) => ({ ...f, images: [...(f.images || []), ...uploadedUrls] }));
+    }
+
     setUploading(false);
     showMsg('ok', 'Foto berhasil diupload!');
+  };
+
+  const removeGalleryImage = (index: number) => {
+    setForm((f: any) => {
+      const newImages = [...f.images];
+      newImages.splice(index, 1);
+      return { ...f, images: newImages };
+    });
   };
 
   const formatPrice = (p: number) => new Intl.NumberFormat('id-ID').format(p);
@@ -106,15 +151,13 @@ export default function AdminProducts() {
     <div className={styles.section}>
       {msg && <div className={`${styles.toast} ${msg.type === 'ok' ? styles.toastOk : styles.toastErr}`}>{msg.text}</div>}
 
-      {/* Header */}
       <div className={styles.sectionHeader}>
-        <input className={styles.searchInput} placeholder="🔍 Cari produk..." value={search} onChange={e => setSearch(e.target.value)} />
+        <input className={styles.searchInput} placeholder="🔍 Cari nama/kategori/SKU..." value={search} onChange={e => setSearch(e.target.value)} />
         <button className={styles.btnPrimary} onClick={() => { resetForm(); setShowForm(true); }}>
           ➕ Tambah Produk
         </button>
       </div>
 
-      {/* Form */}
       {showForm && (
         <div className={styles.card}>
           <div className={styles.cardHeader}>
@@ -123,12 +166,16 @@ export default function AdminProducts() {
           </div>
           <form onSubmit={handleSubmit} className={styles.formGrid}>
             <div className={styles.formField}>
+              <label>SKU</label>
+              <input value={form.sku || ''} onChange={e => setForm((f:any)=>({...f, sku:e.target.value}))} placeholder="TKD-CRC-24K-001" />
+            </div>
+            <div className={styles.formField}>
               <label>Nama Produk *</label>
               <input required value={form.name} onChange={e => setForm((f:any)=>({...f, name:e.target.value}))} placeholder="Contoh: Cincin Emas 24K Model Bunga" />
             </div>
             <div className={styles.formField}>
               <label>Slug URL</label>
-              <input value={form.slug} onChange={e => setForm((f:any)=>({...f, slug:e.target.value}))} placeholder="cincin-emas-24k-bunga (auto jika kosong)" />
+              <input value={form.slug || ''} onChange={e => setForm((f:any)=>({...f, slug:e.target.value}))} placeholder="cincin-emas-24k-bunga (auto jika kosong)" />
             </div>
             <div className={styles.formField}>
               <label>Kategori *</label>
@@ -164,37 +211,63 @@ export default function AdminProducts() {
               <input required type="number" min="0" value={form.stock} onChange={e => setForm((f:any)=>({...f, stock:e.target.value}))} placeholder="5" />
             </div>
 
-            {/* Photo Upload */}
+            {/* Photo Upload Primary */}
             <div className={`${styles.formField} ${styles.formFieldFull}`}>
-              <label>Foto Produk</label>
+              <label>Foto Utama *</label>
               <div className={styles.photoUploadRow}>
-                <input value={form.photo} onChange={e => setForm((f:any)=>({...f, photo:e.target.value}))} placeholder="URL foto atau upload di bawah" />
-                <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload} />
+                <input required value={form.photo || ''} onChange={e => setForm((f:any)=>({...f, photo:e.target.value}))} placeholder="URL foto atau upload di bawah" />
+                <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, true)} />
                 <button type="button" className={styles.btnSecondary} onClick={() => fileRef.current?.click()} disabled={uploading}>
-                  {uploading ? '⏳ Upload...' : '📁 Upload Foto'}
+                  {uploading ? '⏳ Upload...' : '📁 Upload Foto Utama'}
                 </button>
               </div>
               {form.photo && <img src={form.photo} alt="preview" className={styles.photoPreview} />}
             </div>
 
+            {/* Gallery Upload */}
+            <div className={`${styles.formField} ${styles.formFieldFull}`}>
+              <label>Galeri Foto (Multiple)</label>
+              <div className={styles.photoUploadRow}>
+                <input ref={multiFileRef} type="file" accept="image/*" multiple style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, false)} />
+                <button type="button" className={styles.btnSecondary} onClick={() => multiFileRef.current?.click()} disabled={uploading}>
+                  {uploading ? '⏳ Uploading...' : '📁 Tambah Foto Galeri'}
+                </button>
+              </div>
+              {form.images && form.images.length > 0 && (
+                <div className={styles.galleryPreviewRow}>
+                  {form.images.map((img: string, idx: number) => (
+                    <div key={idx} className={styles.galleryPreviewItem}>
+                      <img src={img} alt={`gallery-${idx}`} />
+                      <button type="button" className={styles.removeImgBtn} onClick={() => removeGalleryImage(idx)}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className={`${styles.formField} ${styles.formFieldFull}`}>
               <label>Deskripsi Singkat</label>
-              <input value={form.short_description} onChange={e => setForm((f:any)=>({...f, short_description:e.target.value}))} placeholder="Deskripsi singkat 1-2 kalimat" />
+              <input value={form.short_description || ''} onChange={e => setForm((f:any)=>({...f, short_description:e.target.value}))} placeholder="Deskripsi singkat 1-2 kalimat" />
             </div>
             <div className={`${styles.formField} ${styles.formFieldFull}`}>
               <label>Deskripsi Lengkap</label>
-              <textarea rows={4} value={form.description} onChange={e => setForm((f:any)=>({...f, description:e.target.value}))} placeholder="Deskripsi detail produk..." />
+              <textarea rows={4} value={form.description || ''} onChange={e => setForm((f:any)=>({...f, description:e.target.value}))} placeholder="Deskripsi detail produk..." />
+            </div>
+            <div className={`${styles.formField} ${styles.formFieldFull}`}>
+              <label>Info Garansi</label>
+              <input value={form.warranty_info || ''} onChange={e => setForm((f:any)=>({...f, warranty_info:e.target.value}))} placeholder="Garansi buyback 100%..." />
             </div>
             <div className={styles.formField}>
               <label>Tags (pisah koma)</label>
-              <input value={form.tags} onChange={e => setForm((f:any)=>({...f, tags:e.target.value}))} placeholder="klasik, modern, hadiah" />
+              <input value={form.tags || ''} onChange={e => setForm((f:any)=>({...f, tags:e.target.value}))} placeholder="klasik, modern, hadiah" />
             </div>
             <div className={styles.formField}>
-              <label>Status</label>
+              <label>Status & Badges</label>
               <div className={styles.checkboxGroup}>
-                <label><input type="checkbox" checked={form.featured} onChange={e => setForm((f:any)=>({...f, featured:e.target.checked}))} /> Unggulan</label>
-                <label><input type="checkbox" checked={form.is_new} onChange={e => setForm((f:any)=>({...f, is_new:e.target.checked}))} /> Baru</label>
-                <label><input type="checkbox" checked={form.is_bestseller} onChange={e => setForm((f:any)=>({...f, is_bestseller:e.target.checked}))} /> Terlaris</label>
+                <label><input type="checkbox" checked={form.is_active ?? true} onChange={e => setForm((f:any)=>({...f, is_active:e.target.checked}))} /> Aktif</label>
+                <label><input type="checkbox" checked={form.featured || false} onChange={e => setForm((f:any)=>({...f, featured:e.target.checked}))} /> Unggulan</label>
+                <label><input type="checkbox" checked={form.is_new || false} onChange={e => setForm((f:any)=>({...f, is_new:e.target.checked}))} /> Baru</label>
+                <label><input type="checkbox" checked={form.is_bestseller || false} onChange={e => setForm((f:any)=>({...f, is_bestseller:e.target.checked}))} /> Terlaris</label>
               </div>
             </div>
 
@@ -215,13 +288,12 @@ export default function AdminProducts() {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>Foto</th><th>Nama</th><th>Kategori</th><th>Kadar</th>
-                  <th>Berat</th><th>Harga</th><th>Stok</th><th>Status</th><th>Aksi</th>
+                  <th>Foto</th><th>Detail</th><th>Kategori</th><th>Stok</th><th>Status</th><th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.length === 0 ? (
-                  <tr><td colSpan={9} className={styles.emptyText}>Tidak ada produk ditemukan</td></tr>
+                  <tr><td colSpan={6} className={styles.emptyText}>Tidak ada produk ditemukan</td></tr>
                 ) : filtered.map(p => (
                   <tr key={p.id}>
                     <td>
@@ -231,12 +303,10 @@ export default function AdminProducts() {
                     </td>
                     <td className={styles.nameCell}>
                       <strong>{p.name}</strong>
-                      {p.short_description && <small>{p.short_description}</small>}
+                      <small className={styles.skuText}>{p.sku || p.slug}</small>
+                      <small>{p.weight}g • {p.kadar} • {formatPrice(p.price)}</small>
                     </td>
                     <td><span className={styles.tag}>{p.category}</span></td>
-                    <td><span className={styles.tag}>{p.kadar}</span></td>
-                    <td>{p.weight}g</td>
-                    <td className={styles.priceCell}>{formatPrice(p.price)}</td>
                     <td>
                       <span className={p.stock > 0 ? styles.stockOk : styles.stockOut}>
                         {p.stock} {p.stock === 0 ? '(Habis)' : ''}
@@ -244,6 +314,7 @@ export default function AdminProducts() {
                     </td>
                     <td>
                       <div className={styles.statusBadges}>
+                        {!p.is_active && <span className={styles.badgeRed}>Archive</span>}
                         {p.featured && <span className={styles.badgeGold}>⭐</span>}
                         {p.is_new && <span className={styles.badgeGreen}>🆕</span>}
                         {p.is_bestseller && <span className={styles.badgeRed}>🔥</span>}
@@ -251,8 +322,9 @@ export default function AdminProducts() {
                     </td>
                     <td>
                       <div className={styles.actionBtns}>
-                        <button className={styles.btnEdit} onClick={() => handleEdit(p)}>✏️</button>
-                        <button className={styles.btnDelete} onClick={() => handleDelete(p.id)}>🗑️</button>
+                        <button className={styles.btnEdit} onClick={() => handleEdit(p)} title="Edit">✏️</button>
+                        <button className={styles.btnSecondary} onClick={() => handleDuplicate(p)} title="Duplicate" style={{padding: '0.4rem', border:'1px solid #ddd', borderRadius: '6px', background: 'white', cursor: 'pointer'}}>📄</button>
+                        <button className={styles.btnDelete} onClick={() => handleDelete(p.id)} title="Hapus">🗑️</button>
                       </div>
                     </td>
                   </tr>

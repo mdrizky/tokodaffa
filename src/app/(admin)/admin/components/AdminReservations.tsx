@@ -39,8 +39,8 @@ export default function AdminReservations() {
   };
 
   const contactWa = (rsv: any) => {
-    const text = `Halo ${rsv.name} 👋\n\nKonfirmasi reservasi Anda di TokoDaffa Gold:\n\n📅 Tanggal: ${rsv.preferred_date}\n🔧 Layanan: ${rsv.service_type}\n\nKami tunggu kedatangan Anda!\n\nTokoDaffa Gold ◆`;
-    const phone = rsv.phone?.replace(/\D/g, '');
+    const text = `Halo ${rsv.customer_name} 👋\n\nKonfirmasi reservasi Anda di TokoDaffa Gold:\n\n📅 Tanggal: ${rsv.visit_date}\n🔧 Layanan: ${rsv.reservation_type}\n\nKami tunggu kedatangan Anda!\n\nTokoDaffa Gold ◆`;
+    const phone = rsv.customer_phone?.replace(/\D/g, '');
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -77,11 +77,11 @@ export default function AdminReservations() {
                 onClick={() => setSelected(rsv)}
               >
                 <div className={styles.messageItemHeader}>
-                  <strong>{rsv.name}</strong>
+                  <strong>{rsv.customer_name}</strong>
                   <span className={`${styles.tag} ${statusColor(rsv.status)}`}>{rsv.status}</span>
                 </div>
-                <div className={styles.messageItemSubject}>{rsv.service_type}</div>
-                <div className={styles.messageItemDate}>{rsv.preferred_date} • {formatDate(rsv.created_at)}</div>
+                <div className={styles.messageItemSubject}>{rsv.reservation_type}</div>
+                <div className={styles.messageItemDate}>{rsv.visit_date} • {formatDate(rsv.created_at)}</div>
               </div>
             ))
           }
@@ -97,12 +97,13 @@ export default function AdminReservations() {
                 <button className={styles.btnDelete} onClick={() => handleDelete(selected.id)}>🗑️</button>
               </div>
               <div className={styles.messageDetailMeta}>
-                <div><strong>Nama:</strong> {selected.name}</div>
-                <div><strong>HP/WA:</strong> {selected.phone}</div>
-                {selected.email && <div><strong>Email:</strong> {selected.email}</div>}
-                <div><strong>Layanan:</strong> {selected.service_type}</div>
-                <div><strong>Tanggal Diinginkan:</strong> {selected.preferred_date}</div>
-                {selected.time_preference && <div><strong>Jam:</strong> {selected.time_preference}</div>}
+                <div><strong>Nama:</strong> {selected.customer_name}</div>
+                <div><strong>HP/WA:</strong> {selected.customer_phone}</div>
+                {selected.customer_email && <div><strong>Email:</strong> {selected.customer_email}</div>}
+                <div><strong>Layanan:</strong> {selected.reservation_type}</div>
+                <div><strong>Tanggal Diinginkan:</strong> {selected.visit_date}</div>
+                {selected.visit_time && <div><strong>Jam:</strong> {selected.visit_time}</div>}
+                {selected.product_name && <div><strong>Produk:</strong> {selected.product_name}</div>}
                 {selected.notes && <div><strong>Catatan:</strong> {selected.notes}</div>}
               </div>
 
@@ -118,7 +119,7 @@ export default function AdminReservations() {
               </div>
 
               <div className={styles.messageActions}>
-                {selected.phone && (
+                {selected.customer_phone && (
                   <button className={styles.btnWa} onClick={() => contactWa(selected)}>
                     📱 Konfirmasi via WA
                   </button>

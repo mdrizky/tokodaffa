@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { assertAdminRequest } from "@/lib/adminAuth";
 
@@ -10,10 +9,6 @@ interface ContactPayload {
   subject: string;
   message: string;
 }
-=======
-import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
->>>>>>> ad8eef7 (continue)
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,23 +16,22 @@ export async function POST(req: NextRequest) {
     const { name, email, phone, subject, message } = body;
 
     if (!name || !email || !subject || !message) {
-<<<<<<< HEAD
       return NextResponse.json(
         { error: "Nama, email, subjek, dan pesan wajib diisi." },
         { status: 400 }
       );
     }
 
-    const { error } = await supabase.from("contact_messages").insert([
-      {
-        name,
-        email,
-        phone: phone || null,
-        subject,
-        message,
-        source: "website-contact",
-      },
-    ]);
+    const { data, error } = await supabase.from('contact_messages').insert({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      phone: phone?.trim() || null,
+      subject: subject.trim(),
+      message: message.trim(),
+      status: 'new',
+      created_at: new Date().toISOString(),
+      source: "website-contact",
+    }).select().single();
 
     if (error) {
       return NextResponse.json(
@@ -46,12 +40,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, message: "Pesan berhasil dikirim." });
-  } catch {
+    // Get store WhatsApp for forward notification
+    const { data: store } = await supabase.from('store_settings').select('whatsapp, name').maybeSingle();
+    
+    const waForwardMsg = store?.whatsapp 
+      ? `https://wa.me/${store.whatsapp}?text=${encodeURIComponent(
+          `📩 Pesan Baru dari Website!\n\n👤 Nama: ${name}\n📧 Email: ${email}\n📱 HP: ${phone || '-'}\n📌 Subjek: ${subject}\n\n💬 Pesan:\n${message}\n\n— TokoDaffa Website`
+        )}`
+      : null;
+
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Pesan berhasil dikirim!',
+      wa_forward: waForwardMsg,
+    });
+  } catch (err: any) {
+    console.error('Contact form error:', err);
     return NextResponse.json({ error: "Request tidak valid." }, { status: 400 });
   }
 }
-
 
 export async function GET(req: Request) {
   const authError = assertAdminRequest(req);
@@ -71,49 +78,4 @@ export async function GET(req: Request) {
   }
 
   return NextResponse.json({ success: true, data });
-=======
-      return NextResponse.json({ error: 'Data tidak lengkap' }, { status: 400 });
-    }
-
-    const { data, error } = await supabase.from('contact_messages').insert({
-      name: name.trim(),
-      email: email.trim().toLowerCase(),
-      phone: phone?.trim() || null,
-      subject: subject.trim(),
-      message: message.trim(),
-      status: 'new',
-      created_at: new Date().toISOString(),
-    }).select().single();
-
-    if (error) throw error;
-
-    // Get store WhatsApp for forward notification
-    const { data: store } = await supabase.from('store_settings').select('whatsapp, name').single();
-    
-    const waForwardMsg = store?.whatsapp 
-      ? `https://wa.me/${store.whatsapp}?text=${encodeURIComponent(
-          `📩 Pesan Baru dari Website!\n\n👤 Nama: ${name}\n📧 Email: ${email}\n📱 HP: ${phone || '-'}\n📌 Subjek: ${subject}\n\n💬 Pesan:\n${message}\n\n— TokoDaffa Website`
-        )}`
-      : null;
-
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Pesan berhasil dikirim!',
-      wa_forward: waForwardMsg,
-    });
-  } catch (err: any) {
-    console.error('Contact form error:', err);
-    return NextResponse.json({ error: 'Gagal mengirim pesan' }, { status: 500 });
-  }
-}
-
-export async function GET() {
-  const { data, error } = await supabase
-    .from('contact_messages')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data);
->>>>>>> ad8eef7 (continue)
 }
