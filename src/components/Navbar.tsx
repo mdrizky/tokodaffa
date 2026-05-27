@@ -77,13 +77,11 @@ export default function Navbar() {
         <div className={styles.container}>
           {/* Logo */}
           <Link href="/" className={styles.logo}>
-            <span className={styles.logoIcon}>◆</span>
-            <span className={styles.logoText}>
-              {before}
-              <span className={styles.logoHighlight}>{highlight}</span>
-              {after}
-            </span>
-            <span className={styles.logoSub}>Gold</span>
+            <img 
+              src="/images/logo_toko_4-removebg-preview.png" 
+              alt="Toko Mas Daffa" 
+              className={styles.logoImage}
+            />
           </Link>
 
           {/* Desktop Nav */}

@@ -234,7 +234,21 @@ CREATE TABLE IF NOT EXISTS testimonials (
 );
 
 -- ================================================================
--- 10. FAQS (Frequently Asked Questions)
+-- 10. WHY_CHOOSE_US (Kenapa Memilih Kami)
+-- ================================================================
+CREATE TABLE IF NOT EXISTS why_choose_us (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  icon VARCHAR(50),
+  statistic VARCHAR(100),
+  display_order INTEGER DEFAULT 0,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ================================================================
+-- 11. FAQS (Frequently Asked Questions)
 -- ================================================================
 CREATE TABLE IF NOT EXISTS faqs (
   id SERIAL PRIMARY KEY,

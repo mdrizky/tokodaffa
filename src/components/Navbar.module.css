@@ -54,9 +54,25 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
   text-decoration: none;
   flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logoImage {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.3));
+  transition: all var(--transition-fast);
+}
+
+.logo:hover .logoImage {
+  filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.5));
 }
 
 .logoIcon {
@@ -97,7 +113,7 @@
 }
 
 .navLink {
-  padding: 8px 12px;
+  padding: 8px 16px;
   border-radius: var(--radius-md);
   font-size: 0.88rem;
   font-weight: 500;
@@ -105,6 +121,20 @@
   text-decoration: none;
   transition: all var(--transition-fast);
   white-space: nowrap;
+  position: relative;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-primary), var(--gold-dark));
+  transition: all var(--transition-fast);
+  transform: translateX(-50%);
+  border-radius: 2px;
 }
 
 .navLink:hover {
@@ -112,9 +142,17 @@
   background: var(--gold-muted);
 }
 
+.navLink:hover::after {
+  width: 80%;
+}
+
 .navLink.active {
   color: var(--gold-primary);
   background: var(--gold-muted);
+}
+
+.navLink.active::after {
+  width: 80%;
 }
 
 /* Actions */
@@ -365,6 +403,7 @@
 
 @media (max-width: 640px) {
   .container { padding: 0 var(--space-md); gap: var(--space-md); }
+  .logoImage { height: 40px; }
   .logoSub { display: none; }
   .langBtn { display: none; }
   .themeBtn { display: none; }

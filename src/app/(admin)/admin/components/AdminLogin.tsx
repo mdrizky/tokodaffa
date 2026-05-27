@@ -22,7 +22,11 @@ export default function AdminLogin({ onLogin }: { onLogin: () => void }) {
     <div className={styles.loginPage}>
       <div className={styles.loginCard}>
         <div className={styles.loginLogo}>
-          <span className={styles.loginLogoIcon}>◆</span>
+          <img 
+            src="/images/logo_toko_4-removebg-preview.png" 
+            alt="Toko Mas Daffa" 
+            style={{ height: '80px', width: 'auto', marginBottom: '16px' }}
+          />
           <h1>Admin Panel</h1>
           <p>TokoDaffa Gold</p>
         </div>

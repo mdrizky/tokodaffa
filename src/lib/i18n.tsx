@@ -207,14 +207,15 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('lang') as Language;
-    if (saved === 'id' || saved === 'en') {
-      setTimeout(() => setLang(saved), 0);
-      return;
+    // Only use saved language if it's explicitly set to 'en'
+    // Default to Indonesian in all other cases
+    if (saved === 'en') {
+      setTimeout(() => setLang('en'), 0);
+    } else {
+      // Always default to Indonesian
+      setTimeout(() => setLang('id'), 0);
+      localStorage.setItem('lang', 'id');
     }
-
-    const browserLang = window.navigator.language.startsWith('en') ? 'en' : 'id';
-    setTimeout(() => setLang(browserLang), 0);
-    localStorage.setItem('lang', browserLang);
   }, []);
 
   const handleSetLang = (l: Language) => {

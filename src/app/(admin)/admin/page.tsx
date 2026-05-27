@@ -16,10 +16,13 @@ import AdminBlog from "./components/AdminBlog";
 import AdminMessages from "./components/AdminMessages";
 import AdminReservations from "./components/AdminReservations";
 import AdminAbout from "./components/AdminAbout";
+import AdminTestimonials from "./components/AdminTestimonials";
+import AdminWhyChooseUs from "./components/AdminWhyChooseUs";
 
 export type AdminSection = 
   | "dashboard" | "products" | "gold-price" | "partners" 
-  | "settings" | "blog" | "messages" | "reservations" | "about";
+  | "settings" | "blog" | "messages" | "reservations" | "about"
+  | "testimonials" | "why-choose-us";
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
@@ -55,6 +58,8 @@ export default function AdminPage() {
     { id: "blog", icon: "📝", label: "Blog/Artikel" },
     { id: "reservations", icon: "📋", label: "Reservasi/Pesan" },
     { id: "messages", icon: "💬", label: "Pesan Masuk" },
+    { id: "testimonials", icon: "⭐", label: "Testimoni" },
+    { id: "why-choose-us", icon: "🏆", label: "Kenapa Kami" },
     { id: "partners", icon: "🤝", label: "Mitra/Partner" },
     { id: "about", icon: "ℹ️", label: "Tentang Kami" },
     { id: "settings", icon: "⚙️", label: "Pengaturan Toko" },
@@ -68,6 +73,8 @@ export default function AdminPage() {
       case "blog": return <AdminBlog />;
       case "reservations": return <AdminReservations />;
       case "messages": return <AdminMessages />;
+      case "testimonials": return <AdminTestimonials />;
+      case "why-choose-us": return <AdminWhyChooseUs />;
       case "partners": return <AdminPartners />;
       case "about": return <AdminAbout />;
       case "settings": return <AdminSettings />;

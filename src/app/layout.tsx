@@ -17,12 +17,13 @@ export const metadata: Metadata = {
     "emas batangan"
   ],
   icons: {
-    icon: "/favicon.ico",
+    icon: "/images/logo_toko_4-removebg-preview.png",
+    apple: "/images/logo_toko_4-removebg-preview.png",
   },
   openGraph: {
     title: "Toko Mas Daffa - Jewelry Premium",
     description: "Luxury Jewelry Premium. Belanja emas dan perhiasan dengan harga realtime.",
-    images: ["/logo.png"],
+    images: ["/images/logo_toko_4-removebg-preview.png"],
   },
 };
 
@@ -37,10 +38,10 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "JewelryStore",
     "name": "Toko Mas Daffa",
-    "url": "https://tokodaffa.vercel.app", // Will be updated to domain later
-    "logo": "https://tokodaffa.vercel.app/logo.png",
+    "url": "https://tokodaffa.vercel.app",
+    "logo": "https://tokodaffa.vercel.app/images/logo_toko_4-removebg-preview.png",
     "description": "Toko emas premium modern dengan koleksi jewelry dan custom cincin.",
-    "image": "https://tokodaffa.vercel.app/logo.png",
+    "image": "https://tokodaffa.vercel.app/images/logo_toko_4-removebg-preview.png",
   };
 
   return (

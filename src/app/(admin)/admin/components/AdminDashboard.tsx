@@ -45,6 +45,16 @@ export default function AdminDashboard() {
 
   return (
     <div className={styles.section}>
+      {/* Header with Logo */}
+      <div className={styles.dashboardHeader}>
+        <img 
+          src="/images/logo_toko_4-removebg-preview.png" 
+          alt="Toko Mas Daffa" 
+          style={{ height: '60px', width: 'auto' }}
+        />
+        <h1>Dashboard Admin</h1>
+      </div>
+
       {/* Stats Cards */}
       <div className={styles.statsGrid}>
         <div className={`${styles.statCard} ${styles.statGold}`}>

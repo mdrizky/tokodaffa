@@ -38,6 +38,8 @@ export default function HomePage() {
   const [data, setData] = useState<any>(null);
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [news, setNews] = useState<any[]>([]);
+  const [dbTestimonials, setDbTestimonials] = useState<any[]>([]);
+  const [whyChooseUs, setWhyChooseUs] = useState<any[]>([]);
   
   // Real-time hook for gold prices
   const { data: realTimeGoldData, loading: goldLoading } = useGoldPrice();
@@ -46,14 +48,18 @@ export default function HomePage() {
     async function load() {
       try {
         // Fetch data in parallel for better performance
-        const [p, s, newsRes] = await Promise.all([
+        const [p, s, newsRes, testimonialsRes, whyChooseRes] = await Promise.all([
           getProducts(),
           getStoreInfo(),
-          fetch("/api/news").then(res => res.json())
+          fetch("/api/news").then(res => res.json()).catch(() => ({ data: [] })),
+          fetch("/api/testimonials").then(res => res.json()).catch(() => ({ data: [] })),
+          fetch("/api/why-choose-us").then(res => res.json()).catch(() => ({ data: [] }))
         ]);
         
         setData({ products: p || [], storeInfo: s });
         setNews(newsRes.data || []);
+        setDbTestimonials(testimonialsRes.data || []);
+        setWhyChooseUs(whyChooseRes.data || []);
       } catch (e) {
         console.error(e);
       }
@@ -135,22 +141,46 @@ export default function HomePage() {
       {/* 3. TRENDING CATEGORIES */}
       <section className={styles.sectionPremium}>
         <div className="container">
+          <div className={styles.sectionHeader}>
+            <h2>{lang === 'id' ? 'Koleksi Eksklusif' : 'Exclusive Collection'}</h2>
+            <p>{lang === 'id' ? 'Temukan keindahan dalam setiap karya seni kami' : 'Discover beauty in every piece of our artistry'}</p>
+          </div>
           <div className={styles.grid4}>
             <Link href="/produk?cat=cincin" className={styles.catCard}>
-              <div className={styles.catImage}>💍</div>
+              <div className={styles.catImageWrapper}>
+                <div className={styles.catIcon}>💍</div>
+                <div className={styles.catGlow}></div>
+              </div>
               <h3>{lang === 'id' ? 'Cincin Eksklusif' : 'Exclusive Rings'}</h3>
+              <p>{lang === 'id' ? 'Desain mewah untuk momen spesial' : 'Luxury designs for special moments'}</p>
+              <span className={styles.catCta}>{lang === 'id' ? 'Lihat Koleksi →' : 'View Collection →'}</span>
             </Link>
             <Link href="/produk?cat=gelang" className={styles.catCard}>
-              <div className={styles.catImage}>⭕</div>
-              <h3>{lang === 'id' ? 'Gelang' : 'Bracelets'}</h3>
+              <div className={styles.catImageWrapper}>
+                <div className={styles.catIcon}>⭕</div>
+                <div className={styles.catGlow}></div>
+              </div>
+              <h3>{lang === 'id' ? 'Gelang Mewah' : 'Luxury Bracelets'}</h3>
+              <p>{lang === 'id' ? 'Elegan di setiap gerakan tangan' : 'Elegant in every hand movement'}</p>
+              <span className={styles.catCta}>{lang === 'id' ? 'Lihat Koleksi →' : 'View Collection →'}</span>
             </Link>
             <Link href="/produk?cat=kalung" className={styles.catCard}>
-              <div className={styles.catImage}>📿</div>
-              <h3>{lang === 'id' ? 'Kalung' : 'Necklaces'}</h3>
+              <div className={styles.catImageWrapper}>
+                <div className={styles.catIcon}>📿</div>
+                <div className={styles.catGlow}></div>
+              </div>
+              <h3>{lang === 'id' ? 'Kalung Berkelas' : 'Classy Necklaces'}</h3>
+              <p>{lang === 'id' ? 'Kemewahan yang memancar di leher' : 'Radiant luxury around the neck'}</p>
+              <span className={styles.catCta}>{lang === 'id' ? 'Lihat Koleksi →' : 'View Collection →'}</span>
             </Link>
             <Link href="/produk?cat=batangan" className={styles.catCard}>
-              <div className={styles.catImage}>💰</div>
+              <div className={styles.catImageWrapper}>
+                <div className={styles.catIcon}>💰</div>
+                <div className={styles.catGlow}></div>
+              </div>
               <h3>{lang === 'id' ? 'Logam Mulia' : 'Precious Metals'}</h3>
+              <p>{lang === 'id' ? 'Investasi emas berkualitas tinggi' : 'High-quality gold investment'}</p>
+              <span className={styles.catCta}>{lang === 'id' ? 'Lihat Koleksi →' : 'View Collection →'}</span>
             </Link>
           </div>
         </div>
@@ -225,7 +255,14 @@ export default function HomePage() {
             <p>{lang === 'id' ? 'Kami tidak sekadar menjual perhiasan; kami memberikan warisan. Temukan mengapa pelanggan mempercayai kami.' : 'We don\'t just sell jewelry; we provide a legacy. Discover why generations trust us.'}</p>
           </div>
           <div className={styles.grid4}>
-            {trustItems.map((item, i) => (
+            {whyChooseUs.length > 0 ? whyChooseUs.map((item, i) => (
+              <div key={i} className={styles.trustCardNew}>
+                <div className={styles.trustIconNew}>{item.icon || '⭐'}</div>
+                {item.statistic && <div className={styles.statistic}>{item.statistic}</div>}
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+            )) : trustItems.map((item, i) => (
               <div key={i} className={styles.trustCardNew}>
                 <div className={styles.trustIconNew}>{item.icon}</div>
                 <h4>{item.title}</h4>
@@ -244,17 +281,17 @@ export default function HomePage() {
             <p>{lang === 'id' ? 'Dengar dari pelanggan kami tentang pengalaman mereka.' : 'Hear from our esteemed clientele about their experiences with our craftsmanship.'}</p>
           </div>
           <div className={styles.grid3}>
-            {testimonials.map((t, i) => (
+            {(dbTestimonials.length > 0 ? dbTestimonials : testimonials).map((t, i) => (
               <div key={i} className={styles.testimonialCardNew}>
                 <div className={styles.stars}>
-                  {Array.from({length: 5}).map((_, j) => <Star key={j} size={16} fill="currentColor" color="currentColor" />)}
+                  {Array.from({length: t.rating || 5}).map((_, j) => <Star key={j} size={16} fill="currentColor" color="currentColor" />)}
                 </div>
                 <p>"{t.text}"</p>
                 <div className={styles.tAuthor}>
                   <div className={styles.tAvatar}>{t.name[0]}</div>
                   <div>
                     <h5>{t.name}</h5>
-                    <span>{t.role}</span>
+                    <span>{t.role || t.product_purchased || 'Pelanggan'}</span>
                   </div>
                 </div>
               </div>
@@ -268,27 +305,39 @@ export default function HomePage() {
         <section className={styles.sectionPremiumDark}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>Berita Emas Terkini</h2>
-              <p>Update terbaru seputar harga emas dan industri perhiasan</p>
+              <h2>{lang === 'id' ? 'Berita Emas & Perak Terkini' : 'Latest Gold & Silver News'}</h2>
+              <p>{lang === 'id' ? 'Update terbaru seputar harga emas dan industri perhiasan' : 'Latest updates on gold prices and jewelry industry'}</p>
+            </div>
+            <div className={styles.newsFilters}>
+              <button className={`${styles.newsFilter} ${styles.active}`}>{lang === 'id' ? 'Semua' : 'All'}</button>
+              <button className={styles.newsFilter}>{lang === 'id' ? 'Emas' : 'Gold'}</button>
+              <button className={styles.newsFilter}>{lang === 'id' ? 'Perak' : 'Silver'}</button>
+              <button className={styles.newsFilter}>{lang === 'id' ? 'Investasi' : 'Investment'}</button>
             </div>
             <div className={styles.newsGrid}>
               {news.slice(0, 3).map((item: any, index: number) => (
                 <div key={index} className={styles.newsCard}>
                   <div className={styles.newsImage}>
-                    <img src={item.image} alt={item.title} />
+                    <img src={item.image || 'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'} alt={item.title} />
                   </div>
                   <div className={styles.newsContent}>
+                    <div className={styles.newsMeta}>
+                      <span className={styles.newsSource}>{item.source?.name || 'News'}</span>
+                      <span className={styles.newsDate}>
+                        {new Date(item.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </span>
+                    </div>
                     <h4>{item.title}</h4>
                     <p>{item.description}</p>
-                    <Link href="/news" className="btn-outline-premium" style={{ marginTop: '12px', display: 'inline-block', padding: '8px 16px', fontSize: '0.9rem' }}>
-                      Baca Selengkapnya
-                    </Link>
+                    <a href={item.url || '#'} target="_blank" rel="noopener noreferrer" className="btn-outline-premium" style={{ marginTop: '12px', display: 'inline-block', padding: '8px 16px', fontSize: '0.9rem' }}>
+                      {lang === 'id' ? 'Baca Selengkapnya' : 'Read More'}
+                    </a>
                   </div>
                 </div>
               ))}
             </div>
             <div className="text-center mt-8">
-              <Link href="/news" className="btn-outline-premium">Lihat Semua Berita <ArrowUpRight size={18}/></Link>
+              <Link href="/news" className="btn-outline-premium">{lang === 'id' ? 'Lihat Semua Berita' : 'View All News'} <ArrowUpRight size={18}/></Link>
             </div>
           </div>
         </section>

@@ -33,7 +33,7 @@ export default function Footer() {
           {/* Brand */}
           <div className={styles.brand}>
             <div className={styles.logo}>
-              <img src="/logo.png" alt="Toko Mas Daffa" style={{ height: '60px', width: 'auto', marginBottom: '16px' }} />
+              <img src="/images/logo_toko_4-removebg-preview.png" alt="Toko Mas Daffa" style={{ height: '80px', width: 'auto', marginBottom: '16px' }} />
             </div>
             <p className={styles.description}>{dict.footer_description}</p>
             <div className={styles.socials}>
@@ -102,16 +102,29 @@ export default function Footer() {
                 />
               </div>
             ) : (
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  storeInfo.address || ""
-                )}`}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                Open in Google Maps
-              </a>
+              <div className={styles.mapWrapper}>
+                <iframe
+                  title="TokoDaffa Location"
+                  src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0!2d106.8!3d-6.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTInMDAuMCJTIDEwNsKwNDgnMDAuMCJF!5e0!3m2!1sid!2sid!4v1`}
+                  width="100%"
+                  height="180"
+                  style={{ border: 0, borderRadius: 8 }}
+                  allowFullScreen={false}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
             )}
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                storeInfo.address || "Toko Mas Daffa"
+              )}`}
+              target="_blank"
+              rel="noreferrer noopener"
+              className={styles.mapLink}
+            >
+              📍 {dict.nav_home === 'Beranda' ? 'Buka di Google Maps' : 'Open in Google Maps'}
+            </a>
           </div>
         </div>
 
