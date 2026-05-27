@@ -45,27 +45,39 @@ export default function HomePage() {
   const { data: realTimeGoldData, loading: goldLoading } = useGoldPrice();
 
   useEffect(() => {
+    let mounted = true;
     async function load() {
       try {
-        // Fetch data in parallel for better performance
-        const [p, s, newsRes, testimonialsRes, whyChooseRes] = await Promise.all([
+        // Fetch critical data first (products, store info)
+        const [p, s] = await Promise.all([
           getProducts(),
-          getStoreInfo(),
+          getStoreInfo()
+        ]);
+        
+        if (mounted) {
+          setData({ products: p || [], storeInfo: s });
+          setLoadingInitial(false); // Show content immediately with critical data
+        }
+
+        // Fetch secondary data in background
+        const [newsRes, testimonialsRes, whyChooseRes] = await Promise.all([
           fetch("/api/news").then(res => res.json()).catch(() => ({ data: [] })),
           fetch("/api/testimonials").then(res => res.json()).catch(() => ({ data: [] })),
           fetch("/api/why-choose-us").then(res => res.json()).catch(() => ({ data: [] }))
         ]);
         
-        setData({ products: p || [], storeInfo: s });
-        setNews(newsRes.data || []);
-        setDbTestimonials(testimonialsRes.data || []);
-        setWhyChooseUs(whyChooseRes.data || []);
+        if (mounted) {
+          setNews(newsRes.data || []);
+          setDbTestimonials(testimonialsRes.data || []);
+          setWhyChooseUs(whyChooseRes.data || []);
+        }
       } catch (e) {
         console.error(e);
+        if (mounted) setLoadingInitial(false);
       }
-      setLoadingInitial(false);
     }
     load();
+    return () => { mounted = false; };
   }, []);
 
 
@@ -80,13 +92,13 @@ export default function HomePage() {
       <section className={styles.heroNew}>
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroParticles}>
-          {Array.from({ length: 50 }).map((_, i) => (
+          {Array.from({ length: 30 }).map((_, i) => (
             <motion.div 
               key={i} 
               className={styles.particle} 
               initial={{ y: "100vh", opacity: 0 }}
               animate={{ y: "-10vh", opacity: [0, 1, 0] }}
-              transition={{ duration: Math.random() * 5 + 5, repeat: Infinity, delay: Math.random() * 5 }}
+              transition={{ duration: Math.random() * 3 + 3, repeat: Infinity, delay: Math.random() * 3 }}
               style={{ left: `${Math.random() * 100}%` }}
             />
           ))}

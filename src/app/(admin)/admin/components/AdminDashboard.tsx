@@ -11,33 +11,48 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
     async function load() {
-      const [prod, msg, rsv, blg, gld, msgLatest, rsvLatest] = await Promise.all([
-        supabase.from('products').select('id', { count: 'exact', head: true }),
-        supabase.from('contact_messages').select('id', { count: 'exact', head: true }),
-        supabase.from('reservations').select('id', { count: 'exact', head: true }),
-        supabase.from('blog_posts').select('id', { count: 'exact', head: true }),
-        supabase.from('gold_prices').select('*').order('updated_at', { ascending: false }).limit(5),
-        supabase.from('contact_messages').select('*').order('created_at', { ascending: false }).limit(5),
-        supabase.from('reservations').select('*').order('created_at', { ascending: false }).limit(5),
-      ]);
+      try {
+        // Load stats first (critical)
+        const [prod, msg, rsv, blg, waClick] = await Promise.all([
+          supabase.from('products').select('id', { count: 'exact', head: true }),
+          supabase.from('contact_messages').select('id', { count: 'exact', head: true }),
+          supabase.from('reservations').select('id', { count: 'exact', head: true }),
+          supabase.from('blog_posts').select('id', { count: 'exact', head: true }),
+          supabase.from('wa_inquiries').select('id', { count: 'exact', head: true }),
+        ]);
 
-      // Count WA clicks from wa_inquiries
-      const waClick = await supabase.from('wa_inquiries').select('id', { count: 'exact', head: true });
+        if (mounted) {
+          setStats({
+            products: prod.count || 0,
+            messages: msg.count || 0,
+            reservations: rsv.count || 0,
+            blogs: blg.count || 0,
+            goldWa: waClick.count || 0,
+          });
+          setLoading(false); // Show stats immediately
+        }
 
-      setStats({
-        products: prod.count || 0,
-        messages: msg.count || 0,
-        reservations: rsv.count || 0,
-        blogs: blg.count || 0,
-        goldWa: waClick.count || 0,
-      });
-      setGoldPrice(gld.data?.[0]);
-      setRecentMessages(msgLatest.data || []);
-      setRecentReservations(rsvLatest.data || []);
-      setLoading(false);
+        // Load detailed data in background
+        const [gld, msgLatest, rsvLatest] = await Promise.all([
+          supabase.from('gold_prices').select('*').order('updated_at', { ascending: false }).limit(5),
+          supabase.from('contact_messages').select('*').order('created_at', { ascending: false }).limit(5),
+          supabase.from('reservations').select('*').order('created_at', { ascending: false }).limit(5),
+        ]);
+
+        if (mounted) {
+          setGoldPrice(gld.data?.[0]);
+          setRecentMessages(msgLatest.data || []);
+          setRecentReservations(rsvLatest.data || []);
+        }
+      } catch (e) {
+        console.error(e);
+        if (mounted) setLoading(false);
+      }
     }
     load();
+    return () => { mounted = false; };
   }, []);
 
   const formatPrice = (p: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(p);

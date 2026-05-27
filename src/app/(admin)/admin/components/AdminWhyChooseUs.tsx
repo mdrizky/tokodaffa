@@ -17,17 +17,25 @@ export default function AdminWhyChooseUs() {
   });
 
   useEffect(() => {
+    let mounted = true;
+    async function loadItems() {
+      try {
+        const { data } = await supabase
+          .from("why_choose_us")
+          .select("id, title, description, icon, statistic, is_active, display_order")
+          .order("display_order", { ascending: true });
+        if (mounted) {
+          setItems(data || []);
+          setLoading(false);
+        }
+      } catch (e) {
+        console.error(e);
+        if (mounted) setLoading(false);
+      }
+    }
     loadItems();
+    return () => { mounted = false; };
   }, []);
-
-  async function loadItems() {
-    const { data } = await supabase
-      .from("why_choose_us")
-      .select("*")
-      .order("display_order", { ascending: true });
-    setItems(data || []);
-    setLoading(false);
-  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

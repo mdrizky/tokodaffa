@@ -88,7 +88,11 @@ export default function AdminPage() {
       <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : styles.sidebarClosed}`}>
         <div className={styles.sidebarHeader}>
           <div className={styles.sidebarLogo}>
-            <span>◆</span>
+            <img 
+              src="/images/logo_toko_4-removebg-preview.png" 
+              alt="Toko Mas Daffa" 
+              style={{ height: '40px', width: 'auto' }}
+            />
             {sidebarOpen && <span className={styles.sidebarLogoText}>Admin Panel</span>}
           </div>
           <button className={styles.toggleBtn} onClick={() => setSidebarOpen(!sidebarOpen)}>

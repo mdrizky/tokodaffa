@@ -5,9 +5,10 @@ export async function GET() {
   try {
     const { data, error } = await supabase
       .from('testimonials')
-      .select('*')
+      .select('id, name, role, text, rating, product_purchased')
       .eq('is_active', true)
-      .order('display_order', { ascending: true });
+      .order('display_order', { ascending: true })
+      .limit(10);
 
     if (error) throw error;
 
