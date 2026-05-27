@@ -110,25 +110,56 @@ export default function AdminProducts() {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, isPrimary: boolean = true) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
+    
+    // Validate file types
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml', 'image/bmp', 'image/tiff'];
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!validTypes.includes(file.type)) {
+        showMsg('err', `File ${file.name} tidak didukung. Gunakan: JPG, PNG, WEBP, GIF, SVG, BMP, TIFF`);
+        return;
+      }
+      if (file.size > maxSize) {
+        showMsg('err', `File ${file.name} terlalu besar. Maksimal 10MB`);
+        return;
+      }
+    }
+    
     setUploading(true);
 
     if (isPrimary) {
       const file = files[0];
       const fileName = `products/${Date.now()}-${file.name.replace(/\s/g, '_')}`;
+      console.log('Uploading primary image:', fileName, file.type, file.size);
+      
       const { data, error } = await supabase.storage.from('images').upload(fileName, file);
-      if (error) { showMsg('err', 'Upload gagal: ' + error.message); setUploading(false); return; }
+      if (error) { 
+        console.error('Upload error:', error);
+        showMsg('err', 'Upload gagal: ' + error.message); 
+        setUploading(false); 
+        return; 
+      }
       const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
       setForm((f: any) => ({ ...f, photo: urlData.publicUrl }));
+      console.log('Upload success:', urlData.publicUrl);
     } else {
       const uploadedUrls: string[] = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const fileName = `products/${Date.now()}-${file.name.replace(/\s/g, '_')}`;
+        const fileName = `products/${Date.now()}-${i}-${file.name.replace(/\s/g, '_')}`;
+        console.log('Uploading gallery image:', fileName, file.type, file.size);
+        
         const { error } = await supabase.storage.from('images').upload(fileName, file);
-        if (!error) {
-          const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
-          uploadedUrls.push(urlData.publicUrl);
+        if (error) {
+          console.error('Gallery upload error:', error);
+          showMsg('err', `Upload ${file.name} gagal: ${error.message}`);
+          continue;
         }
+        const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
+        uploadedUrls.push(urlData.publicUrl);
+        console.log('Gallery upload success:', urlData.publicUrl);
       }
       setForm((f: any) => ({ ...f, images: [...(f.images || []), ...uploadedUrls] }));
     }
@@ -215,8 +246,8 @@ export default function AdminProducts() {
             <div className={`${styles.formField} ${styles.formFieldFull}`}>
               <label>Foto Utama *</label>
               <div className={styles.photoUploadRow}>
-                <input required value={form.photo || ''} onChange={e => setForm((f:any)=>({...f, photo:e.target.value}))} placeholder="URL foto atau upload di bawah" />
-                <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, true)} />
+                <input value={form.photo || ''} onChange={e => setForm((f:any)=>({...f, photo:e.target.value}))} placeholder="URL foto atau upload di bawah" />
+                <input ref={fileRef} type="file" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,image/svg+xml,image/bmp,image/tiff" style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, true)} />
                 <button type="button" className={styles.btnSecondary} onClick={() => fileRef.current?.click()} disabled={uploading}>
                   {uploading ? '⏳ Upload...' : '📁 Upload Foto Utama'}
                 </button>
@@ -228,7 +259,7 @@ export default function AdminProducts() {
             <div className={`${styles.formField} ${styles.formFieldFull}`}>
               <label>Galeri Foto (Multiple)</label>
               <div className={styles.photoUploadRow}>
-                <input ref={multiFileRef} type="file" accept="image/*" multiple style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, false)} />
+                <input ref={multiFileRef} type="file" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,image/svg+xml,image/bmp,image/tiff" multiple style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, false)} />
                 <button type="button" className={styles.btnSecondary} onClick={() => multiFileRef.current?.click()} disabled={uploading}>
                   {uploading ? '⏳ Uploading...' : '📁 Tambah Foto Galeri'}
                 </button>
