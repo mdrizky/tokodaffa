@@ -159,6 +159,11 @@
   --surface-border: rgba(15, 23, 42, 0.12);
   --accent-success-bg: rgba(34, 197, 94, 0.12);
   --accent-danger-bg: rgba(239, 68, 68, 0.12);
+  
+  /* Contrast adjustments for Light Mode */
+  --gold-primary: #b8960c; /* Darker gold for better contrast on white */
+  --gold-light: #d4af37;
+  --gold-dark: #8a6f00;
 }
 
 /* ---- Reset & Base ---- */

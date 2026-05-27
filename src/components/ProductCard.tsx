@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./ProductCard.module.css";
 import WishlistButton from "./WishlistButton";
@@ -56,12 +57,14 @@ export default function ProductCard({ product, storeInfo }: ProductCardProps) {
       {/* Image Area */}
       <Link href={productHref} className={styles.imageWrap}>
         {photoUrl ? (
-          <img
+          <Image
             src={photoUrl}
             alt={product.name}
             className={styles.productImage}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{ objectFit: 'cover' }}
             onError={() => setImgError(true)}
-            loading="lazy"
           />
         ) : (
           <div className={styles.imagePlaceholder}>

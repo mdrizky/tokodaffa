@@ -208,12 +208,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem('lang') as Language;
     if (saved === 'id' || saved === 'en') {
-      setLang(saved);
+      setTimeout(() => setLang(saved), 0);
       return;
     }
 
     const browserLang = window.navigator.language.startsWith('en') ? 'en' : 'id';
-    setLang(browserLang);
+    setTimeout(() => setLang(browserLang), 0);
     localStorage.setItem('lang', browserLang);
   }, []);
 

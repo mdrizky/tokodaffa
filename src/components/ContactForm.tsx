@@ -9,7 +9,8 @@ export default function ContactForm() {
     email: "",
     phone: "",
     subject: "",
-    message: ""
+    message: "",
+    bot_field: "" // Honeypot field
   });
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState("");
@@ -36,7 +37,7 @@ export default function ContactForm() {
 
       if (response.ok) {
         setStatus("Pesan berhasil dikirim! Kami akan menghubungi Anda segera.");
-        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "", bot_field: "" });
       } else {
         setStatus(data.error || "Gagal mengirim pesan. Silakan coba lagi.");
       }
@@ -55,6 +56,20 @@ export default function ContactForm() {
       </div>
 
       <form onSubmit={handleSubmit} className={styles.form}>
+        {/* Honeypot field to catch spam bots */}
+        <div style={{ display: "none" }} aria-hidden="true">
+          <label htmlFor="bot_field">Don't fill this out if you're human:</label>
+          <input
+            type="text"
+            id="bot_field"
+            name="bot_field"
+            value={formData.bot_field}
+            onChange={handleChange}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+
         <div className={styles.formGrid}>
           <div className={styles.formGroup}>
             <label htmlFor="name">Nama Lengkap *</label>

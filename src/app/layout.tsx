@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tokodaffa.vercel.app"),
   title: "Toko Mas Daffa - Jewelry Premium & Emas Berkualitas",
   description: "Belanja perhiasan emas premium, cincin, gelang, dan custom jewelry dengan harga emas realtime dan kualitas terpercaya di Toko Mas Daffa.",
   keywords: [

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import styles from "./page.module.css";
@@ -97,7 +98,16 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
           {/* Left Column: Image Gallery */}
           <div className={styles.galleryColumn}>
             <div className={styles.mainImageWrap} onClick={() => setZoomed(true)}>
-              <img src={images[activeImage]} alt={product.name} className={styles.mainImage} />
+              {images[activeImage] && (
+                <Image
+                  src={images[activeImage]}
+                  alt={product.name}
+                  className={styles.mainImage}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  priority
+                />
+              )}
               <div className={styles.badges}>
                 {isEmas ? (
                   <span className={`badge badge-gold`}>{product.kadar}</span>
@@ -131,7 +141,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                     className={`${styles.thumbnail} ${idx === activeImage ? styles.thumbnailActive : ''}`}
                     onClick={() => setActiveImage(idx)}
                   >
-                    <img src={img} alt={`${product.name} - ${idx + 1}`} />
+                    <Image src={img} alt={`${product.name} - ${idx + 1}`} fill style={{ objectFit: 'cover' }} />
                   </button>
                 ))}
               </div>
@@ -244,7 +254,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
               {relatedProducts.map((rp: any) => (
                 <Link key={rp.id} href={`/produk/${rp.id}`} className={styles.relatedCard}>
                   <div className={styles.relatedImageWrap}>
-                    <img src={rp.photo} alt={rp.name} />
+                    <Image src={rp.photo} alt={rp.name} fill style={{ objectFit: 'cover' }} />
                   </div>
                   <div className={styles.relatedInfo}>
                     <span className={styles.relatedName}>{rp.name}</span>
@@ -261,7 +271,9 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
       {zoomed && (
         <div className={styles.zoomOverlay} onClick={() => setZoomed(false)}>
           <button className={styles.zoomClose} onClick={() => setZoomed(false)}>✕</button>
-          <img src={images[activeImage]} alt={product.name} className={styles.zoomImage} onClick={(e) => e.stopPropagation()} />
+          <div className={styles.zoomImageContainer} onClick={(e) => e.stopPropagation()}>
+            <Image src={images[activeImage]} alt={product.name} className={styles.zoomImage} fill style={{ objectFit: 'contain' }} />
+          </div>
           {images.length > 1 && (
             <div className={styles.zoomNav}>
               <button onClick={(e) => { e.stopPropagation(); setActiveImage(prev => (prev - 1 + images.length) % images.length); }}>‹</button>

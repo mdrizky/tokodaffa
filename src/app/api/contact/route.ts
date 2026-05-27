@@ -8,12 +8,19 @@ interface ContactPayload {
   phone?: string;
   subject: string;
   message: string;
+  bot_field?: string;
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as ContactPayload;
-    const { name, email, phone, subject, message } = body;
+    const { name, email, phone, subject, message, bot_field } = body;
+
+    // Honeypot check - if a bot fills this hidden field, secretly reject them
+    if (bot_field && bot_field.length > 0) {
+      console.warn('Bot blocked by honeypot.');
+      return NextResponse.json({ success: true, message: 'Pesan berhasil dikirim!' }); // Lie to the bot
+    }
 
     if (!name || !email || !subject || !message) {
       return NextResponse.json(

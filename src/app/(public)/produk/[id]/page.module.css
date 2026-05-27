@@ -143,6 +143,7 @@
 }
 
 .thumbnail {
+  position: relative;
   aspect-ratio: 1;
   border-radius: var(--radius-md);
   border: 2px solid transparent;
@@ -386,6 +387,7 @@
 }
 
 .relatedImageWrap {
+  position: relative;
   aspect-ratio: 1;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -461,9 +463,13 @@
   color: var(--gold-primary);
 }
 
+.zoomImageContainer {
+  position: relative;
+  width: 90vw;
+  height: 85vh;
+}
+
 .zoomImage {
-  max-width: 90vw;
-  max-height: 85vh;
   object-fit: contain;
   cursor: default;
 }
