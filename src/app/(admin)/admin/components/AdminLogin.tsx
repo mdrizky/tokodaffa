@@ -6,7 +6,7 @@ export default function AdminLogin({ onLogin }: { onLogin: () => void }) {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const ADMIN_PIN = process.env.NEXT_PUBLIC_ADMIN_PIN || "1234";
+  const ADMIN_PIN = process.env.NEXT_PUBLIC_ADMIN_PIN || "240708";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
