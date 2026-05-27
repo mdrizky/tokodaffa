@@ -16,25 +16,22 @@ export default function AdminWhyChooseUs() {
     display_order: 0,
   });
 
-  useEffect(() => {
-    let mounted = true;
-    async function loadItems() {
-      try {
-        const { data } = await supabase
-          .from("why_choose_us")
-          .select("id, title, description, icon, statistic, is_active, display_order")
-          .order("display_order", { ascending: true });
-        if (mounted) {
-          setItems(data || []);
-          setLoading(false);
-        }
-      } catch (e) {
-        console.error(e);
-        if (mounted) setLoading(false);
-      }
+  async function loadItems() {
+    try {
+      const { data } = await supabase
+        .from("why_choose_us")
+        .select("id, title, description, icon, statistic, is_active, display_order")
+        .order("display_order", { ascending: true });
+      setItems(data || []);
+      setLoading(false);
+    } catch (e) {
+      console.error(e);
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
     loadItems();
-    return () => { mounted = false; };
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {

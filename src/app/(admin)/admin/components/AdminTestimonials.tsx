@@ -16,25 +16,22 @@ export default function AdminTestimonials() {
     is_active: true,
   });
 
-  useEffect(() => {
-    let mounted = true;
-    async function loadTestimonials() {
-      try {
-        const { data } = await supabase
-          .from("testimonials")
-          .select("id, name, role, text, rating, product_purchased, is_active, display_order")
-          .order("display_order", { ascending: true });
-        if (mounted) {
-          setTestimonials(data || []);
-          setLoading(false);
-        }
-      } catch (e) {
-        console.error(e);
-        if (mounted) setLoading(false);
-      }
+  async function loadTestimonials() {
+    try {
+      const { data } = await supabase
+        .from("testimonials")
+        .select("id, name, role, text, rating, product_purchased, is_active, display_order")
+        .order("display_order", { ascending: true });
+      setTestimonials(data || []);
+      setLoading(false);
+    } catch (e) {
+      console.error(e);
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
     loadTestimonials();
-    return () => { mounted = false; };
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {
