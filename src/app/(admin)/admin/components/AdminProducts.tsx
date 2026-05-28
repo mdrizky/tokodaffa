@@ -73,6 +73,16 @@ export default function AdminProducts() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    console.log('Form data before submit:', form);
+    
+    // Validasi: Foto utama harus ada
+    if (!form.photo) {
+      showMsg('err', 'Foto utama wajib diupload atau diisi URL-nya!');
+      console.error('Photo is empty:', form.photo);
+      return;
+    }
+    
     setSaving(true);
     const payload = {
       ...form,
@@ -84,14 +94,24 @@ export default function AdminProducts() {
     };
     delete payload.id;
 
+    console.log('Payload to save:', payload);
+
     if (editId) {
       const { error } = await supabase.from('products').update(payload).eq('id', editId);
-      if (error) showMsg('err', 'Gagal update: ' + error.message);
-      else showMsg('ok', '✅ Produk diperbarui!');
+      if (error) {
+        console.error('Update error:', error);
+        showMsg('err', 'Gagal update: ' + error.message);
+      } else {
+        showMsg('ok', '✅ Produk diperbarui!');
+      }
     } else {
       const { error } = await supabase.from('products').insert(payload);
-      if (error) showMsg('err', 'Gagal simpan: ' + error.message);
-      else showMsg('ok', '✅ Produk ditambahkan!');
+      if (error) {
+        console.error('Insert error:', error);
+        showMsg('err', 'Gagal simpan: ' + error.message);
+      } else {
+        showMsg('ok', '✅ Produk ditambahkan!');
+      }
     }
     setSaving(false);
     fetchProducts();
@@ -117,6 +137,8 @@ export default function AdminProducts() {
     
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      console.log('File info:', file.name, file.type, file.size);
+      
       if (!validTypes.includes(file.type)) {
         showMsg('err', `File ${file.name} tidak didukung. Gunakan: JPG, PNG, WEBP, GIF, SVG, BMP, TIFF`);
         return;
@@ -129,43 +151,70 @@ export default function AdminProducts() {
     
     setUploading(true);
 
-    if (isPrimary) {
-      const file = files[0];
-      const fileName = `products/${Date.now()}-${file.name.replace(/\s/g, '_')}`;
-      console.log('Uploading primary image:', fileName, file.type, file.size);
-      
-      const { data, error } = await supabase.storage.from('images').upload(fileName, file);
-      if (error) { 
-        console.error('Upload error:', error);
-        showMsg('err', 'Upload gagal: ' + error.message); 
-        setUploading(false); 
-        return; 
-      }
-      const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
-      setForm((f: any) => ({ ...f, photo: urlData.publicUrl }));
-      console.log('Upload success:', urlData.publicUrl);
-    } else {
-      const uploadedUrls: string[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const fileName = `products/${Date.now()}-${i}-${file.name.replace(/\s/g, '_')}`;
-        console.log('Uploading gallery image:', fileName, file.type, file.size);
+    try {
+      if (isPrimary) {
+        const file = files[0];
+        console.log('Uploading primary image via API:', file.name);
         
-        const { error } = await supabase.storage.from('images').upload(fileName, file);
-        if (error) {
-          console.error('Gallery upload error:', error);
-          showMsg('err', `Upload ${file.name} gagal: ${error.message}`);
-          continue;
+        // Upload via API route
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('isPrimary', 'true');
+        
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok || !result.success) {
+          console.error('API upload error:', result);
+          showMsg('err', result.error || 'Upload gagal. Coba lagi.');
+          return;
         }
-        const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
-        uploadedUrls.push(urlData.publicUrl);
-        console.log('Gallery upload success:', urlData.publicUrl);
+        
+        setForm((f: any) => ({ ...f, photo: result.url }));
+        console.log('Upload success:', result.url);
+        showMsg('ok', 'Foto utama berhasil diupload!');
+      } else {
+        const uploadedUrls: string[] = [];
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          console.log('Uploading gallery image via API:', file.name);
+          
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('isPrimary', 'false');
+          
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+          });
+          
+          const result = await response.json();
+          
+          if (!response.ok || !result.success) {
+            console.error('Gallery API upload error:', result);
+            showMsg('err', `Upload ${file.name} gagal: ${result.error || 'Unknown error'}`);
+            continue;
+          }
+          
+          uploadedUrls.push(result.url);
+          console.log('Gallery upload success:', result.url);
+        }
+        setForm((f: any) => ({ ...f, images: [...(f.images || []), ...uploadedUrls] }));
+        showMsg('ok', `${uploadedUrls.length} foto galeri berhasil diupload!`);
       }
-      setForm((f: any) => ({ ...f, images: [...(f.images || []), ...uploadedUrls] }));
+    } catch (err) {
+      console.error('Upload error:', err);
+      showMsg('err', 'Terjadi kesalahan saat upload. Coba lagi.');
+    } finally {
+      setUploading(false);
+      // Reset file input
+      if (fileRef.current) fileRef.current.value = '';
+      if (multiFileRef.current) multiFileRef.current.value = '';
     }
-
-    setUploading(false);
-    showMsg('ok', 'Foto berhasil diupload!');
   };
 
   const removeGalleryImage = (index: number) => {
@@ -246,13 +295,19 @@ export default function AdminProducts() {
             <div className={`${styles.formField} ${styles.formFieldFull}`}>
               <label>Foto Utama *</label>
               <div className={styles.photoUploadRow}>
-                <input value={form.photo || ''} onChange={e => setForm((f:any)=>({...f, photo:e.target.value}))} placeholder="URL foto atau upload di bawah" />
+                <input 
+                  value={form.photo || ''} 
+                  onChange={e => setForm((f:any)=>({...f, photo:e.target.value}))} 
+                  placeholder="URL foto atau upload di bawah" 
+                  readOnly={uploading}
+                />
                 <input ref={fileRef} type="file" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,image/svg+xml,image/bmp,image/tiff" style={{ display: 'none' }} onChange={(e) => handleImageUpload(e, true)} />
                 <button type="button" className={styles.btnSecondary} onClick={() => fileRef.current?.click()} disabled={uploading}>
                   {uploading ? '⏳ Upload...' : '📁 Upload Foto Utama'}
                 </button>
               </div>
               {form.photo && <img src={form.photo} alt="preview" className={styles.photoPreview} />}
+              {!form.photo && <small style={{color: '#666', fontSize: '0.85rem', marginTop: '5px'}}>Upload foto atau masukkan URL gambar</small>}
             </div>
 
             {/* Gallery Upload */}
