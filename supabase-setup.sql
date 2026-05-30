@@ -4,8 +4,19 @@
 -- Jalankan SQL ini di Supabase SQL Editor
 -- ============================================
 
+-- Drop tabel jika sudah ada (untuk fresh setup)
+DROP TABLE IF EXISTS wa_inquiries CASCADE;
+DROP TABLE IF EXISTS gold_prices CASCADE;
+DROP TABLE IF EXISTS blog_posts CASCADE;
+DROP TABLE IF EXISTS store_info CASCADE;
+DROP TABLE IF EXISTS reservations CASCADE;
+DROP TABLE IF EXISTS contact_messages CASCADE;
+DROP TABLE IF EXISTS why_choose_us CASCADE;
+DROP TABLE IF EXISTS testimonials CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+
 -- 1. Buat tabel products
-CREATE TABLE IF NOT EXISTS products (
+CREATE TABLE products (
   id BIGSERIAL PRIMARY KEY,
   sku VARCHAR(50) UNIQUE,
   name VARCHAR(255) NOT NULL,
